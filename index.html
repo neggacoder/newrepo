@@ -10,6 +10,11 @@
     <header class="header">
         <nav class="wrap">
             <a href="./index.html" class="brand"><svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="11" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 23c3.5-4 7.5-4 11 0s7.5 4 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Центр «Jas Urpaq»</a>
+            <button class="burger-btn" id="burger-btn" aria-label="Меню" aria-expanded="false" aria-controls="nav-mobile">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul>
                 <li><button class="nav-link btn-donate" onclick="Donate()">Поддержать</button></li>
                 <li><a href="./specialists.html">Специалисты</a></li>
@@ -19,6 +24,15 @@
             </ul>
         </nav>
     </header>
+    <nav class="nav-mobile" id="nav-mobile" aria-label="Мобильное меню">
+        <ul>
+            <li><button class="nav-link btn-donate" onclick="Donate()">Поддержать</button></li>
+            <li><a href="./specialists.html">Специалисты</a></li>
+            <li><a href="./about_us.html">О нас</a></li>
+            <li><a href="#faq">Вопросы</a></li>
+            <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+        </ul>
+    </nav>
 
     <main class="main">
 
@@ -503,6 +517,67 @@
             .catch(function () {
                 renderTicker(DEFAULT_DONATERS);
             });
+    </script>
+
+    <script>
+        /* --- БУРГЕР-МЕНЮ --- */
+        (function() {
+            var btn  = document.getElementById('burger-btn');
+            var menu = document.getElementById('nav-mobile');
+            if (!btn || !menu) return;
+
+            function openMenu() {
+                btn.classList.add('is-open');
+                menu.style.display = 'block';
+                requestAnimationFrame(function() {
+                    menu.classList.add('is-open');
+                });
+                btn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                btn.classList.remove('is-open');
+                menu.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                setTimeout(function() {
+                    if (!menu.classList.contains('is-open')) {
+                        menu.style.display = '';
+                    }
+                }, 220);
+            }
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (btn.classList.contains('is-open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            /* Закрыть при клике вне меню */
+            document.addEventListener('click', function(e) {
+                if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) {
+                    closeMenu();
+                }
+            });
+
+            /* Закрыть при нажатии Escape */
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && btn.classList.contains('is-open')) {
+                    closeMenu();
+                }
+            });
+
+            /* Закрыть при клике на ссылку внутри меню */
+            menu.querySelectorAll('a, button').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    closeMenu();
+                });
+            });
+        })();
     </script>
 </body>
 </html>

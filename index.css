@@ -940,3 +940,377 @@ body { padding-bottom: 48px; }
   line-height: 1.7;
   margin: 0;
 }
+/* ==========================================================
+   БУРГЕР-МЕНЮ И МОБИЛЬНАЯ НАВИГАЦИЯ
+   ========================================================== */
+
+/* Кнопка бургера — скрыта на десктопе */
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.burger-btn span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Анимация крестика */
+.burger-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burger-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Мобильный дроп-даун (скрыт по умолчанию) */
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 77px; /* высота хедера */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  z-index: 49;
+  overflow-y: auto;
+  border-top: 1px solid var(--border);
+  padding: 8px 0 48px; /* 48px — высота ticker */
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.nav-mobile.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.nav-mobile ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-mobile ul li {
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-mobile ul li:first-child {
+  border-top: none;
+}
+
+.nav-mobile ul li a,
+.nav-mobile ul li button.nav-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 18px 24px;
+  font-family: var(--font-accent);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-mobile ul li a:hover,
+.nav-mobile ul li button.nav-link:hover {
+  background: var(--bg-soft);
+  color: var(--black);
+}
+
+.nav-mobile .mobile-donate-wrap {
+  padding: 20px 24px 0;
+}
+
+.nav-mobile .btn-donate-mobile {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--black);
+  color: var(--white) !important;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-accent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================
+   УЛУЧШЕННАЯ МОБИЛЬНАЯ АДАПТАЦИЯ
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+  /* --- Шапка --- */
+  .header .wrap {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  /* Скрываем десктопное меню */
+  .header nav > ul {
+    display: none;
+  }
+
+  /* Показываем бургер */
+  .burger-btn {
+    display: flex;
+  }
+
+  /* --- Hero --- */
+  .hero {
+    padding: 40px 0 36px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .hero p.lead {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+  }
+
+  .mission-block {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .mission-block p {
+    font-size: 14px;
+  }
+
+  /* --- Секции --- */
+  .section {
+    padding: 40px 0;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .section-head h2 {
+    font-size: 24px;
+  }
+
+  .section-sub {
+    max-width: 100%;
+  }
+
+  /* --- Новости --- */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* --- Сетка центров --- */
+  .groups-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 28px 0 40px;
+  }
+
+  .group-card {
+    min-height: auto;
+    padding: 20px 18px;
+  }
+
+  /* --- Инстаграм-лента --- */
+  .instagram-feed {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .instagram-feed-wrap {
+    padding: 36px 0;
+  }
+
+  /* --- Статистика о нас --- */
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-stat {
+    padding: 20px 16px;
+  }
+
+  .about-stat .num {
+    font-size: 26px;
+  }
+
+  /* --- Специалисты --- */
+  .specialists-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 28px 0 40px;
+  }
+
+  .specialist-card {
+    flex-direction: column;
+  }
+
+  .specialist-photo {
+    width: 100%;
+    height: 200px;
+  }
+
+  .specialist-info {
+    padding: 16px 18px;
+  }
+
+  /* --- Page hero --- */
+  .page-hero {
+    padding: 36px 0 28px;
+  }
+
+  .page-hero h1 {
+    font-size: 26px;
+  }
+
+  /* --- FAQ --- */
+  .faq-section {
+    padding: 40px 0;
+  }
+
+  .faq-question {
+    font-size: 15px;
+    padding: 18px 0;
+  }
+
+  .faq-answer-inner {
+    font-size: 14px;
+    padding-bottom: 18px;
+  }
+
+  /* --- Footer --- */
+  .footer .wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  /* --- Footer CTA кнопки --- */
+  footer .btn {
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 13px;
+  }
+
+  /* --- Модальное окно --- */
+  .modal-panel {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: 28px 20px 24px;
+    margin: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .modal.is-open {
+    align-items: flex-end;
+  }
+
+  .field-row {
+    flex-direction: column;
+  }
+
+  /* --- Ticker --- */
+  .donor-ticker {
+    height: 44px;
+  }
+
+  .ticker-label span.label-text {
+    display: none;
+  }
+
+  /* --- Padding wrap --- */
+  .wrap {
+    padding: 0 16px;
+  }
+
+  /* --- Страница входа для сотрудников --- */
+  .login-card {
+    padding: 32px 24px;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .brand {
+    font-size: 15px;
+  }
+
+  .brand-mark {
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+  }
+
+  .instagram-feed {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .about-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* Обновляем top для nav-mobile при уменьшении высоты хедера */
+@media (max-width: 768px) {
+  .nav-mobile {
+    top: 65px;
+  }
+}
