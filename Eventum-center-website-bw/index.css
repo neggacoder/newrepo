@@ -1,0 +1,942 @@
+/* =========================================================
+   ЦЕНТР Eventum — ОБЩИЙ ФАЙЛ СТИЛЕЙ
+   Чёрно-белый, сдержанный, но тёплый стиль детского центра:
+   строгая графика + мягкие скругления и линейные значки
+   вместо ярких красок и мультяшности.
+   Используется на index.html, specialists.html,
+   about_us.html и employee_part/enter.html.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* ---- Color tokens (grayscale only) ---- */
+  --white:      #ffffff;
+  --bg-soft:    #f6f6f6;
+  --bg-soft-2:  #efefef;
+  --border:     #dcdcdc;
+  --border-2:   #c7c7c7;
+  --gray-mid:   #9a9a9a;
+  --text:       #2b2b2b;
+  --black:      #111111;
+
+  /* ---- Type tokens ---- */
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;   /* заголовки — строгий каркас */
+  --font-accent:  'Quicksand', 'Helvetica Neue', Arial, sans-serif; /* кнопки, лейблы, навигация — тёплая нотка */
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;     /* основной текст */
+
+  /* ---- Layout ---- */
+  --max-width: 1120px;
+  --gap: 24px;
+
+  /* ---- Radius (мягкие, но не "игрушечные" скругления) ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+}
+
+/* ---------------------------------------------------------
+   СБРОС СТИЛЕЙ
+   --------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--black);
+  margin: 0 0 0.5em 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 1em 0; }
+
+a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+img { max-width: 100%; display: block; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* место под нижнюю бегущую строку с донаторами */
+body { padding-bottom: 48px; }
+
+/* ---------------------------------------------------------
+   БАЗОВЫЙ КАРКАС
+   --------------------------------------------------------- */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.squiggle {
+  display: block;
+  width: 56px;
+  height: 10px;
+  margin: 18px 0 26px;
+  color: var(--black);
+}
+
+/* ---------------------------------------------------------
+   ШАПКА / НАВИГАЦИЯ
+   --------------------------------------------------------- */
+.header {
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-mark {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  color: var(--black);
+  flex-shrink: 0;
+}
+
+/* старая разметка <span></span> внутри .brand — скрываем, если где-то осталась */
+.brand > span:not(.brand-mark) { display: none; }
+
+.header nav ul {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.header nav a,
+.header nav button.nav-link {
+  font-family: var(--font-accent);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text);
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.header nav a:hover,
+.header nav button.nav-link:hover {
+  color: var(--black);
+}
+
+.header nav a::after,
+.header nav button.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 0;
+  height: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6'%3E%3Cpath d='M0 3 C4 0,8 6,12 3 C16 0,20 6,24 3 C28 0,32 6,36 3 C38 1.5,39 1.5,40 3' fill='none' stroke='%23111111' stroke-width='1.3'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 40px 6px;
+  transition: width 0.2s ease;
+}
+
+.header nav a:hover::after,
+.header nav button.nav-link:hover::after {
+  width: 100%;
+}
+
+.btn-donate {
+  background: var(--black) !important;
+  color: var(--white) !important;
+  padding: 10px 22px !important;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-accent);
+}
+
+.btn-donate::after { display: none; }
+.btn-donate:hover { background: #000 !important; color: var(--white) !important; }
+
+/* ---------------------------------------------------------
+   ОБЩИЕ КНОПКИ
+   --------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 13px 28px;
+  border: 1px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+  border-radius: var(--radius-pill);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover { background: var(--black); color: var(--white); }
+
+.btn-solid {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn-solid:hover { background: #000; opacity: 0.85; }
+
+.btn-block { width: 100%; text-align: center; }
+
+/* ---------------------------------------------------------
+   ОСНОВНОЙ КОНТЕНТ / СЕКЦИИ
+   --------------------------------------------------------- */
+.main { padding-bottom: 40px; }
+
+.section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.section-sub {
+  color: var(--gray-mid);
+  font-size: 14px;
+  max-width: 420px;
+}
+
+/* ---------------------------------------------------------
+   ГЛАВНЫЙ ЭКРАН (главная страница)
+   --------------------------------------------------------- */
+.hero {
+  padding: 80px 0 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size: 46px;
+  font-weight: 800;
+  max-width: 720px;
+  line-height: 1.1;
+}
+
+.hero p.lead {
+  max-width: 540px;
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 28px;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ---------------------------------------------------------
+   ГАЛЕРЕЯ — «Последние новости»
+   --------------------------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.news-card {
+  border: 1px solid var(--border);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.news-thumb {
+  aspect-ratio: 4/3;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-thumb svg {
+  width: 34px;
+  height: 34px;
+  stroke: var(--gray-mid);
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.news-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.news-date {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+}
+
+.news-body h3 { font-size: 16px; font-weight: 600; }
+
+.news-body p { font-size: 13.5px; color: #555; margin: 0; flex: 1; }
+
+.news-link {
+  font-family: var(--font-accent);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 6px;
+}
+
+/* ---------------------------------------------------------
+   ЗАГЛУШКА ЛЕНТЫ INSTAGRAM
+   --------------------------------------------------------- */
+.instagram-feed-wrap { padding: 64px 0; border-bottom: 1px solid var(--border); }
+
+.instagram-handle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.instagram-handle .dot {
+  width: 8px; height: 8px; background: var(--black); border-radius: 50%;
+}
+
+.instagram-handle strong { font-family: var(--font-accent); font-size: 15px; }
+.instagram-handle a { font-family: var(--font-accent); font-weight: 600; font-size: 13px; color: var(--gray-mid); }
+.instagram-handle a:hover { color: var(--black); }
+
+.instagram-feed {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.insta-post {
+  aspect-ratio: 1/1;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--gray-mid);
+}
+
+.insta-post svg { width: 22px; height: 22px; stroke: var(--gray-mid); fill: none; stroke-width: 1.4; }
+.insta-post span { font-family: var(--font-accent); font-weight: 600; font-size: 10px; letter-spacing: 0.05em; }
+
+/* ---------------------------------------------------------
+   ЧАСТЫЕ ВОПРОСЫ
+   --------------------------------------------------------- */
+.faq-section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+
+.faq-list { max-width: 760px; }
+
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-child { border-top: 1px solid var(--border); }
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+  text-align: left;
+}
+
+.faq-question .icon {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.faq-question .icon::before,
+.faq-question .icon::after {
+  content: '';
+  position: absolute;
+  background: var(--black);
+  top: 50%; left: 50%;
+  transition: transform 0.2s ease;
+}
+
+.faq-question .icon::before { width: 100%; height: 1px; transform: translate(-50%, -50%); }
+.faq-question .icon::after { width: 1px; height: 100%; transform: translate(-50%, -50%); }
+
+.faq-question[aria-expanded="true"] .icon::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease;
+}
+
+.faq-answer-inner {
+  padding-bottom: 22px;
+  color: #555;
+  font-size: 14.5px;
+  max-width: 640px;
+}
+
+/* ---------------------------------------------------------
+   ДОНАТОРЫ — бегущая строка снизу экрана
+   --------------------------------------------------------- */
+.donor-ticker {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background: var(--black);
+  border-top: 1px solid #2a2a2a;
+  display: flex;
+  align-items: stretch;
+  z-index: 150;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.ticker-label .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--black);
+  flex-shrink: 0;
+}
+
+.ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation-name: ticker-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
+}
+
+.donor-ticker:hover .ticker-track { animation-play-state: paused; }
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 26px;
+  font-size: 13px;
+  color: var(--white);
+}
+
+.ticker-item .sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #555;
+}
+
+.ticker-name { color: #e6e6e6; }
+.ticker-amount { font-family: var(--font-accent); font-weight: 700; color: var(--white); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; transform: translateX(0); }
+  .ticker-viewport { overflow-x: auto; }
+}
+
+@media (max-width: 640px) {
+  .ticker-label span.label-text { display: none; }
+}
+
+/* ---------------------------------------------------------
+   МОДАЛЬНОЕ ОКНО — Донат
+   --------------------------------------------------------- */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.is-open { display: flex; }
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.6);
+}
+
+.modal-panel {
+  position: relative;
+  background: var(--white);
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 36px;
+  z-index: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--white);
+  font-size: 16px;
+  line-height: 1;
+  color: var(--black);
+}
+
+.modal-close:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+.modal-panel h2 { font-size: 22px; margin-bottom: 6px; }
+.modal-panel .modal-sub { color: var(--gray-mid); font-size: 13.5px; margin-bottom: 24px; }
+
+.modal-section-label {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.reason-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.reason-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.reason-option:hover { border-color: var(--gray-mid); }
+
+.reason-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--black);
+  flex-shrink: 0;
+}
+
+.reason-option input[type="radio"]:checked ~ span { color: var(--black); font-weight: 600; }
+
+.reason-option span { font-size: 14px; color: var(--text); }
+
+.reason-option:has(input:checked) {
+  border-color: var(--black);
+  background: var(--bg-soft);
+}
+
+.card-form { display: flex; flex-direction: column; gap: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+}
+
+.field input {
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 12px 13px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--black);
+  border-radius: var(--radius-sm);
+}
+
+.field input:focus { border-color: var(--black); outline: none; }
+
+.field-row { display: flex; gap: 14px; }
+.field-row .field { flex: 1; }
+
+.card-form .btn { margin-top: 8px; }
+
+.modal-fineprint {
+  font-size: 11px;
+  color: var(--gray-mid);
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------
+   СТРАНИЦА СПЕЦИАЛИСТОВ
+   --------------------------------------------------------- */
+.page-hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-hero h1 { font-size: 36px; max-width: 640px; }
+.page-hero p { color: #555; max-width: 560px; font-size: 15px; }
+
+.specialists-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+  padding: 56px 0 80px;
+}
+
+.specialist-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+}
+
+.specialist-photo {
+  width: 160px;
+  flex-shrink: 0;
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+
+.specialist-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(105%);
+  min-height: 200px;
+}
+
+.specialist-info { padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+.specialist-info h3 { font-size: 17px; }
+.specialist-role {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  margin-bottom: 6px;
+}
+.specialist-info p { font-size: 13.5px; color: #555; margin: 0; }
+
+/* ---------------------------------------------------------
+   СТРАНИЦА «О НАС»
+   --------------------------------------------------------- */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.about-stat {
+  padding: 28px 24px;
+  border-right: 1px solid var(--border);
+}
+
+.about-stat:last-child { border-right: none; }
+
+.about-stat .num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--black);
+  display: block;
+}
+
+.about-stat .label {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--gray-mid);
+  margin-top: 4px;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding: 56px 0 80px;
+}
+
+.group-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
+}
+
+.group-card .age-range {
+  font-family: var(--font-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gray-mid);
+  text-transform: uppercase;
+}
+
+.group-card h3 { font-size: 19px; margin: 0; }
+
+.group-card p { font-size: 13.5px; color: #555; margin: 0; flex: 1; }
+
+.group-mark {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  color: var(--black);
+}
+
+.group-mark svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------------------------------------------------
+   СТРАНИЦА ВХОДА ДЛЯ СОТРУДНИКОВ
+   --------------------------------------------------------- */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-soft);
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--white);
+  border: 1px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 44px 38px;
+}
+
+.login-card .brand { display: block; margin-bottom: 6px; }
+.login-card .eyebrow { margin-bottom: 28px; }
+
+.login-form { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+
+.login-back {
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  font-size: 12.5px;
+  color: var(--gray-mid);
+}
+.login-back:hover { color: var(--black); }
+
+/* ---------------------------------------------------------
+   ПОДВАЛ
+   --------------------------------------------------------- */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+}
+
+.footer .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer span { font-size: 12px; color: var(--gray-mid); }
+
+/* ---------------------------------------------------------
+   АДАПТИВНОСТЬ
+   --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .instagram-feed { grid-template-columns: repeat(3, 1fr); }
+  .groups-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .about-stat:nth-child(2) { border-right: none; }
+  .specialists-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 34px; }
+}
+
+@media (max-width: 640px) {
+  .header nav ul { gap: 16px; }
+  .header nav a, .header nav button.nav-link { font-size: 11.5px; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .instagram-feed { grid-template-columns: repeat(2, 1fr); }
+  .groups-grid { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .specialist-card { flex-direction: column; }
+  .specialist-photo { width: 100%; height: 160px; }
+  .field-row { flex-direction: column; }
+}
+
+/* ---------------------------------------------------------
+   URPAQ INCLUSIVE — ADDITIONS
+   --------------------------------------------------------- */
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--gray-mid);
+  margin-top: .5rem;
+  max-width: 680px;
+}
+
+.mission-block {
+  margin-top: 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  background: var(--bg-soft);
+}
+
+.mission-block .eyebrow {
+  display: block;
+  margin-bottom: .75rem;
+}
+
+.mission-block p {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}

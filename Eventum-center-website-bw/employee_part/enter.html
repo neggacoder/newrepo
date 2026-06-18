@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход для сотрудников — Центр «Jas Urpaq»</title>
+    <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <div class="login-screen">
+        <div class="login-card">
+            <a href="../index.html" class="brand"><svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="11" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 23c3.5-4 7.5-4 11 0s7.5 4 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Центр «Jas Urpaq»</a>
+            <span class="eyebrow">Доступ для сотрудников</span>
+
+            <h2 style="margin-bottom: 6px;">Вход</h2>
+            <p style="color: var(--gray-mid); font-size: 13.5px; margin-bottom: 8px;">Используйте свой рабочий логин для доступа к внутренним инструментам.</p>
+
+            <form class="login-form" onsubmit="return handleLogin(event)">
+                <div class="field">
+                    <label for="login-email">Логин / Email</label>
+                    <input type="text" id="login-email" placeholder="name@Eventum-center.ru" required autocomplete="username">
+                </div>
+                <div class="field">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-solid btn-block">Войти</button>
+            </form>
+
+            <a href="../index.html" class="login-back">← Назад на главную</a>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('Это демо-форма — авторизация пока не подключена.');
+            return false;
+        }
+    </script>
+</body>
+</html>
