@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Центр «Jas Urpaq» — развитие и поддержка детей</title>
     <link rel="stylesheet" href="index.css">
 </head>
@@ -10,28 +10,31 @@
     <header class="header">
         <nav class="wrap">
             <a href="./index.html" class="brand"><img class="brand-logo" src="./logo.jpg" alt="Логотип фонда Jas Urpaq" width="26" height="26">Jas Urpaq</a>
+            <div class="lang-switch"></div>
             <button class="burger-btn" id="burger-btn" aria-label="Меню" aria-expanded="false" aria-controls="nav-mobile">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             <ul>
-                <li><button class="nav-link btn-donate" onclick="Donate()">Поддержать</button></li>
-                <li><a href="./specialists.html">Специалисты</a></li>
-                <li><a href="./about_us.html">О нас</a></li>
-                <li><a href="#faq">Вопросы</a></li>
-                <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+                <li><button class="nav-link btn-donate" onclick="Donate()" data-i18n="nav_support">Поддержать</button></li>
+                <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+                <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+                <li><a href="#faq" data-i18n="nav_faq">Вопросы</a></li>
+                <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
             </ul>
         </nav>
     </header>
     <nav class="nav-mobile" id="nav-mobile" aria-label="Мобильное меню">
         <ul>
-            <li><button class="nav-link btn-donate" onclick="Donate()">Поддержать</button></li>
-            <li><a href="./specialists.html">Специалисты</a></li>
-            <li><a href="./about_us.html">О нас</a></li>
-            <li><a href="#faq">Вопросы</a></li>
-            <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+            <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+            <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+            <li><a href="#faq" data-i18n="nav_faq">Вопросы</a></li>
+            <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
         </ul>
+        <div class="mobile-donate-wrap">
+            <button class="btn-donate-mobile" onclick="Donate()" data-i18n="nav_support">Поддержать фонд</button>
+        </div>
     </nav>
 
     <main class="main">
@@ -40,11 +43,11 @@
             <div class="wrap">
                 <h1>Urpaq Inclusive</h1>
                 <svg class="squiggle" viewBox="0 0 56 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5c3-4 6 4 9 0s6-4 9 0 6 4 9 0 6-4 9 0 5 4 8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                <p class="lead">Общественный фонд, созданный для поддержки детей и подростков с расстройствами аутистического спектра и другими ментальными нарушениями, а также их семей.</p>
-                <p class="hero-sub">Мы объединяем: современные методы терапии, обучение специалистов, поддержку родителей, проекты по развитию самостоятельности и социальной адаптации.</p>
+                <p class="lead" data-i18n="hero_lead">Общественный фонд, созданный для поддержки детей и подростков с расстройствами аутистического спектра и другими ментальными нарушениями, а также их семей.</p>
+                <p class="hero-sub" data-i18n="hero_sub">Мы объединяем: современные методы терапии, обучение специалистов, поддержку родителей, проекты по развитию самостоятельности и социальной адаптации.</p>
                 <div class="mission-block">
-                    <span class="eyebrow">Миссия фонда</span>
-                    <p>Мы верим, что каждый ребёнок имеет право: на развитие, образование, уважение, самостоятельность, и достойное будущее. Наша задача — создавать среду, где дети с особенностями развития могут раскрывать свой потенциал, а семьи получать профессиональную поддержку.</p>
+                    <span class="eyebrow" data-i18n="mission_eyebrow">Миссия фонда</span>
+                    <p data-i18n="mission_text">Мы верим, что каждый ребёнок имеет право: на развитие, образование, уважение, самостоятельность, и достойное будущее. Наша задача — создавать среду, где дети с особенностями развития могут раскрывать свой потенциал, а семьи получать профессиональную поддержку.</p>
                 </div>
             </div>
         </section>
@@ -53,50 +56,50 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <span class="eyebrow">Обновления</span>
-                        <h2>Последние новости</h2>
+                        <span class="eyebrow" data-i18n="news_eyebrow">Обновления</span>
+                        <h2 data-i18n="news_title">Последние новости</h2>
                     </div>
-                    <p class="section-sub">Короткие заметки из наших центров — о программах, открытиях и людях, которые за этим стоят.</p>
+                    <p class="section-sub" data-i18n="news_sub">Короткие заметки из наших центров — о программах, открытиях и людях, которые за этим стоят.</p>
                 </div>
 
                 <div class="gallery gallery-grid">
                     <article class="news-card">
                         <div class="news-thumb"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></div>
                         <div class="news-body">
-                            <span class="news-date">2 июня</span>
-                            <h3>В центре №3 открылась новая сенсорная комната</h3>
-                            <p>Тихое пространство с минимумом раздражителей, разработанное вместе с нашими эрготерапевтами для детей, которым нужна спокойная среда.</p>
-                            <a class="news-link" href="#">Подробнее →</a>
+                            <span class="news-date" data-i18n="news1_date">2 июня</span>
+                            <h3 data-i18n="news1_title">В центре №3 открылась новая сенсорная комната</h3>
+                            <p data-i18n="news1_text">Тихое пространство с минимумом раздражителей, разработанное вместе с нашими эрготерапевтами для детей, которым нужна спокойная среда.</p>
+                            <a class="news-link" href="#" data-i18n="news1_link">Подробнее →</a>
                         </div>
                     </article>
 
                     <article class="news-card">
                         <div class="news-thumb"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
                         <div class="news-body">
-                            <span class="news-date">24 мая</span>
-                            <h3>Летняя интенсивная программа: открыта запись</h3>
-                            <p>Двухнедельные утренние занятия, объединяющие логопедию, движение и групповые игры для детей 4–10 лет.</p>
-                            <a class="news-link" href="#">Подробнее →</a>
+                            <span class="news-date" data-i18n="news2_date">24 мая</span>
+                            <h3 data-i18n="news2_title">Летняя интенсивная программа: открыта запись</h3>
+                            <p data-i18n="news2_text">Двухнедельные утренние занятия, объединяющие логопедию, движение и групповые игры для детей 4–10 лет.</p>
+                            <a class="news-link" href="#" data-i18n="news2_link">Подробнее →</a>
                         </div>
                     </article>
 
                     <article class="news-card">
                         <div class="news-thumb"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></svg></div>
                         <div class="news-body">
-                            <span class="news-date">11 мая</span>
-                            <h3>Тренинг для волонтёров: 18 новых помощников</h3>
-                            <p>Двухдневный курс о первом контакте с семьями, границах и повседневных правилах поддержки.</p>
-                            <a class="news-link" href="#">Подробнее →</a>
+                            <span class="news-date" data-i18n="news3_date">11 мая</span>
+                            <h3 data-i18n="news3_title">Тренинг для волонтёров: 18 новых помощников</h3>
+                            <p data-i18n="news3_text">Двухдневный курс о первом контакте с семьями, границах и повседневных правилах поддержки.</p>
+                            <a class="news-link" href="#" data-i18n="news3_link">Подробнее →</a>
                         </div>
                     </article>
 
                     <article class="news-card">
                         <div class="news-thumb"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
                         <div class="news-body">
-                            <span class="news-date">29 апреля</span>
-                            <h3>Партнёрство с городской детской больницей</h3>
-                            <p>Общая линия направлений, чтобы семьи могли переходить между медицинской и развивающей помощью без задержек.</p>
-                            <a class="news-link" href="#">Подробнее →</a>
+                            <span class="news-date" data-i18n="news4_date">29 апреля</span>
+                            <h3 data-i18n="news4_title">Партнёрство с городской детской больницей</h3>
+                            <p data-i18n="news4_text">Общая линия направлений, чтобы семьи могли переходить между медицинской и развивающей помощью без задержек.</p>
+                            <a class="news-link" href="#" data-i18n="news4_link">Подробнее →</a>
                         </div>
                     </article>
                 </div>
@@ -107,71 +110,71 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <span class="eyebrow">Наши центры</span>
-                        <h2>Сегодня в структуре фонда работают 4 центра</h2>
+                        <span class="eyebrow" data-i18n="centres_eyebrow">Наши центры</span>
+                        <h2 data-i18n="centres_title">Сегодня в структуре фонда работают 4 центра</h2>
                     </div>
-                    <p class="section-sub">Более 200 детей получают регулярную терапевтическую и коррекционную помощь.</p>
+                    <p class="section-sub" data-i18n="centres_sub">Более 200 детей получают регулярную терапевтическую и коррекционную помощь.</p>
                 </div>
 
                 <div class="groups-grid">
                     <article class="group-card">
                         <span class="eyebrow">01</span>
-                        <h3>Jas Urpaq Kids</h3>
-                        <p>Центр ранней поддержки и развития</p>
+                        <h3 data-i18n="c1_name">Jas Urpaq Kids</h3>
+                        <p data-i18n="c1_desc">Центр ранней поддержки и развития</p>
                     </article>
                     <article class="group-card">
                         <span class="eyebrow">02</span>
-                        <h3>Eventum Junior</h3>
-                        <p>Академические навыки и трудотерапия</p>
+                        <h3 data-i18n="c2_name">Eventum Junior</h3>
+                        <p data-i18n="c2_desc">Академические навыки и трудотерапия</p>
                     </article>
                     <article class="group-card">
                         <span class="eyebrow">03</span>
-                        <h3>Group</h3>
-                        <p>Формирование навыков самостоятельной жизни</p>
+                        <h3 data-i18n="c3_name">Group</h3>
+                        <p data-i18n="c3_desc">Формирование навыков самостоятельной жизни</p>
                     </article>
                     <article class="group-card">
                         <span class="eyebrow">04</span>
-                        <h3>EVENTUM</h3>
-                        <p>Индивидуальные занятия: АВА, Логопед, Сенсорная интеграция, Нейропсихолог</p>
+                        <h3 data-i18n="c4_name">EVENTUM</h3>
+                        <p data-i18n="c4_desc">Индивидуальные занятия: АВА, Логопед, Сенсорная интеграция, Нейропсихолог</p>
                     </article>
                 </div>
 
-                <p style="margin-top:2rem;border-top:1px solid currentColor;padding-top:1.5rem;">В центрах работают: ABA-специалисты, нейропсихологи, логопеды, специалисты сенсорной интеграции, поведенческие терапевты, специалисты по развитию навыков самостоятельности.</p>
+                <p style="margin-top:2rem;border-top:1px solid currentColor;padding-top:1.5rem;" data-i18n="staff_text">В центрах работают: ABA-специалисты, нейропсихологи, логопеды, специалисты сенсорной интеграции, поведенческие терапевты, специалисты по развитию навыков самостоятельности.</p>
 
                 <div class="section-head" style="margin-top:3rem;">
                     <div>
-                        <span class="eyebrow">Направления работы</span>
-                        <h2>Наши программы</h2>
+                        <span class="eyebrow" data-i18n="prog_eyebrow">Направления работы</span>
+                        <h2 data-i18n="prog_title">Наши программы</h2>
                     </div>
                 </div>
 
                 <div class="groups-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
                     <article class="group-card">
-                        <h3>ABA-терапия</h3>
-                        <p>Развитие коммуникации, навыков поведения и социальной адаптации на основе прикладного анализа поведения.</p>
+                        <h3 data-i18n="p1_name">ABA-терапия</h3>
+                        <p data-i18n="p1_desc">Развитие коммуникации, навыков поведения и социальной адаптации на основе прикладного анализа поведения.</p>
                     </article>
                     <article class="group-card">
-                        <h3>Сенсорная интеграция</h3>
-                        <p>Помощь детям в обработке сенсорных стимулов и улучшении регуляции восприятия.</p>
+                        <h3 data-i18n="p2_name">Сенсорная интеграция</h3>
+                        <p data-i18n="p2_desc">Помощь детям в обработке сенсорных стимулов и улучшении регуляции восприятия.</p>
                     </article>
                     <article class="group-card">
-                        <h3>Логопедия и коммуникация</h3>
-                        <p>Развитие речи, альтернативных методов коммуникации и языковых навыков.</p>
+                        <h3 data-i18n="p3_name">Логопедия и коммуникация</h3>
+                        <p data-i18n="p3_desc">Развитие речи, альтернативных методов коммуникации и языковых навыков.</p>
                     </article>
                     <article class="group-card">
-                        <h3>Подготовка к самостоятельной жизни</h3>
-                        <p>Формирование бытовых навыков, самообслуживания и навыков для жизни в обществе.</p>
+                        <h3 data-i18n="p4_name">Подготовка к самостоятельной жизни</h3>
+                        <p data-i18n="p4_desc">Формирование бытовых навыков, самообслуживания и навыков для жизни в обществе.</p>
                     </article>
                     <article class="group-card">
-                        <h3>Работа с семьёй</h3>
-                        <p>Консультации, поддержка и обучение родителей для создания единой развивающей среды.</p>
+                        <h3 data-i18n="p5_name">Работа с семьёй</h3>
+                        <p data-i18n="p5_desc">Консультации, поддержка и обучение родителей для создания единой развивающей среды.</p>
                     </article>
                 </div>
 
                 <div class="mission-block" style="margin-top:3rem;">
-                    <span class="eyebrow">Международные стажировки и обучение</span>
-                    <p>На базе наших центров проходят: практические стажировки, обучающие программы, супервизии, международные тренинги для специалистов. Мы обучаем не только теории, но и практической работе с детьми в реальной среде центра.</p>
-                    <p style="margin-top:1rem;"><strong>Программы подойдут:</strong> начинающим специалистам, педагогам, психологам, ABA-терапистам, студентам, международным волонтёрам.</p>
+                    <span class="eyebrow" data-i18n="intern_eyebrow">Международные стажировки и обучение</span>
+                    <p data-i18n="intern_text">На базе наших центров проходят: практические стажировки, обучающие программы, супервизии, международные тренинги для специалистов. Мы обучаем не только теории, но и практической работе с детьми в реальной среде центра.</p>
+                    <p style="margin-top:1rem;"><strong data-i18n="intern_who_label">Программы подойдут:</strong> <span data-i18n="intern_who_list">начинающим специалистам, педагогам, психологам, ABA-терапистам, студентам, международным волонтёрам.</span></p>
                 </div>
             </div>
         </section>
@@ -181,33 +184,33 @@
                 <div class="instagram-handle">
                     <span class="dot"></span>
                     <strong>@Eventum.center</strong>
-                    <a href="#" target="_blank" rel="noopener">Открыть в Instagram →</a>
+                    <a href="#" target="_blank" rel="noopener" data-i18n="insta_open">Открыть в Instagram →</a>
                 </div>
 
                 <div class="instagram-feed">
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><path d="M20.8 4.6c-1.6-1.6-4.2-1.6-5.8 0L12 7.6 9 4.6c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8L12 19l8.8-8.6c1.6-1.6 1.6-4.2 0-5.8z"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><path d="M20.8 4.6c-1.6-1.6-4.2-1.6-5.8 0L12 7.6 9 4.6c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8L12 19l8.8-8.6c1.6-1.6 1.6-4.2 0-5.8z"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                     <div class="insta-post">
                         <svg viewBox="0 0 24 24"><path d="M20.8 4.6c-1.6-1.6-4.2-1.6-5.8 0L12 7.6 9 4.6c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8L12 19l8.8-8.6c1.6-1.6 1.6-4.2 0-5.8z"/></svg>
-                        <span>Пост</span>
+                        <span data-i18n="insta_post">Пост</span>
                     </div>
                 </div>
             </div>
@@ -217,19 +220,19 @@
             <div class="wrap">
                 <div class="section-head">
                     <div>
-                        <span class="eyebrow">Частые вопросы</span>
-                        <h2>Вопросы и ответы</h2>
+                        <span class="eyebrow" data-i18n="faq_eyebrow">Частые вопросы</span>
+                        <h2 data-i18n="faq_title">Вопросы и ответы</h2>
                     </div>
                 </div>
 
                 <div class="faq-list">
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
-                            Как записать ребёнка?
+                            <span data-i18n="faq1_q">Как записать ребёнка?</span>
                             <span class="icon"></span>
                         </button>
                         <div class="faq-answer">
-                            <div class="faq-answer-inner">
+                            <div class="faq-answer-inner" data-i18n="faq1_a">
                                 Позвоните или приходите в любой из 4 центров на короткую вводную встречу. Специалист поговорит с вами о ребёнке и предложит первую программу — диагноз или направление врача для этого не требуются.
                             </div>
                         </div>
@@ -237,11 +240,11 @@
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
-                            Есть ли поддержка для семей с ограниченным бюджетом?
+                            <span data-i18n="faq2_q">Есть ли поддержка для семей с ограниченным бюджетом?</span>
                             <span class="icon"></span>
                         </button>
                         <div class="faq-answer">
-                            <div class="faq-answer-inner">
+                            <div class="faq-answer-inner" data-i18n="faq2_a">
                                 Да. Часть каждого пожертвования направляется в фонд стипендий, который полностью или частично покрывает занятия для нуждающихся семей. Уточните условия у координатора центра.
                             </div>
                         </div>
@@ -249,23 +252,23 @@
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
-                            С какими возрастными группами вы работаете?
+                            <span data-i18n="faq3_q">С какими возрастными группами вы работаете?</span>
                             <span class="icon"></span>
                         </button>
                         <div class="faq-answer">
-                            <div class="faq-answer-inner">
-                                Наши программы разделены на четыре группы — Kids, Junior,  Jas Urpaq Group и Eventum — от раннего детства до подросткового возраста, плюс выездные мероприятия для всех возрастов. Подробнее — на странице «О нас».
+                            <div class="faq-answer-inner" data-i18n="faq3_a">
+                                Наши программы разделены на четыре группы — Kids, Junior, Jas Urpaq Group и Eventum — от раннего детства до подросткового возраста, плюс выездные мероприятия для всех возрастов. Подробнее — на странице «О нас».
                             </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
-                            Как стать волонтёром или специалистом?
+                            <span data-i18n="faq4_q">Как стать волонтёром или специалистом?</span>
                             <span class="icon"></span>
                         </button>
                         <div class="faq-answer">
-                            <div class="faq-answer-inner">
+                            <div class="faq-answer-inner" data-i18n="faq4_a">
                                 Мы регулярно набираем волонтёров и круглый год ищем лицензированных специалистов. Обратитесь в любой центр, а действующие сотрудники могут войти на странице «Для сотрудников».
                             </div>
                         </div>
@@ -278,107 +281,110 @@
 
     <footer class="footer">
         <div class="wrap" style="display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;padding-block:2rem;">
-            <button class="btn btn-solid" onclick="openPopup('popup-help')">Получить помощь</button>
-            <button class="btn btn-solid" onclick="openPopup('popup-training')">Пройти обучение</button>
-            <button class="btn btn-solid" onclick="Donate()">Поддержать фонд</button>
-            <button class="btn" onclick="alert('Раздел волонтёрства — скоро!')">Стать волонтёром</button>
-            <button class="btn" onclick="alert('Свяжитесь с нами: info@urpaq.kz')">Связаться с нами</button>
+            <button class="btn btn-solid" onclick="openPopup('popup-help')" data-i18n="footer_help">Получить помощь</button>
+            <button class="btn btn-solid" onclick="openPopup('popup-training')" data-i18n="footer_training">Пройти обучение</button>
+            <button class="btn btn-solid" onclick="Donate()" data-i18n="footer_donate">Поддержать фонд</button>
+            <button class="btn" onclick="alert(t('volunteer_alert'))" data-i18n="footer_volunteer">Стать волонтёром</button>
+            <button class="btn" onclick="alert(t('contact_alert'))" data-i18n="footer_contact">Связаться с нами</button>
         </div>
     </footer>
 
+    <!-- Модал доната -->
     <div id="popup" class="modal">
         <div class="modal-overlay" onclick="closeDonate()"></div>
         <div class="modal-panel">
             <button class="modal-close" onclick="closeDonate()" aria-label="Закрыть">×</button>
-            <h2>Поддержать центр «Jas Urpaq»</h2>
-            <p class="modal-sub">Выберите, на что пойдёт ваше пожертвование, и укажите данные карты ниже.</p>
+            <h2 data-i18n="modal_donate_title">Поддержать центр «Jas Urpaq»</h2>
+            <p class="modal-sub" data-i18n="modal_donate_sub">Выберите, на что пойдёт ваше пожертвование, и укажите данные карты ниже.</p>
 
-            <span class="modal-section-label">Я хочу поддержать</span>
+            <span class="modal-section-label" data-i18n="modal_donate_want">Я хочу поддержать</span>
             <div class="reason-list">
                 <label class="reason-option">
                     <input type="radio" name="reason" value="general" checked>
-                    <span>Общий фонд</span>
+                    <span data-i18n="donate_r_general">Общий фонд</span>
                 </label>
                 <label class="reason-option">
                     <input type="radio" name="reason" value="sensory">
-                    <span>Оборудование сенсорной комнаты</span>
+                    <span data-i18n="donate_r_sensory">Оборудование сенсорной комнаты</span>
                 </label>
                 <label class="reason-option">
                     <input type="radio" name="reason" value="scholarship">
-                    <span>Стипендия для нуждающихся семей</span>
+                    <span data-i18n="donate_r_scholar">Стипендия для нуждающихся семей</span>
                 </label>
                 <label class="reason-option">
                     <input type="radio" name="reason" value="training">
-                    <span>Программа обучения специалистов</span>
+                    <span data-i18n="donate_r_training">Программа обучения специалистов</span>
                 </label>
             </div>
 
-            <span class="modal-section-label">Данные платежа</span>
+            <span class="modal-section-label" data-i18n="modal_pay_label">Данные платежа</span>
             <form class="card-form" id="donate-form" onsubmit="submitDonation(event)">
                 <div class="field">
-                    <label for="card-number">Номер карты</label>
+                    <label for="card-number" data-i18n="card_number_lbl">Номер карты</label>
                     <input type="text" id="card-number" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" required>
                 </div>
                 <div class="field-row">
                     <div class="field">
-                        <label for="card-expiry">Срок действия (MM/YY)</label>
+                        <label for="card-expiry" data-i18n="card_expiry_lbl">Срок действия (MM/YY)</label>
                         <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
                     </div>
                     <div class="field">
-                        <label for="card-cvv">CVV</label>
+                        <label for="card-cvv" data-i18n="card_cvv_lbl">CVV</label>
                         <input type="text" id="card-cvv" inputmode="numeric" placeholder="•••" maxlength="3" required>
                     </div>
                 </div>
                 <div class="field">
-                    <label for="card-name">Имя держателя карты</label>
-                    <input type="text" id="card-name" placeholder="Как указано на карте" required>
+                    <label for="card-name" data-i18n="card_name_lbl">Имя держателя карты</label>
+                    <input type="text" id="card-name" data-i18n-ph="card_name_ph" placeholder="Как указано на карте" required>
                 </div>
-                <button type="submit" class="btn btn-solid btn-block">Подтвердить пожертвование</button>
+                <button type="submit" class="btn btn-solid btn-block" data-i18n="donate_btn">Подтвердить пожертвование</button>
             </form>
-            <p class="modal-fineprint">Это демо-форма — реальный платёж не выполняется.</p>
+            <p class="modal-fineprint" data-i18n="modal_fineprint">Это демо-форма — реальный платёж не выполняется.</p>
         </div>
     </div>
 
+    <!-- Модал помощи -->
     <div id="popup-help" class="modal">
         <div class="modal-overlay" onclick="closePopup('popup-help')"></div>
         <div class="modal-panel">
             <button class="modal-close" onclick="closePopup('popup-help')" aria-label="Закрыть">×</button>
-            <h2>Получить помощь</h2>
-            <p class="modal-sub">Оставьте контакты — мы свяжемся с вами в ближайшее время.</p>
-            <form class="card-form" onsubmit="event.preventDefault();closePopup('popup-help');alert('Заявка отправлена! Мы свяжемся с вами.');">
+            <h2 data-i18n="modal_help_title">Получить помощь</h2>
+            <p class="modal-sub" data-i18n="modal_help_sub">Оставьте контакты — мы свяжемся с вами в ближайшее время.</p>
+            <form class="card-form" onsubmit="event.preventDefault();closePopup('popup-help');alert(t('sent_alert'));">
                 <div class="field">
-                    <label for="help-name">Имя</label>
-                    <input type="text" id="help-name" placeholder="Ваше имя" required>
+                    <label for="help-name" data-i18n="field_name_lbl">Имя</label>
+                    <input type="text" id="help-name" data-i18n-ph="field_name_ph" placeholder="Ваше имя" required>
                 </div>
                 <div class="field">
-                    <label for="help-phone">Телефон</label>
+                    <label for="help-phone" data-i18n="field_phone_lbl">Телефон</label>
                     <input type="tel" id="help-phone" placeholder="+7 (___) ___-__-__" required>
                 </div>
-                <button type="submit" class="btn btn-solid btn-block">Отправить заявку</button>
+                <button type="submit" class="btn btn-solid btn-block" data-i18n="send_btn">Отправить заявку</button>
             </form>
         </div>
     </div>
 
+    <!-- Модал обучения -->
     <div id="popup-training" class="modal">
         <div class="modal-overlay" onclick="closePopup('popup-training')"></div>
         <div class="modal-panel">
             <button class="modal-close" onclick="closePopup('popup-training')" aria-label="Закрыть">×</button>
-            <h2>Пройти обучение</h2>
-            <p class="modal-sub">Заполните форму — мы подберём подходящую программу.</p>
-            <form class="card-form" onsubmit="event.preventDefault();closePopup('popup-training');alert('Заявка на обучение отправлена!');">
+            <h2 data-i18n="modal_train_title">Пройти обучение</h2>
+            <p class="modal-sub" data-i18n="modal_train_sub">Заполните форму — мы подберём подходящую программу.</p>
+            <form class="card-form" onsubmit="event.preventDefault();closePopup('popup-training');alert(t('train_alert'));">
                 <div class="field">
-                    <label for="train-name">Имя</label>
-                    <input type="text" id="train-name" placeholder="Ваше имя" required>
+                    <label for="train-name" data-i18n="field_name_lbl">Имя</label>
+                    <input type="text" id="train-name" data-i18n-ph="field_name_ph" placeholder="Ваше имя" required>
                 </div>
                 <div class="field">
-                    <label for="train-email">Email</label>
-                    <input type="email" id="train-email" placeholder="example@mail.com" required>
+                    <label for="train-email" data-i18n="field_email_lbl">Email</label>
+                    <input type="email" id="train-email" data-i18n-ph="field_email_ph" placeholder="example@mail.com" required>
                 </div>
                 <div class="field">
-                    <label for="train-spec">Специализация</label>
-                    <input type="text" id="train-spec" placeholder="Педагог, психолог, ABA-терапист…" required>
+                    <label for="train-spec" data-i18n="field_spec_lbl">Специализация</label>
+                    <input type="text" id="train-spec" data-i18n-ph="field_spec_ph" placeholder="Педагог, психолог, ABA-терапист…" required>
                 </div>
-                <button type="submit" class="btn btn-solid btn-block">Отправить заявку</button>
+                <button type="submit" class="btn btn-solid btn-block" data-i18n="train_btn">Отправить заявку</button>
             </form>
         </div>
     </div>
@@ -386,7 +392,7 @@
     <div class="donor-ticker" id="donor-ticker" role="marquee" aria-label="Список донаторов">
         <div class="ticker-label">
             <span class="pulse-dot"></span>
-            <span class="label-text">Донаторы</span>
+            <span class="label-text" data-i18n="donors_label">Донаторы</span>
         </div>
         <div class="ticker-viewport">
             <div class="ticker-track" id="ticker-track">
@@ -395,68 +401,58 @@
         </div>
     </div>
 
+    <script src="lang.js"></script>
+
     <script>
-        /* ---------------------------------------------------
-           МОДАЛЬНОЕ ОКНО ДОНАТА
-           --------------------------------------------------- */
+        /* МОДАЛЬНОЕ ОКНО ДОНАТА */
         function Donate() {
             document.getElementById('popup').classList.add('is-open');
             document.body.style.overflow = 'hidden';
         }
-
         function closeDonate() {
             document.getElementById('popup').classList.remove('is-open');
             document.body.style.overflow = '';
         }
-
         function openPopup(id) {
             document.getElementById(id).classList.add('is-open');
             document.body.style.overflow = 'hidden';
         }
-
         function closePopup(id) {
             document.getElementById(id).classList.remove('is-open');
             document.body.style.overflow = '';
         }
-
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeDonate();
                 ['popup-help', 'popup-training'].forEach(closePopup);
             }
         });
-
         function submitDonation(event) {
             event.preventDefault();
             closeDonate();
             document.getElementById('donate-form').reset();
-            alert('Спасибо — ваше пожертвование зафиксировано. (Это демо-форма, реальное списание не производилось.)');
+            alert(t('donate_alert'));
         }
 
-        /* автоформатирование номера карты по 4 цифры */
-        document.getElementById('card-number').addEventListener('input', function (e) {
+        /* автоформатирование карты */
+        document.getElementById('card-number').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '').slice(0, 16);
             e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
         });
-
-        document.getElementById('card-expiry').addEventListener('input', function (e) {
+        document.getElementById('card-expiry').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '').slice(0, 4);
             if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
             e.target.value = v;
         });
-
-        document.getElementById('card-cvv').addEventListener('input', function (e) {
+        document.getElementById('card-cvv').addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
         });
 
-        /* ---------------------------------------------------
-           FAQ-АККОРДЕОН
-           --------------------------------------------------- */
-        document.querySelectorAll('.faq-question').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        /* FAQ-АККОРДЕОН */
+        document.querySelectorAll('.faq-question').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 const answer = btn.nextElementSibling;
                 const isOpen = btn.getAttribute('aria-expanded') === 'true';
-
                 if (isOpen) {
                     answer.style.maxHeight = null;
                     btn.setAttribute('aria-expanded', 'false');
@@ -467,9 +463,7 @@
             });
         });
 
-        /* ---------------------------------------------------
-           БЕГУЩАЯ СТРОКА ДОНАТОРОВ (снизу экрана, бесконечный цикл)
-           --------------------------------------------------- */
+        /* БЕГУЩАЯ СТРОКА */
         const DEFAULT_DONATERS = [
             { name: 'Аноним', amount: 12000 },
             { name: 'А. Петрова', amount: 8500 },
@@ -478,111 +472,73 @@
             { name: 'Аноним', amount: 3000 },
             { name: 'С. Кузнецова', amount: 2500 }
         ];
-
         function formatAmount(n) {
             return Number(n).toLocaleString('ru-RU') + ' ₸';
         }
-
         function renderTicker(list) {
             const track = document.getElementById('ticker-track');
-
-            const itemHtml = list.map(function (d) {
+            const itemHtml = list.map(function(d) {
                 return '<span class="ticker-item">' +
                     '<span class="ticker-name">' + (d.name || 'Аноним') + '</span>' +
                     '<span class="ticker-amount">' + formatAmount(d.amount || 0) + '</span>' +
                     '<span class="sep"></span>' +
                     '</span>';
             }).join('');
-
-            /* дублируем набор дважды — это даёт бесшовный бесконечный цикл при translateX(-50%) */
             track.innerHTML = itemHtml + itemHtml;
-
-            requestAnimationFrame(function () {
+            requestAnimationFrame(function() {
                 const setWidth = track.scrollWidth / 2;
                 const pxPerSecond = 55;
                 const duration = Math.max(setWidth / pxPerSecond, 10);
                 track.style.animationDuration = duration + 's';
             });
         }
-
         fetch('http://100.94.40.120:8000/donaters')
-            .then(function (res) {
-                if (!res.ok) throw new Error('Bad response');
-                return res.json();
-            })
-            .then(function (data) {
+            .then(function(res) { if (!res.ok) throw new Error('Bad response'); return res.json(); })
+            .then(function(data) {
                 if (!Array.isArray(data) || data.length === 0) throw new Error('Empty list');
-                /* Бэкенд возвращает строки вида [id, name, amount, valute] */
-                var normalized = data.map(function (row) {
-                    if (Array.isArray(row)) {
-                        return { name: row[1], amount: row[2] };
-                    }
+                var normalized = data.map(function(row) {
+                    if (Array.isArray(row)) return { name: row[1], amount: row[2] };
                     return { name: row.name, amount: row.amount };
                 });
                 renderTicker(normalized);
             })
-            .catch(function () {
-                renderTicker(DEFAULT_DONATERS);
-            });
+            .catch(function() { renderTicker(DEFAULT_DONATERS); });
     </script>
 
     <script>
-        /* --- БУРГЕР-МЕНЮ --- */
+        /* БУРГЕР-МЕНЮ */
         (function() {
             var btn  = document.getElementById('burger-btn');
             var menu = document.getElementById('nav-mobile');
             if (!btn || !menu) return;
-
             function openMenu() {
                 btn.classList.add('is-open');
                 menu.style.display = 'block';
-                requestAnimationFrame(function() {
-                    menu.classList.add('is-open');
-                });
+                requestAnimationFrame(function() { menu.classList.add('is-open'); });
                 btn.setAttribute('aria-expanded', 'true');
                 document.body.style.overflow = 'hidden';
             }
-
             function closeMenu() {
                 btn.classList.remove('is-open');
                 menu.classList.remove('is-open');
                 btn.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = '';
                 setTimeout(function() {
-                    if (!menu.classList.contains('is-open')) {
-                        menu.style.display = '';
-                    }
+                    if (!menu.classList.contains('is-open')) menu.style.display = '';
                 }, 220);
             }
-
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                if (btn.classList.contains('is-open')) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
+                if (btn.classList.contains('is-open')) closeMenu(); else openMenu();
             });
-
-            /* Закрыть при клике вне меню */
             document.addEventListener('click', function(e) {
-                if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) {
-                    closeMenu();
-                }
+                if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) closeMenu();
             });
-
-            /* Закрыть при нажатии Escape */
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && btn.classList.contains('is-open')) {
-                    closeMenu();
-                }
+                if (e.key === 'Escape' && btn.classList.contains('is-open')) closeMenu();
             });
-
-            /* Закрыть при клике на ссылку внутри меню */
             menu.querySelectorAll('a, button').forEach(function(el) {
-                el.addEventListener('click', function() {
-                    closeMenu();
-                });
+                el.addEventListener('click', function() { closeMenu(); });
             });
         })();
     </script>

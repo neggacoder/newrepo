@@ -9,38 +9,37 @@
 <body>
     <header class="header">
         <nav class="wrap">
-            <a href="./index.html" class="brand"><svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="11" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 23c3.5-4 7.5-4 11 0s7.5 4 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Центр «Jas Urpaq»</a>
+            <a href="./index.html" class="brand"><img class="brand-logo" src="./logo.jpg" alt="Логотип фонда Jas Urpaq" width="26" height="26">Jas Urpaq</a>
+            <div class="lang-switch"></div>
             <button class="burger-btn" id="burger-btn" aria-label="Меню" aria-expanded="false" aria-controls="nav-mobile">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
             <ul>
-                <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'">Поддержать</button></li>
-                <li><a href="./specialists.html">Специалисты</a></li>
-                <li><a href="./about_us.html">О нас</a></li>
-                <li><a href="index.html#faq">Вопросы</a></li>
-                <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+                <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
+                <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+                <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+                <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
+                <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
             </ul>
         </nav>
     </header>
     <nav class="nav-mobile" id="nav-mobile" aria-label="Мобильное меню">
         <ul>
-            <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'">Поддержать</button></li>
-            <li><a href="./specialists.html">Специалисты</a></li>
-            <li><a href="./about_us.html">О нас</a></li>
-            <li><a href="index.html#faq">Вопросы</a></li>
-            <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+            <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
+            <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+            <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+            <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
+            <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
         </ul>
     </nav>
 
     <main class="main">
         <section class="page-hero">
             <div class="wrap">
-                <span class="eyebrow">Наша команда</span>
-                <h1>Специалисты, которые проводят каждое занятие.</h1>
+                <span class="eyebrow" data-i18n="spec_eyebrow">Наша команда</span>
+                <h1 data-i18n="spec_h1">Специалисты, которые проводят каждое занятие.</h1>
                 <svg class="squiggle" viewBox="0 0 56 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5c3-4 6 4 9 0s6-4 9 0 6 4 9 0 6-4 9 0 5 4 8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                <p>Психологи, терапевты и педагоги, работающие в наших 4 центрах — каждый отвечает за свою часть развития ребёнка.</p>
+                <p data-i18n="spec_sub">Психологи, терапевты и педагоги, работающие в наших 4 центрах — каждый отвечает за свою часть развития ребёнка.</p>
             </div>
         </section>
 
@@ -52,9 +51,9 @@
                         <img src="./Татьяна.JPEG" alt="Портрет Татьяны Ким" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Основатель фонда</span>
-                        <h3>Ким Татьяна Львовна</h3>
-                        <p>Основатель фонда Urpaq Inclusive и сети центров Jas Urpaq и Eventum. Руководитель проектов, направленных на создание системы помощи детям и подросткам с особенностями развития, поддержку семей и развитие инклюзивного общества.</p>
+                        <span class="specialist-role" data-i18n="s1_role">Основатель фонда</span>
+                        <h3 data-i18n="s1_name">Ким Татьяна Львовна</h3>
+                        <p data-i18n="s1_bio">Основатель фонда Urpaq Inclusive и сети центров Jas Urpaq и Eventum. Руководитель проектов, направленных на создание системы помощи детям и подросткам с особенностями развития, поддержку семей и развитие инклюзивного общества.</p>
                     </div>
                 </article>
 
@@ -63,9 +62,9 @@
                         <img src="./Нурлыгуль.jpeg" alt="Портрет Нурлыгуль Кужахметовой" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Исполнительный директор</span>
-                        <h3>Кужахметова Нурлыгуль Еркиновна</h3>
-                        <p>Исполнительный директор сети центров Jas Urpaq и Eventum. Руководит деятельностью центров, координирует работу команд специалистов, развитие программ и качество оказываемой помощи детям и семьям.</p>
+                        <span class="specialist-role" data-i18n="s2_role">Исполнительный директор</span>
+                        <h3 data-i18n="s2_name">Кужахметова Нурлыгуль Еркиновна</h3>
+                        <p data-i18n="s2_bio">Исполнительный директор сети центров Jas Urpaq и Eventum. Руководит деятельностью центров, координирует работу команд специалистов, развитие программ и качество оказываемой помощи детям и семьям.</p>
                     </div>
                 </article>
 
@@ -74,9 +73,9 @@
                         <img src="./Асем.jpeg" alt="Портрет Асем Жулкаевой" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Руководитель проектов развития</span>
-                        <h3>Жулкаева Асем Ерболовна</h3>
-                        <p>Руководитель проектов развития сети центров Jas Urpaq и Eventum. Отвечает за внедрение новых направлений работы, развитие образовательных и социальных программ, а также реализацию перспективных проектов.</p>
+                        <span class="specialist-role" data-i18n="s3_role">Руководитель проектов развития</span>
+                        <h3 data-i18n="s3_name">Жулкаева Асем Ерболовна</h3>
+                        <p data-i18n="s3_bio">Руководитель проектов развития сети центров Jas Urpaq и Eventum. Отвечает за внедрение новых направлений работы, развитие образовательных и социальных программ, а также реализацию перспективных проектов.</p>
                     </div>
                 </article>
 
@@ -85,9 +84,9 @@
                         <img src="./Алия Хегай.jpeg" alt="Портрет Алии Хегай" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Специалист по раннему развитию</span>
-                        <h3>Хегай Алия Маликовна</h3>
-                        <p>Специалист по раннему развитию детей с особенностями развития. Руководит центром KIDS и сопровождает семьи на ранних этапах коррекционной помощи и адаптации ребёнка.</p>
+                        <span class="specialist-role" data-i18n="s4_role">Специалист по раннему развитию</span>
+                        <h3 data-i18n="s4_name">Хегай Алия Маликовна</h3>
+                        <p data-i18n="s4_bio">Специалист по раннему развитию детей с особенностями развития. Руководит центром KIDS и сопровождает семьи на ранних этапах коррекционной помощи и адаптации ребёнка.</p>
                     </div>
                 </article>
 
@@ -96,9 +95,9 @@
                         <img src="./Глеб.jpeg" alt="Портрет Глеба Шайхина" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Куратор сенсорной интеграции</span>
-                        <h3>Шайхин Глеб Ермекович</h3>
-                        <p>Куратор направления сенсорной интеграции. Специалист по развитию сенсорной регуляции, моторных навыков и адаптации детей с особенностями развития.</p>
+                        <span class="specialist-role" data-i18n="s5_role">Куратор сенсорной интеграции</span>
+                        <h3 data-i18n="s5_name">Шайхин Глеб Ермекович</h3>
+                        <p data-i18n="s5_bio">Куратор направления сенсорной интеграции. Специалист по развитию сенсорной регуляции, моторных навыков и адаптации детей с особенностями развития.</p>
                     </div>
                 </article>
 
@@ -107,9 +106,9 @@
                         <img src="./Натали.jpeg" alt="Портрет Натали Ким" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Нейропсихолог</span>
-                        <h3>Ким Натали Вячеславовна</h3>
-                        <p>Нейропсихолог. Специалист по развитию когнитивных функций, внимания, памяти, эмоциональной регуляции и сопровождению детей с особенностями развития.</p>
+                        <span class="specialist-role" data-i18n="s6_role">Нейропсихолог</span>
+                        <h3 data-i18n="s6_name">Ким Натали Вячеславовна</h3>
+                        <p data-i18n="s6_bio">Нейропсихолог. Специалист по развитию когнитивных функций, внимания, памяти, эмоциональной регуляции и сопровождению детей с особенностями развития.</p>
                     </div>
                 </article>
 
@@ -118,9 +117,9 @@
                         <img src="./Акмарал.jpeg" alt="Портрет Акмарал Бурушевой" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Куратор поведенческой терапии</span>
-                        <h3>Бурушева Акмарал Талгатовна</h3>
-                        <p>Куратор поведенческой терапии центра Junior. Специалист по развитию навыков самостоятельности, социальной адаптации и сопровождению детей и подростков с особенностями развития.</p>
+                        <span class="specialist-role" data-i18n="s7_role">Куратор поведенческой терапии</span>
+                        <h3 data-i18n="s7_name">Бурушева Акмарал Талгатовна</h3>
+                        <p data-i18n="s7_bio">Куратор поведенческой терапии центра Junior. Специалист по развитию навыков самостоятельности, социальной адаптации и сопровождению детей и подростков с особенностями развития.</p>
                     </div>
                 </article>
 
@@ -129,9 +128,9 @@
                         <img src="./Алена.jpeg" alt="Портрет Алены Аветиковой" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Куратор логопедических программ</span>
-                        <h3>Аветикова Алена Ильинична</h3>
-                        <p>Куратор логопедических программ. Специалист по развитию речи, коммуникации и сопровождению детей с речевыми и коммуникативными трудностями.</p>
+                        <span class="specialist-role" data-i18n="s8_role">Куратор логопедических программ</span>
+                        <h3 data-i18n="s8_name">Аветикова Алена Ильинична</h3>
+                        <p data-i18n="s8_bio">Куратор логопедических программ. Специалист по развитию речи, коммуникации и сопровождению детей с речевыми и коммуникативными трудностями.</p>
                     </div>
                 </article>
 
@@ -140,9 +139,9 @@
                         <img src="./Анастасия.jpeg" alt="Портрет Анастасии Адамович" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Куратор индивидуальных занятий</span>
-                        <h3>Адамович Анастасия Анатольевна</h3>
-                        <p>Куратор индивидуальных занятий центра Eventum. Ведущий специалист по прикладному анализу поведения и развитию жизненно важных навыков.</p>
+                        <span class="specialist-role" data-i18n="s9_role">Куратор индивидуальных занятий</span>
+                        <h3 data-i18n="s9_name">Адамович Анастасия Анатольевна</h3>
+                        <p data-i18n="s9_bio">Куратор индивидуальных занятий центра Eventum. Ведущий специалист по прикладному анализу поведения и развитию жизненно важных навыков.</p>
                     </div>
                 </article>
 
@@ -151,81 +150,97 @@
                         <img src="./Марина.jpeg" alt="Портрет Марины Ломако" loading="lazy" decoding="async">
                     </div>
                     <div class="specialist-info">
-                        <span class="specialist-role">Куратор АФК и сенсорной интеграции</span>
-                        <h3>Ломако Марина Вячеславовна</h3>
-                        <p>Куратор направления адаптивной физической культуры (АФК) центров Jas Urpaq и Eventum. Специалист по сенсорной интеграции.</p>
+                        <span class="specialist-role" data-i18n="s10_role">Куратор АФК и сенсорной интеграции</span>
+                        <h3 data-i18n="s10_name">Ломако Марина Вячеславовна</h3>
+                        <p data-i18n="s10_bio">Куратор направления адаптивной физической культуры (АФК) центров Jas Urpaq и Eventum. Специалист по сенсорной интеграции.</p>
                     </div>
                 </article>
 
+            </div>
+            <div class="specialists-showmore-wrap" id="specialists-showmore-wrap">
+                <button class="specialists-showmore-btn" id="specialists-showmore-btn" data-i18n="spec_show_all">Показать всех</button>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="wrap">
-            <span>© 2026 Центр «Jas Urpaq». Все права защищены.</span>
-            <span>4 центра · некоммерческая организация</span>
+            <span data-i18n="spec_footer_copy">© 2026 Центр «Jas Urpaq». Все права защищены.</span>
+            <span data-i18n="spec_footer_sub">4 центра · некоммерческая организация</span>
         </div>
     </footer>
 
+    <script src="lang.js"></script>
     <script>
-        /* --- БУРГЕР-МЕНЮ --- */
+        /* БУРГЕР-МЕНЮ */
         (function() {
             var btn  = document.getElementById('burger-btn');
             var menu = document.getElementById('nav-mobile');
             if (!btn || !menu) return;
-
             function openMenu() {
-                btn.classList.add('is-open');
-                menu.style.display = 'block';
-                requestAnimationFrame(function() {
-                    menu.classList.add('is-open');
-                });
-                btn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
+                btn.classList.add('is-open'); menu.style.display = 'block';
+                requestAnimationFrame(function() { menu.classList.add('is-open'); });
+                btn.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden';
             }
-
             function closeMenu() {
-                btn.classList.remove('is-open');
-                menu.classList.remove('is-open');
-                btn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                setTimeout(function() {
-                    if (!menu.classList.contains('is-open')) {
-                        menu.style.display = '';
+                btn.classList.remove('is-open'); menu.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+                setTimeout(function() { if (!menu.classList.contains('is-open')) menu.style.display = ''; }, 220);
+            }
+            btn.addEventListener('click', function(e) { e.stopPropagation(); if (btn.classList.contains('is-open')) closeMenu(); else openMenu(); });
+            document.addEventListener('click', function(e) { if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) closeMenu(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && btn.classList.contains('is-open')) closeMenu(); });
+            menu.querySelectorAll('a, button').forEach(function(el) { el.addEventListener('click', function() { closeMenu(); }); });
+        })();
+    </script>
+    <script>
+        /* ПОКАЗАТЬ ВСЕХ СПЕЦИАЛИСТОВ (только мобильный) */
+        (function() {
+            function initShowMore() {
+                var grid = document.querySelector('.specialists-grid');
+                var wrap = document.getElementById('specialists-showmore-wrap');
+                var btn  = document.getElementById('specialists-showmore-btn');
+                if (!grid || !wrap || !btn) return;
+
+                var cards = Array.from(grid.querySelectorAll('.specialist-card'));
+                var VISIBLE = 4;
+                var expanded = false;
+
+                function isMobile() { return window.innerWidth <= 768; }
+
+                function apply() {
+                    if (!isMobile()) {
+                        // Десктоп — всё показать, кнопку скрыть
+                        cards.forEach(function(c) { c.style.display = ''; });
+                        wrap.style.display = 'none';
+                        return;
                     }
-                }, 220);
+                    // Мобильный
+                    wrap.style.display = '';
+                    if (expanded) {
+                        cards.forEach(function(c) { c.style.display = ''; });
+                        wrap.style.display = 'none'; // скрыть кнопку когда все открыты
+                    } else {
+                        cards.forEach(function(c, i) {
+                            c.style.display = i < VISIBLE ? '' : 'none';
+                        });
+                    }
+                }
+
+                btn.addEventListener('click', function() {
+                    expanded = true;
+                    apply();
+                });
+
+                apply();
+                window.addEventListener('resize', apply);
             }
 
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (btn.classList.contains('is-open')) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
-            });
-
-            /* Закрыть при клике вне меню */
-            document.addEventListener('click', function(e) {
-                if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) {
-                    closeMenu();
-                }
-            });
-
-            /* Закрыть при нажатии Escape */
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && btn.classList.contains('is-open')) {
-                    closeMenu();
-                }
-            });
-
-            /* Закрыть при клике на ссылку внутри меню */
-            menu.querySelectorAll('a, button').forEach(function(el) {
-                el.addEventListener('click', function() {
-                    closeMenu();
-                });
-            });
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initShowMore);
+            } else {
+                initShowMore();
+            }
         })();
     </script>
 </body>

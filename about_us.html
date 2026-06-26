@@ -9,96 +9,95 @@
 <body>
     <header class="header">
         <nav class="wrap">
-            <a href="./index.html" class="brand"><svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="11" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 23c3.5-4 7.5-4 11 0s7.5 4 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Центр «Jas Urpaq»</a>
+            <a href="./index.html" class="brand"><img class="brand-logo" src="./logo.jpg" alt="Логотип фонда Jas Urpaq" width="26" height="26">Jas Urpaq</a>
+            <div class="lang-switch"></div>
             <button class="burger-btn" id="burger-btn" aria-label="Меню" aria-expanded="false" aria-controls="nav-mobile">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
             <ul>
-                <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'">Поддержать</button></li>
-                <li><a href="./specialists.html">Специалисты</a></li>
-                <li><a href="./about_us.html">О нас</a></li>
-                <li><a href="index.html#faq">Вопросы</a></li>
-                <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+                <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
+                <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+                <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+                <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
+                <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
             </ul>
         </nav>
     </header>
     <nav class="nav-mobile" id="nav-mobile" aria-label="Мобильное меню">
         <ul>
-            <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'">Поддержать</button></li>
-            <li><a href="./specialists.html">Специалисты</a></li>
-            <li><a href="./about_us.html">О нас</a></li>
-            <li><a href="index.html#faq">Вопросы</a></li>
-            <li><a href="employee_part/enter.html">Для сотрудников</a></li>
+            <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
+            <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
+            <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
+            <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
+            <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
         </ul>
     </nav>
 
     <main class="main">
         <section class="page-hero">
             <div class="wrap">
-                <span class="eyebrow">О нас</span>
-                <h1>Семнадцать лет работы с детьми и семьями.</h1>
+                <span class="eyebrow" data-i18n="about_eyebrow">О нас</span>
+                <h1 data-i18n="about_h1">Семнадцать лет работы с детьми и семьями.</h1>
                 <svg class="squiggle" viewBox="0 0 56 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5c3-4 6 4 9 0s6-4 9 0 6 4 9 0 6-4 9 0 5 4 8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                <p>Центр «Jas Urpaq» — одна из самых давних организаций в регионе, занимающихся развитием детей. Мы работаем в 4 центрах, в каждом из которых терапия, обучение и поддержка семьи объединены под одной крышей, и нам доверяют больницы, школы и местные органы власти как надёжному партнёру по направлению пациентов.</p>
+                <p data-i18n="about_sub">Центр «Jas Urpaq» — одна из самых давних организаций в регионе, занимающихся развитием детей. Мы работаем в 4 центрах, в каждом из которых терапия, обучение и поддержка семьи объединены под одной крышей, и нам доверяют больницы, школы и местные органы власти как надёжному партнёру по направлению пациентов.</p>
             </div>
         </section>
 
         <section class="about-stats">
             <div class="about-stat">
-                <span class="num">17</span>
-                <span class="label">Лет работы</span>
+                <span class="num" data-i18n="stat1_num">17</span>
+                <span class="label" data-i18n="stat1_label">Лет работы</span>
             </div>
             <div class="about-stat">
-                <span class="num">4</span>
-                <span class="label">Центра в регионе</span>
+                <span class="num" data-i18n="stat2_num">4</span>
+                <span class="label" data-i18n="stat2_label">Центра в регионе</span>
             </div>
             <div class="about-stat">
-                <span class="num">40+</span>
-                <span class="label">Специалистов в штате</span>
+                <span class="num" data-i18n="stat3_num">40+</span>
+                <span class="label" data-i18n="stat3_label">Специалистов в штате</span>
             </div>
             <div class="about-stat">
-                <span class="num">2 300+</span>
-                <span class="label">Детей получили поддержку</span>
+                <span class="num" data-i18n="stat4_num">2 300+</span>
+                <span class="label" data-i18n="stat4_label">Детей получили поддержку</span>
             </div>
         </section>
 
         <section class="wrap">
             <div class="section-head" style="margin-top: 56px;">
                 <div>
-                    <span class="eyebrow">Программы по возрасту</span>
-                    <h2>Четыре группы, один подход</h2>
+                    <span class="eyebrow" data-i18n="groups_eyebrow">Программы по возрасту</span>
+                    <h2 data-i18n="groups_title">Четыре группы, один подход</h2>
                 </div>
-                <p class="section-sub">Каждый ребёнок попадает в группу, подходящую его возрасту и потребностям, и может переходить между группами по мере роста.</p>
+                <p class="section-sub" data-i18n="groups_sub">Каждый ребёнок попадает в группу, подходящую его возрасту и потребностям, и может переходить между группами по мере роста.</p>
             </div>
 
             <div class="groups-grid">
                 <article class="group-card">
                     <span class="group-mark"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="10" width="8" height="8"/><rect x="13" y="10" width="8" height="8"/><rect x="8" y="3" width="8" height="8"/></svg></span>
-                    <span class="age-range">Возраст 3–6</span>
-                    <h3>Jas Urpaq Kids</h3>
-                    <p>Раннее развитие через сенсорную игру, основы речи и первые навыки общения — в небольших группах, рядом с родителем.</p>
+                    <span class="age-range" data-i18n="g1_age">Возраст 3–6</span>
+                    <h3 data-i18n="g1_name">Jas Urpaq Kids</h3>
+                    <p data-i18n="g1_desc">Раннее развитие через сенсорную игру, основы речи и первые навыки общения — в небольших группах, рядом с родителем.</p>
                 </article>
 
                 <article class="group-card">
                     <span class="group-mark"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 5c3-1.5 6-1.5 9 0v14c-3-1.5-6-1.5-9 0V5z"/><path d="M21 5c-3-1.5-6-1.5-9 0v14c3-1.5 6-1.5 9 0V5z"/></svg></span>
-                    <span class="age-range">Возраст 7–10</span>
-                    <h3>Eventum Junior</h3>
-                    <p>Подготовка к школе, структурированная групповая терапия и направляемая игра со сверстниками — с учётом нагрузки первых школьных лет.</p>
+                    <span class="age-range" data-i18n="g2_age">Возраст 7–10</span>
+                    <h3 data-i18n="g2_name">Eventum Junior</h3>
+                    <p data-i18n="g2_desc">Подготовка к школе, структурированная групповая терапия и направляемая игра со сверстниками — с учётом нагрузки первых школьных лет.</p>
                 </article>
 
                 <article class="group-card">
                     <span class="group-mark"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/></svg></span>
-                    <span class="age-range">Возраст 11–14</span>
-                    <h3> Jas Urpaq Group</h3>
-                    <p>Учебное наставничество, консультирование и поддержка поведения в период давления и перемен раннего подросткового возраста.</p>
+                    <span class="age-range" data-i18n="g3_age">Возраст 11–14</span>
+                    <h3 data-i18n="g3_name">Jas Urpaq Group</h3>
+                    <p data-i18n="g3_desc">Учебное наставничество, консультирование и поддержка поведения в период давления и перемен раннего подросткового возраста.</p>
                 </article>
 
                 <article class="group-card">
                     <span class="group-mark"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
-                    <span class="age-range">Любой возраст</span>
-                    <h3>Eventum</h3>
-                    <p>Наш формат на основе мероприятий: сезонные выезды, мастер-классы и семейные дни, объединяющие все группы вне обычного расписания.</p>
+                    <span class="age-range" data-i18n="g4_age">Любой возраст</span>
+                    <h3 data-i18n="g4_name">Eventum</h3>
+                    <p data-i18n="g4_desc">Наш формат на основе мероприятий: сезонные выезды, мастер-классы и семейные дни, объединяющие все группы вне обычного расписания.</p>
                 </article>
             </div>
         </section>
@@ -106,69 +105,32 @@
 
     <footer class="footer">
         <div class="wrap">
-            <span>© 2026 Центр «Jas Urpaq». Все права защищены.</span>
-            <span>4 центра · некоммерческая организация</span>
+            <span data-i18n="about_footer_copy">© 2026 Центр «Jas Urpaq». Все права защищены.</span>
+            <span data-i18n="about_footer_sub">4 центра · некоммерческая организация</span>
         </div>
     </footer>
 
+    <script src="lang.js"></script>
     <script>
-        /* --- БУРГЕР-МЕНЮ --- */
+        /* БУРГЕР-МЕНЮ */
         (function() {
             var btn  = document.getElementById('burger-btn');
             var menu = document.getElementById('nav-mobile');
             if (!btn || !menu) return;
-
             function openMenu() {
-                btn.classList.add('is-open');
-                menu.style.display = 'block';
-                requestAnimationFrame(function() {
-                    menu.classList.add('is-open');
-                });
-                btn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
+                btn.classList.add('is-open'); menu.style.display = 'block';
+                requestAnimationFrame(function() { menu.classList.add('is-open'); });
+                btn.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden';
             }
-
             function closeMenu() {
-                btn.classList.remove('is-open');
-                menu.classList.remove('is-open');
-                btn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                setTimeout(function() {
-                    if (!menu.classList.contains('is-open')) {
-                        menu.style.display = '';
-                    }
-                }, 220);
+                btn.classList.remove('is-open'); menu.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+                setTimeout(function() { if (!menu.classList.contains('is-open')) menu.style.display = ''; }, 220);
             }
-
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (btn.classList.contains('is-open')) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
-            });
-
-            /* Закрыть при клике вне меню */
-            document.addEventListener('click', function(e) {
-                if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) {
-                    closeMenu();
-                }
-            });
-
-            /* Закрыть при нажатии Escape */
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && btn.classList.contains('is-open')) {
-                    closeMenu();
-                }
-            });
-
-            /* Закрыть при клике на ссылку внутри меню */
-            menu.querySelectorAll('a, button').forEach(function(el) {
-                el.addEventListener('click', function() {
-                    closeMenu();
-                });
-            });
+            btn.addEventListener('click', function(e) { e.stopPropagation(); if (btn.classList.contains('is-open')) closeMenu(); else openMenu(); });
+            document.addEventListener('click', function(e) { if (btn.classList.contains('is-open') && !menu.contains(e.target) && e.target !== btn) closeMenu(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && btn.classList.contains('is-open')) closeMenu(); });
+            menu.querySelectorAll('a, button').forEach(function(el) { el.addEventListener('click', function() { closeMenu(); }); });
         })();
     </script>
 </body>
