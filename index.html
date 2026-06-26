@@ -505,14 +505,21 @@
             });
         }
 
-        fetch('http://localhost:1734/donaters-list')
+        fetch('http://100.94.40.120:8000/donaters')
             .then(function (res) {
                 if (!res.ok) throw new Error('Bad response');
                 return res.json();
             })
             .then(function (data) {
                 if (!Array.isArray(data) || data.length === 0) throw new Error('Empty list');
-                renderTicker(data);
+                /* Бэкенд возвращает строки вида [id, name, amount, valute] */
+                var normalized = data.map(function (row) {
+                    if (Array.isArray(row)) {
+                        return { name: row[1], amount: row[2] };
+                    }
+                    return { name: row.name, amount: row.amount };
+                });
+                renderTicker(normalized);
             })
             .catch(function () {
                 renderTicker(DEFAULT_DONATERS);
