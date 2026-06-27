@@ -1,8 +1,8 @@
 /* =========================================================
    ЦЕНТР Eventum — ОБЩИЙ ФАЙЛ СТИЛЕЙ
-   Чёрно-белый, сдержанный, но тёплый стиль детского центра:
-   строгая графика + мягкие скругления и линейные значки
-   вместо ярких красок и мультяшности.
+   Серо-жёлто-белый стиль детского центра: тёплый светлый фон,
+   спокойная серая структура текста и жёлтый акцент на кнопках,
+   активных состояниях и декоративных деталях.
    Используется на index.html, specialists.html,
    about_us.html и employee_part/enter.html.
    ========================================================= */
@@ -10,15 +10,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* ---- Color tokens (grayscale only) ---- */
+  /* ---- Color tokens (серо-жёлто-белая палитра) ---- */
   --white:      #ffffff;
-  --bg-soft:    #f6f6f6;
-  --bg-soft-2:  #efefef;
-  --border:     #dcdcdc;
-  --border-2:   #c7c7c7;
-  --gray-mid:   #9a9a9a;
-  --text:       #2b2b2b;
-  --black:      #111111;
+  --bg-soft:    #f7f5ef;
+  --bg-soft-2:  #efebe0;
+  --border:     #ddd8c8;
+  --border-2:   #c7c0aa;
+  --gray-mid:   #9a9588;
+  --text:       #2b2b27;
+  --black:      #1f1e1a;
+
+  --yellow:       #f2c94c;
+  --yellow-dark:  #d9ad1f;
+  --yellow-soft:  #fdf3d4;
+  --yellow-text:  #2b2208;
 
   /* ---- Type tokens ---- */
   --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;   /* заголовки — строгий каркас */
@@ -116,7 +121,7 @@ body { padding-bottom: 48px; }
   width: 56px;
   height: 10px;
   margin: 18px 0 26px;
-  color: var(--black);
+  color: var(--yellow-dark);
 }
 
 /* ---------------------------------------------------------
@@ -200,7 +205,7 @@ body { padding-bottom: 48px; }
   bottom: -9px;
   width: 0;
   height: 6px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6'%3E%3Cpath d='M0 3 C4 0,8 6,12 3 C16 0,20 6,24 3 C28 0,32 6,36 3 C38 1.5,39 1.5,40 3' fill='none' stroke='%23111111' stroke-width='1.3'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6'%3E%3Cpath d='M0 3 C4 0,8 6,12 3 C16 0,20 6,24 3 C28 0,32 6,36 3 C38 1.5,39 1.5,40 3' fill='none' stroke='%23d9ad1f' stroke-width='1.3'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 40px 6px;
   transition: width 0.2s ease;
@@ -212,15 +217,15 @@ body { padding-bottom: 48px; }
 }
 
 .btn-donate {
-  background: var(--black) !important;
-  color: var(--white) !important;
+  background: var(--yellow) !important;
+  color: var(--yellow-text) !important;
   padding: 10px 22px !important;
   border-radius: var(--radius-pill);
   font-family: var(--font-accent);
 }
 
 .btn-donate::after { display: none; }
-.btn-donate:hover { background: #000 !important; color: var(--white) !important; }
+.btn-donate:hover { background: var(--yellow-dark) !important; color: var(--yellow-text) !important; }
 
 /* ---------------------------------------------------------
    ОБЩИЕ КНОПКИ
@@ -237,17 +242,18 @@ body { padding-bottom: 48px; }
   background: var(--white);
   color: var(--black);
   border-radius: var(--radius-pill);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.btn:hover { background: var(--black); color: var(--white); }
+.btn:hover { background: var(--yellow); color: var(--yellow-text); border-color: var(--yellow-dark); }
 
 .btn-solid {
-  background: var(--black);
-  color: var(--white);
+  background: var(--yellow);
+  color: var(--yellow-text);
+  border-color: var(--yellow);
 }
 
-.btn-solid:hover { background: #000; opacity: 0.85; }
+.btn-solid:hover { background: var(--yellow-dark); border-color: var(--yellow-dark); }
 
 .btn-block { width: 100%; text-align: center; }
 
@@ -511,7 +517,7 @@ body { padding-bottom: 48px; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--black);
+  background: var(--yellow-dark);
   flex-shrink: 0;
 }
 
@@ -560,7 +566,7 @@ body { padding-bottom: 48px; }
 }
 
 .ticker-name { color: #e6e6e6; }
-.ticker-amount { font-family: var(--font-accent); font-weight: 700; color: var(--white); }
+.ticker-amount { font-family: var(--font-accent); font-weight: 700; color: var(--yellow); }
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track { animation: none; transform: translateX(0); }
@@ -618,7 +624,7 @@ body { padding-bottom: 48px; }
   color: var(--black);
 }
 
-.modal-close:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+.modal-close:hover { background: var(--yellow); color: var(--yellow-text); border-color: var(--yellow-dark); }
 
 .modal-panel h2 { font-size: 22px; margin-bottom: 6px; }
 .modal-panel .modal-sub { color: var(--gray-mid); font-size: 13.5px; margin-bottom: 24px; }
@@ -812,7 +818,7 @@ body { padding-bottom: 48px; }
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 800;
-  color: var(--black);
+  color: var(--yellow-dark);
   display: block;
 }
 
@@ -858,7 +864,7 @@ body { padding-bottom: 48px; }
   display: inline-block;
   width: 26px;
   height: 26px;
-  color: var(--black);
+  color: var(--yellow-dark);
 }
 
 .group-mark svg {
@@ -1103,8 +1109,8 @@ body { padding-bottom: 48px; }
   display: block;
   width: 100%;
   padding: 16px 24px;
-  background: var(--black);
-  color: var(--white) !important;
+  background: var(--yellow);
+  color: var(--yellow-text) !important;
   border: none;
   border-radius: var(--radius-pill);
   font-family: var(--font-accent);
@@ -1747,9 +1753,9 @@ body { padding-bottom: 48px; }
 }
 
 .lang-btn.active {
-  color: var(--text, #111);
-  background: var(--surface-2, #f4f4f4);
-  border-color: var(--border, #ddd);
+  color: var(--yellow-text, #111);
+  background: var(--yellow-soft, #f4f4f4);
+  border-color: var(--yellow-dark, #ddd);
 }
 
 @media (max-width: 600px) {
