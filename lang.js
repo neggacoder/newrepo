@@ -9,7 +9,7 @@ const TRANSLATIONS = {
   nav_support:    { kk: 'Қолдау', ru: 'Поддержать', en: 'Donate' },
   nav_specialists:{ kk: 'Мамандар', ru: 'Специалисты', en: 'Specialists' },
   nav_about:      { kk: 'Біз туралы', ru: 'О нас', en: 'About us' },
-  nav_faq:        { kk: 'Жиі сұрақтар', ru: 'Частые вопросы', en: 'FAQ' },
+  nav_faq:        { kk: 'Сұрақтар', ru: 'Вопросы', en: 'FAQ' },
   nav_employees:  { kk: 'Қызметкерлерге', ru: 'Для сотрудников', en: 'For staff' },
 
   /* ─── INDEX ───────────────────────────────────────────── */
@@ -313,8 +313,153 @@ function renderLangSwitch() {
   });
 }
 
+/* ── подсветка активного пункта навигации ── */
+function markActiveNavLink() {
+  var current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.header nav a, .nav-mobile a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var linkFile = href.split('#')[0].split('/').pop();
+    if (!linkFile || linkFile === 'enter.html') return;
+    if (linkFile === current) {
+      link.classList.add('nav-active');
+    }
+  });
+}
+
+/* ── счётчик-анимация для цифр статистики ── */
+function formatStatNumber(value, lang) {
+  var sep = (lang === 'en') ? ',' : ' ';
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+}
+
+function animateStatNumber(el, target, suffix) {
+  var duration = 1400;
+  var start = null;
+
+  function step(timestamp) {
+    if (start === null) start = timestamp;
+    var progress = Math.min((timestamp - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    var current = Math.round(eased * target);
+    el.textContent = formatStatNumber(current, getLang()) + suffix;
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = formatStatNumber(target, getLang()) + suffix;
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+function initStatCounters() {
+  var nums = document.querySelectorAll('.about-stat .num');
+  if (!nums.length) return;
+
+  nums.forEach(function(el) {
+    var raw = el.textContent.trim();
+    var digits = raw.replace(/[^\d]/g, '');
+    if (!digits) return;
+    var target = parseInt(digits, 10);
+    var suffix = raw.replace(/^[\d\s,]+/, '');
+    el.dataset.statTarget = target;
+    el.dataset.statSuffix = suffix;
+  });
+
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  var animated = new WeakSet();
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !animated.has(entry.target)) {
+        animated.add(entry.target);
+        var target = parseInt(entry.target.dataset.statTarget, 10);
+        var suffix = entry.target.dataset.statSuffix || '';
+        animateStatNumber(entry.target, target, suffix);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  nums.forEach(function(el) {
+    if (el.dataset.statTarget) observer.observe(el);
+  });
+}
+
+/* ── анимация появления карточек при скролле ── */
+function initScrollReveal() {
+  var selectors = '.news-card, .group-card, .specialist-card, .about-stat';
+  var items = document.querySelectorAll(selectors);
+  if (!items.length) return;
+
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(function(el) { el.classList.add('is-visible'); });
+    return;
+  }
+
+  items.forEach(function(el) { el.classList.add('reveal'); });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  items.forEach(function(el) { observer.observe(el); });
+}
+
+/* ── переход + плавный скролл к секции (например, FAQ) ──
+   Сначала переходим на нужную страницу (если мы не на ней),
+   и только после загрузки делаем smooth scroll к блоку —
+   вместо мгновенного браузерного прыжка по якорю. */
+function smoothScrollTo(id) {
+  var target = document.getElementById(id);
+  if (!target) return;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function initSmoothSectionLinks() {
+  var current = window.location.pathname.split('/').pop() || 'index.html';
+
+  document.querySelectorAll('[data-scroll-target]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var id = link.dataset.scrollTarget;
+      var hrefFile = (link.getAttribute('href') || '').split('#')[0].split('/').pop() || 'index.html';
+
+      if (hrefFile === current) {
+        e.preventDefault();
+        smoothScrollTo(id);
+      } else {
+        e.preventDefault();
+        try { sessionStorage.setItem('jas_scroll_target', id); } catch (err) {}
+        window.location.href = hrefFile;
+      }
+    });
+  });
+
+  /* если пришли с другой страницы с сохранённой целью — доскроллить после загрузки */
+  var pendingId = null;
+  try { pendingId = sessionStorage.getItem('jas_scroll_target'); } catch (err) {}
+  if (pendingId) {
+    try { sessionStorage.removeItem('jas_scroll_target'); } catch (err) {}
+    window.requestAnimationFrame(function() {
+      setTimeout(function() { smoothScrollTo(pendingId); }, 50);
+    });
+  }
+}
+
 /* ── инициализация ── */
 document.addEventListener('DOMContentLoaded', function() {
   renderLangSwitch();
   applyLang();
+  markActiveNavLink();
+  initStatCounters();
+  initScrollReveal();
+  initSmoothSectionLinks();
 });

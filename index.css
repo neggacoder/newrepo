@@ -93,6 +93,42 @@ button {
   }
 }
 
+/* ── появление карточек при скролле ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-grid .reveal:nth-child(1),
+.groups-grid .reveal:nth-child(1),
+.specialists-grid .reveal:nth-child(1) { transition-delay: 0s; }
+.gallery-grid .reveal:nth-child(2),
+.groups-grid .reveal:nth-child(2),
+.specialists-grid .reveal:nth-child(2) { transition-delay: 0.08s; }
+.gallery-grid .reveal:nth-child(3),
+.groups-grid .reveal:nth-child(3),
+.specialists-grid .reveal:nth-child(3) { transition-delay: 0.16s; }
+.gallery-grid .reveal:nth-child(4),
+.groups-grid .reveal:nth-child(4),
+.specialists-grid .reveal:nth-child(4) { transition-delay: 0.24s; }
+.gallery-grid .reveal:nth-child(5),
+.specialists-grid .reveal:nth-child(5) { transition-delay: 0.32s; }
+.gallery-grid .reveal:nth-child(6),
+.specialists-grid .reveal:nth-child(6) { transition-delay: 0.4s; }
+.specialists-grid .reveal:nth-child(7) { transition-delay: 0.48s; }
+.specialists-grid .reveal:nth-child(8) { transition-delay: 0.56s; }
+
+.about-stats .reveal:nth-child(1) { transition-delay: 0s; }
+.about-stats .reveal:nth-child(2) { transition-delay: 0.1s; }
+.about-stats .reveal:nth-child(3) { transition-delay: 0.2s; }
+.about-stats .reveal:nth-child(4) { transition-delay: 0.3s; }
+
 /* место под нижнюю бегущую строку с донаторами */
 body { padding-bottom: 48px; }
 
@@ -213,6 +249,14 @@ body { padding-bottom: 48px; }
 
 .header nav a:hover::after,
 .header nav button.nav-link:hover::after {
+  width: 100%;
+}
+
+.header nav a.nav-active {
+  color: var(--yellow-text);
+}
+
+.header nav a.nav-active::after {
   width: 100%;
 }
 
@@ -1155,6 +1199,22 @@ body { padding-bottom: 48px; }
 .nav-mobile ul li button.nav-link:hover {
   background: var(--bg-soft);
   color: var(--black);
+}
+
+.nav-mobile ul li a.nav-active {
+  background: var(--yellow-soft);
+  color: var(--yellow-text);
+  position: relative;
+}
+
+.nav-mobile ul li a.nav-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--yellow-dark);
 }
 
 .nav-mobile .mobile-donate-wrap {
