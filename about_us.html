@@ -5,6 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О нас — Центр «Jas Urpaq»</title>
     <link rel="stylesheet" href="index.css">
+    <style>
+        /* ── КАРТА ФИЛИАЛОВ ── */
+        .map-section {
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid currentColor;
+        }
+        .map-section-head { margin-bottom: 1.25rem; }
+        .map-section-head h2 { margin-top: .25rem; margin-bottom: 0; }
+        .map-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,.10);
+            min-height: 320px;
+        }
+        @media (max-width: 600px) {
+            .map-wrapper { border-radius: 10px; min-height: 260px; }
+        }
+
+        /* ── ПЛАВАЮЩАЯ КНОПКА СВЯЗИ (FAB) ── */
+        .fab-wrap {
+            position: fixed;
+            right: 20px;
+            bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .fab-main {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,.22);
+            transition: background .2s, transform .15s;
+            flex-shrink: 0;
+        }
+        .fab-main:hover { background: #1ebe5b; transform: scale(1.07); }
+        .fab-main:active { transform: scale(.95); }
+        .fab-main svg { width: 26px; height: 26px; }
+        .fab-icon-close { display: none; }
+        .fab-wrap.is-open .fab-icon-chat  { display: none; }
+        .fab-wrap.is-open .fab-icon-close { display: block; }
+        .fab-wrap.is-open .fab-main { background: #555; }
+        .fab-menu {
+            display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+            opacity: 0; pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity .2s, transform .2s;
+        }
+        .fab-wrap.is-open .fab-menu { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .fab-option {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0 16px 0 12px; height: 44px; border-radius: 22px;
+            text-decoration: none; font-size: .875rem; font-weight: 600;
+            color: #fff; box-shadow: 0 3px 12px rgba(0,0,0,.18);
+            transition: opacity .15s, transform .15s; white-space: nowrap;
+        }
+        .fab-option:hover { opacity: .9; transform: scale(1.04); }
+        .fab-option svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .fab-whatsapp { background: #25D366; }
+        .fab-call     { background: #3a7bd5; }
+        @media (max-width: 400px) {
+            .fab-wrap { right: 14px; }
+            .fab-option span { display: none; }
+            .fab-option { padding: 0 12px; border-radius: 50%; width: 44px; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -102,6 +173,17 @@
                     <p data-i18n="g4_desc">Наш формат на основе мероприятий: сезонные выезды, мастер-классы и семейные дни, объединяющие все группы вне обычного расписания.</p>
                 </article>
             </div>
+
+                <!-- КАРТА ФИЛИАЛОВ -->
+                <div class="map-section">
+                    <div class="map-section-head">
+                        <span class="eyebrow" data-i18n="map_eyebrow">Где мы находимся</span>
+                        <h2 data-i18n="map_title">Наши филиалы на карте</h2>
+                    </div>
+                    <div class="map-wrapper">
+                        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A99e59f7ac544d07eee7694601a9f00a2c940a2b21b51f2d0929a64c4ccd80f75&amp;width=100%25&amp;height=512&amp;lang=ru_RU&amp;scroll=true"></script>
+                    </div>
+                </div>
         </section>
     </main>
 
@@ -166,6 +248,24 @@
         </div>
     </footer>
 
+    <!-- ПЛАВАЮЩАЯ КНОПКА СВЯЗИ -->
+    <div class="fab-wrap" id="fab-wrap">
+        <div class="fab-menu" id="fab-menu">
+            <a class="fab-option fab-call" href="tel:+77767504466" aria-label="Позвонить нам">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6.5c0-.6.4-1 1-1H8c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="currentColor"/></svg>
+                <span data-i18n="fab_call">Позвонить</span>
+            </a>
+            <a class="fab-option fab-whatsapp" href="https://wa.me/77767504466?text=Здравствуйте!%20Хочу%20узнать%20подробнее%20о%20центре." target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.34A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 13.68c-.21.59-1.22 1.13-1.68 1.19-.46.06-.89.22-3.01-.63-2.56-1.01-4.2-3.6-4.33-3.77-.13-.17-1.05-1.4-1.05-2.67s.66-1.9.9-2.16c.24-.26.52-.33.69-.33h.5c.16 0 .38-.06.59.45.22.52.74 1.8.81 1.93.07.13.11.28.02.45-.09.17-.13.28-.26.43-.13.15-.27.33-.39.45-.13.12-.26.26-.11.5.15.24.66 1.09 1.42 1.77.97.87 1.79 1.14 2.03 1.27.24.13.38.11.52-.07.14-.18.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.18.46.28.06.1.06.58-.15 1.18z" fill="currentColor"/></svg>
+                <span data-i18n="fab_whatsapp">WhatsApp</span>
+            </a>
+        </div>
+        <button class="fab-main" id="fab-main" aria-label="Связаться с нами" aria-expanded="false">
+            <svg class="fab-icon-chat" viewBox="0 0 24 24" fill="none"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z" fill="currentColor"/></svg>
+            <svg class="fab-icon-close" viewBox="0 0 24 24" fill="none"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg>
+        </button>
+    </div>
+
     <script src="lang.js"></script>
     <script>
         /* МОДАЛЬНОЕ ОКНО ДОНАТА */
@@ -200,6 +300,28 @@
         document.getElementById('card-cvv').addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
         });
+    </script>
+    <script>
+        /* ПЛАВАЮЩАЯ КНОПКА СВЯЗИ (FAB) */
+        (function() {
+            var btn  = document.getElementById('fab-main');
+            var wrap = document.getElementById('fab-wrap');
+            if (!btn || !wrap) return;
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                wrap.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', wrap.classList.contains('is-open'));
+            });
+            document.addEventListener('click', function(e) {
+                if (wrap.classList.contains('is-open') && !wrap.contains(e.target)) {
+                    wrap.classList.remove('is-open');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') { wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+            });
+        })();
     </script>
     <script>
         /* БУРГЕР-МЕНЮ */

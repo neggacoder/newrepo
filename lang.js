@@ -9,7 +9,7 @@ const TRANSLATIONS = {
   nav_support:    { kk: 'Қолдау', ru: 'Поддержать', en: 'Donate' },
   nav_specialists:{ kk: 'Мамандар', ru: 'Специалисты', en: 'Specialists' },
   nav_about:      { kk: 'Біз туралы', ru: 'О нас', en: 'About us' },
-  nav_faq:        { kk: 'Сұрақтар', ru: 'Вопросы', en: 'FAQ' },
+  nav_faq:        { kk: 'Жиі  сұрақтар', ru: 'Частые вопросы', en: 'FAQ' },
   nav_employees:  { kk: 'Қызметкерлерге', ru: 'Для сотрудников', en: 'For staff' },
 
   /* ─── INDEX ───────────────────────────────────────────── */
@@ -52,6 +52,14 @@ const TRANSLATIONS = {
   news4_title: { kk: 'Қалалық балалар ауруханасымен серіктестік', ru: 'Партнёрство с городской детской больницей', en: 'Partnership with city children\'s hospital' },
   news4_text:  { kk: 'Отбасылар медициналық және дамытушы көмек арасында кешіктірусіз өте алуы үшін ортақ жолдама жолы.', ru: 'Общая линия направлений, чтобы семьи могли переходить между медицинской и развивающей помощью без задержек.', en: 'A shared referral pathway so families can move between medical and developmental support without delays.' },
   news4_link:  { kk: 'Толығырақ →', ru: 'Подробнее →', en: 'Read more →' },
+
+  /* ─── КАРТА / MAP ─────────────────────────────────────── */
+  map_eyebrow:  { kk: 'Біз қайда орналасқанбыз', ru: 'Где мы находимся', en: 'Where we are' },
+  map_title:    { kk: 'Картадағы біздің филиалдар', ru: 'Наши филиалы на карте', en: 'Our branches on the map' },
+
+  /* ─── FAB / СВЯЗЬ ─────────────────────────────────────── */
+  fab_call:     { kk: 'Қоңырау шалу', ru: 'Позвонить', en: 'Call us' },
+  fab_whatsapp: { kk: 'WhatsApp', ru: 'WhatsApp', en: 'WhatsApp' },
 
   centres_eyebrow: { kk: 'Біздің орталықтар', ru: 'Наши центры', en: 'Our centres' },
   centres_title: { kk: 'Бүгін қор құрылымында 4 орталық жұмыс істейді', ru: 'Сегодня в структуре фонда работают 4 центра', en: 'Today the foundation runs 4 centres' },
