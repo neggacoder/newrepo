@@ -1,4 +1,4 @@
-import mysql.connector as cnr
+import pymysql as cnr
 import fastapi
 import pydantic
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,7 +15,7 @@ app.add_middleware(
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "12233445",
+    "password": "",
     "database": "db"
 }
 
@@ -60,3 +60,25 @@ def AddDonaters(payload: donate):
     except Exception as e:
         print(f"ERROR OCCURED: {e}")
         raise fastapi.HTTPException(status_code=500, detail="Database error")
+
+
+class Entering(pydantic.BaseModel):
+    login : str
+    password : str
+@app.post("/enter")
+def CheckIfPossible(data : Entering):
+    db = cnr.connect(**db_config)
+    try:
+        with db.cursor() as cursor :
+            msg = "SELECT * FROM users_passwords WHERE login = %s and passw = %s"
+            values = ( data.login,data.password)
+            cursor.execute(msg,values)
+            answer = cursor.fetchall()
+            if not answer:
+                return {"answer" : False}
+            return {"answer" : True}
+    except Exception as e:
+        print("Internal error\n",e)
+        return {"answer":"Error"}
+    finally:
+        db.close()

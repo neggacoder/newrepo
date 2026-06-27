@@ -48,7 +48,31 @@
             align-items: flex-end;
             gap: 10px;
         }
+        @keyframes drop-bounce-in {
+            0%   { transform: translateY(-110vh) scaleY(1.18) scaleX(0.88); animation-timing-function: cubic-bezier(.55,0,.7,.45); }
+            50%  { transform: translateY(0)      scaleY(0.60) scaleX(1.40); animation-timing-function: cubic-bezier(.2,0,.4,1); }
+            65%  { transform: translateY(-18%)   scaleY(1.12) scaleX(0.93); animation-timing-function: cubic-bezier(.55,0,.7,.45); }
+            80%  { transform: translateY(0)      scaleY(0.90) scaleX(1.06); animation-timing-function: cubic-bezier(.2,0,.4,1); }
+            90%  { transform: translateY(-6%)    scaleY(1.04) scaleX(0.98); animation-timing-function: cubic-bezier(.4,0,.6,1); }
+            97%  { transform: translateY(0)      scaleY(0.98) scaleX(1.01); }
+            100% { transform: translateY(0)      scaleY(1)    scaleX(1); }
+        }
+        @keyframes fab-idle {
+            0%   { transform: scale(1) rotate(0deg); }
+            70%  { transform: scale(1) rotate(0deg); }
+            75%  { transform: scale(1.13) rotate(-8deg); }
+            80%  { transform: scale(1.13) rotate(8deg); }
+            85%  { transform: scale(1.13) rotate(-5deg); }
+            90%  { transform: scale(1.13) rotate(5deg); }
+            95%  { transform: scale(1.06) rotate(0deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes fab-ping {
+            0%   { transform: scale(1); opacity: .5; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
         .fab-main {
+            position: relative;
             width: 56px;
             height: 56px;
             border-radius: 50%;
@@ -60,23 +84,35 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 16px rgba(0,0,0,.22);
-            transition: background .2s, transform .15s;
+            transition: background .2s;
             flex-shrink: 0;
+            transform-origin: bottom center;
+            animation: drop-bounce-in 0.75s cubic-bezier(.55,0,.7,.45) both,
+                       fab-idle 4s ease-in-out 7s infinite;
         }
-        .fab-main:hover { background: #1ebe5b; transform: scale(1.07); }
+        .fab-ping {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: #25D366;
+            animation: fab-ping 2s ease-out 3s infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .fab-wrap.is-open .fab-ping { animation: none; opacity: 0; }
+        .fab-wrap.is-open .fab-main { animation: none; background: #555; }
+        .fab-main:hover { background: #1ebe5b; animation: none; transform: scale(1.07); }
         .fab-main:active { transform: scale(.95); }
         .fab-main svg { width: 26px; height: 26px; transition: opacity .15s, transform .15s; }
         .fab-icon-close { display: none; }
         .fab-wrap.is-open .fab-icon-chat  { display: none; }
         .fab-wrap.is-open .fab-icon-close { display: block; }
-        .fab-wrap.is-open .fab-main { background: #555; }
 
         .fab-menu {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             gap: 8px;
-            /* закрытое состояние */
             opacity: 0;
             pointer-events: none;
             transform: translateY(12px);
@@ -87,7 +123,6 @@
             pointer-events: auto;
             transform: translateY(0);
         }
-
         .fab-option {
             display: flex;
             align-items: center;
@@ -534,6 +569,7 @@
             </a>
         </div>
         <button class="fab-main" id="fab-main" aria-label="Связаться с нами" aria-expanded="false">
+            <div class="fab-ping" aria-hidden="true"></div>
             <svg class="fab-icon-chat" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z" fill="currentColor"/></svg>
             <svg class="fab-icon-close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg>
         </button>
@@ -630,7 +666,7 @@
                 track.style.animationDuration = duration + 's';
             });
         }
-        fetch('http://100.94.40.120:8000/donaters')
+        fetch('http://localhost:8000/donaters')
             .then(function(res) { if (!res.ok) throw new Error('Bad response'); return res.json(); })
             .then(function(data) {
                 if (!Array.isArray(data) || data.length === 0) throw new Error('Empty list');

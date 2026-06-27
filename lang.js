@@ -9,7 +9,7 @@ const TRANSLATIONS = {
   nav_support:    { kk: 'Қолдау', ru: 'Поддержать', en: 'Donate' },
   nav_specialists:{ kk: 'Мамандар', ru: 'Специалисты', en: 'Specialists' },
   nav_about:      { kk: 'Біз туралы', ru: 'О нас', en: 'About us' },
-  nav_faq:        { kk: 'Жиі  сұрақтар', ru: 'Частые вопросы', en: 'FAQ' },
+  nav_faq:        { kk: 'Жиі сұрақтар', ru: 'Частые вопросы', en: 'FAQ' },
   nav_employees:  { kk: 'Қызметкерлерге', ru: 'Для сотрудников', en: 'For staff' },
 
   /* ─── INDEX ───────────────────────────────────────────── */
