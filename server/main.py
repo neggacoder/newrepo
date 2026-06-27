@@ -68,7 +68,7 @@ class Entering(pydantic.BaseModel):
 @app.post("/enter")
 def CheckIfPossible(data : Entering):
     db = cnr.connect(**db_config)
-    try:
+    with cnr.connect(**db_config) as db:
         with db.cursor() as cursor :
             msg = "SELECT * FROM users_passwords WHERE login = %s and passw = %s"
             values = ( data.login,data.password)
@@ -77,8 +77,3 @@ def CheckIfPossible(data : Entering):
             if not answer:
                 return {"answer" : False}
             return {"answer" : True}
-    except Exception as e:
-        print("Internal error\n",e)
-        return {"answer":"Error"}
-    finally:
-        db.close()
