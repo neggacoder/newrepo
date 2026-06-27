@@ -1083,6 +1083,22 @@ body { padding-bottom: 48px; }
   padding: 20px 24px 0;
 }
 
+/* Едва заметный штрих на пункте "Вопросы" — самый слабый акцент,
+   просто маркер-точка рядом с текстом. */
+.nav-mobile ul li a.nav-mobile-soft {
+  position: relative;
+}
+
+.nav-mobile ul li a.nav-mobile-soft::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border-2);
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
 .nav-mobile .btn-donate-mobile {
   display: block;
   width: 100%;
@@ -1446,22 +1462,11 @@ body { padding-bottom: 48px; }
     letter-spacing: 0.01em;
   }
 
-  /* Кнопка «Поддержать» крупнее в мобильном меню */
-  .nav-mobile ul li:first-child a,
-  .nav-mobile ul li:first-child button.nav-link {
-    font-size: 15px;
-    background: var(--black);
-    color: var(--white) !important;
-    margin: 16px 16px 0;
-    border-radius: var(--radius-pill);
-    width: calc(100% - 32px);
-    text-align: center;
-    justify-content: center;
-    border-bottom: none;
-  }
+  /* Кнопка «Поддержать» теперь отдельный блок (.mobile-donate-wrap),
+     поэтому больше не стилизуем первый пункт списка как кнопку. */
 
   .nav-mobile ul li:first-child {
-    border-bottom: none;
+    border-bottom: 1px solid var(--border);
   }
 
   /* ── Hero ─────────────────────────────────────────────── */
@@ -1750,4 +1755,31 @@ body { padding-bottom: 48px; }
 @media (max-width: 600px) {
   .lang-switch { margin-right: 4px; }
   .lang-btn { padding: 2px 5px; font-size: 10px; }
+}
+
+/* На ПК переключатель языка стоит справа от меню и не сдвигает его при смене языка.
+   На телефоне (≤768px) поведение остаётся прежним — здесь ничего не меняем. */
+@media (min-width: 769px) {
+  .header .wrap {
+    flex-wrap: nowrap;
+  }
+
+  .header nav.wrap {
+    justify-content: flex-start;
+  }
+
+  .header nav.wrap > ul {
+    margin-left: auto;
+  }
+
+  .lang-switch {
+    order: 3;
+    margin-left: 24px;
+    margin-right: 0;
+    flex-shrink: 0;
+    /* Резервируем место под самый длинный вариант (RU/KZ/EN),
+       чтобы переключение языка не меняло ширину блока и не двигало меню */
+    min-width: 96px;
+    justify-content: flex-end;
+  }
 }

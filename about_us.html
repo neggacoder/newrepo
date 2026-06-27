@@ -15,7 +15,7 @@
                 <span></span><span></span><span></span>
             </button>
             <ul>
-                <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
+                <li><button class="nav-link btn-donate" onclick="Donate()" data-i18n="nav_support">Поддержать</button></li>
                 <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
                 <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
                 <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
@@ -25,12 +25,14 @@
     </header>
     <nav class="nav-mobile" id="nav-mobile" aria-label="Мобильное меню">
         <ul>
-            <li><button class="nav-link btn-donate" onclick="window.location.href='index.html'" data-i18n="nav_support">Поддержать</button></li>
             <li><a href="./specialists.html" data-i18n="nav_specialists">Специалисты</a></li>
             <li><a href="./about_us.html" data-i18n="nav_about">О нас</a></li>
-            <li><a href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
+            <li><a class="nav-mobile-soft" href="index.html#faq" data-i18n="nav_faq">Вопросы</a></li>
             <li><a href="employee_part/enter.html" data-i18n="nav_employees">Для сотрудников</a></li>
         </ul>
+        <div class="mobile-donate-wrap">
+            <button class="btn-donate-mobile" onclick="Donate()" data-i18n="nav_support">Поддержать фонд</button>
+        </div>
     </nav>
 
     <main class="main">
@@ -103,6 +105,60 @@
         </section>
     </main>
 
+    <!-- Модал доната -->
+    <div id="popup" class="modal">
+        <div class="modal-overlay" onclick="closeDonate()"></div>
+        <div class="modal-panel">
+            <button class="modal-close" onclick="closeDonate()" aria-label="Закрыть">×</button>
+            <h2 data-i18n="modal_donate_title">Поддержать центр «Jas Urpaq»</h2>
+            <p class="modal-sub" data-i18n="modal_donate_sub">Выберите, на что пойдёт ваше пожертвование, и укажите данные карты ниже.</p>
+
+            <span class="modal-section-label" data-i18n="modal_donate_want">Я хочу поддержать</span>
+            <div class="reason-list">
+                <label class="reason-option">
+                    <input type="radio" name="reason" value="general" checked>
+                    <span data-i18n="donate_r_general">Общий фонд</span>
+                </label>
+                <label class="reason-option">
+                    <input type="radio" name="reason" value="sensory">
+                    <span data-i18n="donate_r_sensory">Оборудование сенсорной комнаты</span>
+                </label>
+                <label class="reason-option">
+                    <input type="radio" name="reason" value="scholarship">
+                    <span data-i18n="donate_r_scholar">Стипендия для нуждающихся семей</span>
+                </label>
+                <label class="reason-option">
+                    <input type="radio" name="reason" value="training">
+                    <span data-i18n="donate_r_training">Программа обучения специалистов</span>
+                </label>
+            </div>
+
+            <span class="modal-section-label" data-i18n="modal_pay_label">Данные платежа</span>
+            <form class="card-form" id="donate-form" onsubmit="submitDonation(event)">
+                <div class="field">
+                    <label for="card-number" data-i18n="card_number_lbl">Номер карты</label>
+                    <input type="text" id="card-number" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="card-expiry" data-i18n="card_expiry_lbl">Срок действия (MM/YY)</label>
+                        <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="field">
+                        <label for="card-cvv" data-i18n="card_cvv_lbl">CVV</label>
+                        <input type="text" id="card-cvv" inputmode="numeric" placeholder="•••" maxlength="3" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="card-name" data-i18n="card_name_lbl">Имя держателя карты</label>
+                    <input type="text" id="card-name" data-i18n-ph="card_name_ph" placeholder="Как указано на карте" required>
+                </div>
+                <button type="submit" class="btn btn-solid btn-block" data-i18n="donate_btn">Подтвердить пожертвование</button>
+            </form>
+            <p class="modal-fineprint" data-i18n="modal_fineprint">Это демо-форма — реальный платёж не выполняется.</p>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="wrap">
             <span data-i18n="about_footer_copy">© 2026 Центр «Jas Urpaq». Все права защищены.</span>
@@ -111,6 +167,40 @@
     </footer>
 
     <script src="lang.js"></script>
+    <script>
+        /* МОДАЛЬНОЕ ОКНО ДОНАТА */
+        function Donate() {
+            document.getElementById('popup').classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDonate() {
+            document.getElementById('popup').classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDonate();
+        });
+        function submitDonation(event) {
+            event.preventDefault();
+            closeDonate();
+            document.getElementById('donate-form').reset();
+            alert(t('donate_alert'));
+        }
+
+        /* автоформатирование карты */
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+            e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+        });
+        document.getElementById('card-expiry').addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+            if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
+            e.target.value = v;
+        });
+        document.getElementById('card-cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+        });
+    </script>
     <script>
         /* БУРГЕР-МЕНЮ */
         (function() {

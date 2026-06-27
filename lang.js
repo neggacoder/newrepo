@@ -9,7 +9,7 @@ const TRANSLATIONS = {
   nav_support:    { kk: 'Қолдау', ru: 'Поддержать', en: 'Donate' },
   nav_specialists:{ kk: 'Мамандар', ru: 'Специалисты', en: 'Specialists' },
   nav_about:      { kk: 'Біз туралы', ru: 'О нас', en: 'About us' },
-  nav_faq:        { kk: 'Сұрақтар', ru: 'Вопросы', en: 'FAQ' },
+  nav_faq:        { kk: 'Жиі сұрақтар', ru: 'Частые вопросы', en: 'FAQ' },
   nav_employees:  { kk: 'Қызметкерлерге', ru: 'Для сотрудников', en: 'For staff' },
 
   /* ─── INDEX ───────────────────────────────────────────── */
@@ -164,6 +164,7 @@ const TRANSLATIONS = {
   spec_eyebrow: { kk: 'Біздің команда', ru: 'Наша команда', en: 'Our team' },
   spec_h1: { kk: 'Әрбір сабақты өткізетін мамандар.', ru: 'Специалисты, которые проводят каждое занятие.', en: 'The specialists who lead every session.' },
   spec_sub: { kk: 'Психологтар, терапевттер мен педагогтар біздің 4 орталықта жұмыс істейді — әрқайсысы баланың дамуының өз бөлігіне жауапты.', ru: 'Психологи, терапевты и педагоги, работающие в наших 4 центрах — каждый отвечает за свою часть развития ребёнка.', en: 'Psychologists, therapists and educators working across our 4 centres — each responsible for their part of a child\'s development.' },
+  spec_show_all: { kk: 'Барлығын көрсету', ru: 'Показать всех', en: 'Show all' },
 
   s1_role: { kk: 'Қор негізін қалаушы', ru: 'Основатель фонда', en: 'Founder of the foundation' },
   s1_name: { kk: 'Ким Татьяна Львовна', ru: 'Ким Татьяна Львовна', en: 'Tatyana Kim' },
