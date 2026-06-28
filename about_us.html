@@ -63,11 +63,12 @@
             inset: 0;
             border-radius: 50%;
             background: #25D366;
-            animation: fab-ping 2s ease-out 3s infinite;
+            opacity: 0;
             pointer-events: none;
             z-index: -1;
         }
-        .fab-wrap.is-open .fab-ping { animation: none; opacity: 0; }
+        .fab-ping.anim-ping { animation: fab-ping 2s ease-out infinite; }
+        .fab-wrap.is-open .fab-ping { animation: none !important; opacity: 0 !important; }
         .fab-main {
             position: relative;
             width: 56px; height: 56px;
@@ -79,17 +80,16 @@
             transition: background .2s;
             flex-shrink: 0;
             transform-origin: bottom center;
-            animation: drop-bounce-in 0.75s cubic-bezier(.55,0,.7,.45) both,
-                       fab-idle 4s ease-in-out 7s infinite;
         }
-        .fab-wrap.is-open .fab-main { animation: none; }
-        .fab-main:hover { background: #1ebe5b; animation: none; transform: scale(1.07); }
+        .fab-main.anim-bounce { animation: drop-bounce-in 0.75s cubic-bezier(.55,0,.7,.45) both; }
+        .fab-main.anim-idle   { animation: fab-idle 4s ease-in-out infinite; }
+        .fab-wrap.is-open .fab-main { animation: none !important; background: #555; }
+        .fab-main:hover { background: #1ebe5b; }
         .fab-main:active { transform: scale(.95); }
         .fab-main svg { width: 26px; height: 26px; }
         .fab-icon-close { display: none; }
         .fab-wrap.is-open .fab-icon-chat  { display: none; }
         .fab-wrap.is-open .fab-icon-close { display: block; }
-        .fab-wrap.is-open .fab-main { background: #555; }
         .fab-menu {
             display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
             opacity: 0; pointer-events: none;
@@ -344,21 +344,44 @@
         /* ПЛАВАЮЩАЯ КНОПКА СВЯЗИ (FAB) */
         (function() {
             var btn  = document.getElementById('fab-main');
+            var ping = document.querySelector('.fab-ping');
             var wrap = document.getElementById('fab-wrap');
             if (!btn || !wrap) return;
+
+            /* drop-bounce при загрузке */
+            btn.classList.add('anim-bounce');
+
+            btn.addEventListener('animationend', function onBounceEnd(e) {
+                if (e.animationName !== 'drop-bounce-in') return;
+                btn.removeEventListener('animationend', onBounceEnd);
+                btn.classList.remove('anim-bounce');
+                if (ping) { ping.classList.add('anim-ping'); }
+                setTimeout(function() {
+                    if (!wrap.classList.contains('is-open')) btn.classList.add('anim-idle');
+                }, 6000);
+            });
+
+            function openFab() {
+                wrap.classList.add('is-open');
+                btn.classList.remove('anim-idle');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+            function closeFab() {
+                wrap.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                wrap.classList.toggle('is-open');
-                btn.setAttribute('aria-expanded', wrap.classList.contains('is-open'));
+                wrap.classList.contains('is-open') ? closeFab() : openFab();
             });
             document.addEventListener('click', function(e) {
-                if (wrap.classList.contains('is-open') && !wrap.contains(e.target)) {
-                    wrap.classList.remove('is-open');
-                    btn.setAttribute('aria-expanded', 'false');
-                }
+                if (wrap.classList.contains('is-open') && !wrap.contains(e.target)) closeFab();
             });
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') { wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+                if (e.key === 'Escape') { closeFab(); }
+            });
+            document.getElementById('fab-menu').querySelectorAll('a').forEach(function(el) {
+                el.addEventListener('click', function() { closeFab(); });
             });
         })();
     </script>

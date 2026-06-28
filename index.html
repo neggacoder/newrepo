@@ -87,22 +87,23 @@
             transition: background .2s;
             flex-shrink: 0;
             transform-origin: bottom center;
-            animation: drop-bounce-in 0.75s cubic-bezier(.55,0,.7,.45) both,
-                       fab-idle 4s ease-in-out 7s infinite;
         }
+        .fab-main:hover { background: #1ebe5b; }
+        .fab-main:active { transform: scale(.95); }
+        .fab-main.anim-bounce { animation: drop-bounce-in 0.75s cubic-bezier(.55,0,.7,.45) both; }
+        .fab-main.anim-idle   { animation: fab-idle 4s ease-in-out infinite; }
         .fab-ping {
             position: absolute;
             inset: 0;
             border-radius: 50%;
             background: #25D366;
-            animation: fab-ping 2s ease-out 3s infinite;
+            opacity: 0;
             pointer-events: none;
             z-index: -1;
         }
-        .fab-wrap.is-open .fab-ping { animation: none; opacity: 0; }
-        .fab-wrap.is-open .fab-main { animation: none; background: #555; }
-        .fab-main:hover { background: #1ebe5b; animation: none; transform: scale(1.07); }
-        .fab-main:active { transform: scale(.95); }
+        .fab-ping.anim-ping { animation: fab-ping 2s ease-out infinite; }
+        .fab-wrap.is-open .fab-ping { animation: none !important; opacity: 0 !important; }
+        .fab-wrap.is-open .fab-main { animation: none !important; background: #555; }
         .fab-main svg { width: 26px; height: 26px; transition: opacity .15s, transform .15s; }
         .fab-icon-close { display: none; }
         .fab-wrap.is-open .fab-icon-chat  { display: none; }
@@ -658,13 +659,25 @@
                     '<span class="sep"></span>' +
                     '</span>';
             }).join('');
-            track.innerHTML = itemHtml + itemHtml;
-            requestAnimationFrame(function() {
-                const setWidth = track.scrollWidth / 2;
+            // Минимум 4 копии чтобы бесшовный скролл работал на любой ширине экрана
+            track.innerHTML = itemHtml + itemHtml + itemHtml + itemHtml;
+
+            // Даём браузеру отрисовать, потом меряем реальную ширину одного сета
+            setTimeout(function() {
+                // одна копия = 1/4 от всего track (4 копии)
+                const setWidth = track.scrollWidth / 4;
                 const pxPerSecond = 55;
-                const duration = Math.max(setWidth / pxPerSecond, 10);
+                const duration = Math.max(setWidth / pxPerSecond, 8);
+                track.style.setProperty('--ticker-set-w', setWidth + 'px');
                 track.style.animationDuration = duration + 's';
-            });
+                // Переопределяем keyframes через inline-animation чтобы двигаться ровно на одну копию
+                track.style.animationName = 'none';
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        track.style.animationName = '';
+                    });
+                });
+            }, 100);
         }
         fetch('http://localhost:8000/donaters')
             .then(function(res) { if (!res.ok) throw new Error('Bad response'); return res.json(); })
@@ -683,11 +696,36 @@
         /* ПЛАВАЮЩАЯ КНОПКА СВЯЗИ (FAB) */
         (function() {
             var btn  = document.getElementById('fab-main');
+            var ping = document.querySelector('.fab-ping');
             var menu = document.getElementById('fab-menu');
             var wrap = document.getElementById('fab-wrap');
             if (!btn || !menu) return;
+
+            /* ── АНИМАЦИИ ── */
+            // 1. drop-bounce при загрузке
+            btn.classList.add('anim-bounce');
+
+            // 2. После падения — запускаем пинг и через паузу idle-wiggle
+            btn.addEventListener('animationend', function onBounceEnd(e) {
+                if (e.animationName !== 'drop-bounce-in') return;
+                btn.removeEventListener('animationend', onBounceEnd);
+                btn.classList.remove('anim-bounce');
+
+                // пинг стартует сразу после приземления
+                if (ping) { ping.classList.add('anim-ping'); }
+
+                // wiggle — через 6 секунд после приземления
+                setTimeout(function() {
+                    if (!wrap.classList.contains('is-open')) {
+                        btn.classList.add('anim-idle');
+                    }
+                }, 6000);
+            });
+
+            /* ── ОТКРЫТИЕ / ЗАКРЫТИЕ ── */
             function openFab() {
                 wrap.classList.add('is-open');
+                btn.classList.remove('anim-idle');
                 btn.setAttribute('aria-expanded', 'true');
             }
             function closeFab() {

@@ -634,7 +634,7 @@ body { padding-bottom: 48px; }
 
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-25%); }
 }
 
 .ticker-item {
