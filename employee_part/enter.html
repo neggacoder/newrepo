@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Вход для сотрудников Urpaq Inclusive.">
+    <title>Вход для сотрудников - Urpaq Inclusive</title>
+    <link rel="icon" href="../assets/logo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../index.css?v=20260703-ux3">
+</head>
+<body>
+    <main class="login-screen">
+        <section class="login-card">
+            <a class="brand" href="../index.html">
+                <span class="brand-logo-wrap"><img src="../assets/logo.jpg" alt="Логотип Urpaq Inclusive" width="42" height="42"></span>
+                <span class="brand-text"><strong>Urpaq Inclusive</strong><small>Jas Urpaq & Eventum</small></span>
+            </a>
+            <span class="eyebrow" data-i18n="login_eyebrow">Доступ для сотрудников</span>
+            <h1 data-i18n="login_title">Вход</h1>
+            <p data-i18n="login_text">Используйте рабочий логин для доступа к внутренним инструментам.</p>
+
+            <form class="login-form" id="login-form">
+                <label class="field">
+                    <span>Логин / Email</span>
+                    <input type="text" id="login-email" placeholder="name@eventum-center.kz" autocomplete="username" required>
+                </label>
+                <label class="field">
+                    <span>Пароль</span>
+                    <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required>
+                </label>
+                <button class="btn btn-support btn-block" type="submit" data-i18n="login_button">Войти</button>
+            </form>
+            <a class="login-back" href="../index.html" data-i18n="login_back">Назад на главную</a>
+        </section>
+    </main>
+
+    <script src="../lang.js?v=20260703-ux3"></script>
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            fetch("http://localhost:8000/enter", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    login: document.getElementById("login-email").value,
+                    password: document.getElementById("login-password").value
+                })
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                if (data.answer) {
+                    alert("Вход выполнен. Внутренний кабинет пока находится в разработке.");
+                } else {
+                    alert("Логин или пароль не распознаны.");
+                }
+            })
+            .catch(function() {
+                alert("Сервер авторизации недоступен. Проверьте запуск API.");
+            });
+        });
+    </script>
+</body>
+</html>

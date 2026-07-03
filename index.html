@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Urpaq Inclusive - фонд и сеть центров Jas Urpaq & Eventum для поддержки детей с особенностями развития, семей и специалистов.">
+    <title>Urpaq Inclusive - поддержка детей и семей</title>
+    <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="index.css?v=20260703-ux3">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell" aria-label="Основная навигация">
+            <a class="brand" href="index.html" aria-label="Urpaq Inclusive">
+                <span class="brand-logo-wrap"><img src="assets/logo.jpg" alt="Логотип Urpaq Inclusive" width="42" height="42"></span>
+                <span class="brand-text">
+                    <strong>Urpaq Inclusive</strong>
+                    <small>Jas Urpaq & Eventum</small>
+                </span>
+            </a>
+
+            <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="main-nav">
+                <div class="nav-dropdown">
+                    <button class="nav-link nav-dropdown-toggle" type="button" data-i18n="nav_foundation">Фонд</button>
+                    <div class="nav-dropdown-menu">
+                        <a href="about_us.html" data-i18n="nav_about">О фонде</a>
+                        <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
+                        <a href="index.html#news" data-i18n="nav_news">Новости</a>
+                        <a href="index.html#internship" data-i18n="nav_internship">Стажировка</a>
+                    </div>
+                </div>
+                <a class="nav-link" href="#programs" data-i18n="nav_programs">Программы</a>
+                <a class="nav-link" href="#for-whom" data-i18n="nav_help">Помощь</a>
+                <a class="nav-link" href="#locations" data-i18n="nav_locations">Филиалы</a>
+                <a class="nav-link" href="employee_part/enter.html" data-i18n="nav_staff">Для сотрудников</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="contact-dropdown">
+                    <button class="btn btn-outline contact-toggle" type="button" aria-expanded="false" aria-controls="contact-menu" data-i18n="nav_contact">Связаться с нами</button>
+                    <div class="contact-menu" id="contact-menu">
+                        <button type="button" data-open-modal="help" data-i18n="action_help">Получить помощь</button>
+                        <button type="button" data-open-modal="training" data-i18n="action_training">Пройти обучение</button>
+                        <button type="button" data-open-modal="volunteer" data-i18n="action_volunteer">Стать волонтером</button>
+                        <a href="tel:+77767504466" data-i18n="action_call">Позвонить</a>
+                    </div>
+                </div>
+                <button class="btn btn-support" type="button" data-open-modal="donate" data-i18n="nav_support">Поддержать фонд</button>
+                <div class="lang-switch" aria-label="Выбор языка"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="wrap hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow" data-i18n="hero_eyebrow">Инклюзивный фонд в Актобе</span>
+                    <h1 data-i18n="hero_title">Помощь детям с особенностями развития и их семьям.</h1>
+                    <p class="lead" data-i18n="hero_lead">Консультации, терапия, обучение навыкам и поддержка родителей в четырех центрах Jas Urpaq & Eventum.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-support" type="button" data-open-modal="help" data-i18n="hero_help">Получить помощь</button>
+                        <a class="btn btn-outline" href="#programs" data-i18n="hero_programs">Посмотреть программы</a>
+                    </div>
+                    <div class="hero-metrics" aria-label="Ключевые показатели">
+                        <div><strong>4</strong><span data-i18n="metric_centres">центра</span></div>
+                        <div><strong>17</strong><span data-i18n="metric_years">лет опыта</span></div>
+                        <div><strong>40+</strong><span data-i18n="metric_team">специалистов</span></div>
+                    </div>
+                </div>
+
+                <div class="hero-media" aria-label="Фотографии центров">
+                    <img src="assets/centres/hero-centres.png" alt="Помещения и команда центров Jas Urpaq и Eventum">
+                    <div class="hero-media-caption">
+                        <strong data-i18n="hero_badge">4 центра в Актобе</strong>
+                        <span data-i18n="hero_caption">пространства терапии, обучения и поддержки</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section path-section" id="for-whom">
+            <div class="wrap support-layout">
+                <div>
+                    <span class="eyebrow" data-i18n="path_eyebrow">Выберите свой путь</span>
+                    <h2 data-i18n="path_title">Сразу перейдите к тому, что вам нужно.</h2>
+                </div>
+                <div class="help-grid">
+                    <article class="info-card path-card">
+                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"></path><circle cx="17" cy="7" r="2.3"></circle><path d="M14.8 12.3c2.3.4 4 2.2 4.2 4.7"></path></svg></span>
+                        <h3 data-i18n="path_parent_title">Родителям</h3>
+                        <p data-i18n="path_parent_text">Запишитесь на консультацию. Администратор подскажет ближайший центр и первый шаг.</p>
+                        <button class="btn btn-support" type="button" data-open-modal="help" data-i18n="action_help">Получить помощь</button>
+                    </article>
+                    <article class="info-card path-card">
+                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="13" width="4.2" height="7" rx="1"></rect><rect x="9.9" y="8" width="4.2" height="12" rx="1"></rect><rect x="16.3" y="4" width="4.2" height="16" rx="1"></rect></svg></span>
+                        <h3 data-i18n="path_specialist_title">Специалистам</h3>
+                        <p data-i18n="path_specialist_text">Посмотрите стажировку 2026: практика в действующих центрах, кураторы и супервизии.</p>
+                        <a class="btn btn-outline" href="#internship" data-i18n="nav_internship">Стажировка</a>
+                    </article>
+                    <article class="info-card path-card">
+                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2c-3.6-2.4-8.4-5.9-8.4-10.2 0-2.6 2.1-4.6 4.6-4.6 1.6 0 3 .8 3.8 2 .8-1.2 2.2-2 3.8-2 2.5 0 4.6 2 4.6 4.6 0 4.3-4.8 7.8-8.4 10.2z"></path></svg></span>
+                        <h3 data-i18n="path_partner_title">Партнерам и волонтерам</h3>
+                        <p data-i18n="path_partner_text">Помогите фонду ресурсами, временем или профессиональной поддержкой.</p>
+                        <button class="btn btn-outline" type="button" data-open-modal="volunteer" data-i18n="action_volunteer">Стать волонтером</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section tinted" id="programs">
+            <div class="wrap program-layout">
+                <div class="program-copy">
+                    <span class="eyebrow" data-i18n="programs_eyebrow">Наши программы</span>
+                    <h2 data-i18n="programs_title">Четыре центра - один профессиональный подход.</h2>
+                    <p data-i18n="programs_text">Ребенок может получать поддержку в подходящем формате и переходить между направлениями по мере роста, целей и динамики развития.</p>
+                    <button class="btn btn-outline" type="button" data-open-modal="help" data-i18n="programs_more">Помочь выбрать программу</button>
+                </div>
+                <div class="program-list">
+                    <article class="program-row">
+                        <span>01</span>
+                        <div>
+                            <h3>Jas Urpaq Kids</h3>
+                            <p data-i18n="program_kids">Ранняя поддержка и базовые навыки для детей 2-9 лет.</p>
+                        </div>
+                    </article>
+                    <article class="program-row">
+                        <span>02</span>
+                        <div>
+                            <h3>Eventum Junior</h3>
+                            <p data-i18n="program_junior">Академические навыки, трудотерапия и подготовка к школе.</p>
+                        </div>
+                    </article>
+                    <article class="program-row">
+                        <span>03</span>
+                        <div>
+                            <h3>Jas Urpaq Group</h3>
+                            <p data-i18n="program_group">Полный день и формирование навыков самостоятельной жизни.</p>
+                        </div>
+                    </article>
+                    <article class="program-row">
+                        <span>04</span>
+                        <div>
+                            <h3>EVENTUM</h3>
+                            <p data-i18n="program_eventum">Индивидуальные занятия: ABA, логопед, сенсорная интеграция, нейропсихолог.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="internship">
+            <div class="wrap internship-layout">
+                <div class="internship-card">
+                    <span class="eyebrow" data-i18n="intern_eyebrow">Стажировка 2026</span>
+                    <h2 data-i18n="intern_title">5 или 10 дней полного погружения в действующих центрах.</h2>
+                    <p data-i18n="intern_text">Стажировка создана для специалистов, которым важно перейти от теории к уверенной работе с ребенком: постановка целей, анализ поведения, индивидуальная программа и обратная связь кураторов.</p>
+                    <div class="internship-points">
+                        <span data-i18n="intern_point1">До 5 участников</span>
+                        <span data-i18n="intern_point2">Предварительный отбор</span>
+                        <span data-i18n="intern_point3">3 супервизии после</span>
+                    </div>
+                    <button class="btn btn-support" type="button" data-open-modal="training" data-i18n="intern_apply">Подать заявку</button>
+                </div>
+                <div class="formats-grid">
+                    <article class="format-card">
+                        <h3 data-i18n="format_5_title">5 дней - базовый формат</h3>
+                        <p data-i18n="format_5_text">Понять систему, включиться в групповую работу с ребенком и получить групповую обратную связь.</p>
+                        <strong>200 000 тг</strong>
+                    </article>
+                    <article class="format-card accent">
+                        <h3 data-i18n="format_10_title">10 дней - профессиональный формат</h3>
+                        <p data-i18n="format_10_text">Самостоятельное проведение занятий под сопровождением, ведение кейса, данные, программа и видеоразбор.</p>
+                        <strong>380 000 тг</strong>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="news">
+            <div class="wrap">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow" data-i18n="news_eyebrow">Важные новости фонда</span>
+                        <h2 data-i18n="news_title">Коротко о том, что происходит в фонде.</h2>
+                    </div>
+                    <a class="text-link" href="https://www.instagram.com/jasurpaq_aktobe/" target="_blank" rel="noopener" data-i18n="news_instagram">Instagram фонда</a>
+                </div>
+                <div class="news-grid">
+                    <article class="news-card news-featured">
+                        <span class="news-date" data-i18n="news1_date">Сегодня</span>
+                        <h3 data-i18n="news1_title">Junior посетили представители государства, бизнеса и социальных инициатив.</h3>
+                        <p data-i18n="news1_text">На встрече обсуждались поддержка социальных проектов, развитие инициатив и дальнейшее сотрудничество государства, бизнеса и некоммерческого сектора.</p>
+                        <a href="https://www.instagram.com/reel/DY7WX_igOaA/?igsh=Ym81cXJmcGFzYjdl" target="_blank" rel="noopener" data-i18n="news_read">Смотреть публикацию</a>
+                    </article>
+                    <article class="news-card">
+                        <span class="news-date" data-i18n="news2_date">2 апреля</span>
+                        <h3 data-i18n="news2_title">Всемирный день распространения информации об аутизме.</h3>
+                        <p data-i18n="news2_text">Аутизм - не болезнь, а особенность. Наша задача - понимать, принимать и учить этому детей.</p>
+                    </article>
+                    <article class="news-card">
+                        <span class="news-date" data-i18n="news4_date">Повышение квалификации</span>
+                        <h3 data-i18n="news4_title">ABA-специалисты получили сертификаты после курса.</h3>
+                        <p data-i18n="news4_text">Команда продолжает учиться, чтобы помогать детям еще эффективнее и расти вместе с Jas Urpaq и Eventum.</p>
+                        <a href="https://www.instagram.com/reel/DJ_4YH6oZg0/?igsh=ZXRuNXk3dG96bGx3" target="_blank" rel="noopener" data-i18n="news_read">Смотреть публикацию</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section team-preview">
+            <div class="wrap">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow" data-i18n="team_eyebrow">Наша команда</span>
+                        <h2 data-i18n="team_title">Кураторы и специалисты, которые ведут практику каждый день.</h2>
+                    </div>
+                    <a class="text-link" href="specialists.html" data-i18n="team_all">Смотреть всю команду</a>
+                </div>
+                <div class="team-strip">
+                    <article class="team-mini">
+                        <img src="assets/team/tatyana.jpeg" alt="Ким Татьяна Львовна">
+                        <h3>Ким Татьяна Львовна</h3>
+                        <p data-i18n="role_founder">Основатель фонда</p>
+                    </article>
+                    <article class="team-mini">
+                        <img src="assets/team/aliya-khegai.jpeg" alt="Хегай Алия Маликовна">
+                        <h3>Хегай Алия Маликовна</h3>
+                        <p data-i18n="role_early">Специалист по раннему развитию</p>
+                    </article>
+                    <article class="team-mini">
+                        <img src="assets/team/akmaral.jpeg" alt="Бурушева Акмарал Талгатовна">
+                        <h3>Бурушева Акмарал</h3>
+                        <p data-i18n="role_behavior">Куратор поведенческой терапии</p>
+                    </article>
+                    <article class="team-mini">
+                        <img src="assets/team/natali.jpeg" alt="Ким Натали Вячеславовна">
+                        <h3>Ким Натали Вячеславовна</h3>
+                        <p data-i18n="role_neuro">Нейропсихолог</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section tinted" id="locations">
+            <div class="wrap location-layout">
+                <div>
+                    <span class="eyebrow" data-i18n="locations_eyebrow">Наши филиалы</span>
+                    <h2 data-i18n="locations_title">Четыре точки присутствия в Актобе.</h2>
+                    <p data-i18n="locations_text">Выберите ближайший центр или позвоните администратору - мы подскажем, с какого формата лучше начать.</p>
+                    <a class="btn btn-outline" href="tel:+77767504466"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h3l1.4 4-2 1.6a13 13 0 0 0 5.9 5.9l1.6-2 4 1.4v3c0 1-.9 1.8-1.9 1.7C11.6 18.7 5.3 12.4 4.8 5.4c-.1-1 .7-1.9 1.7-1.9z"></path></svg>+7 776 750 4466</a>
+                </div>
+                <div class="location-list">
+                    <div><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg></span><strong>Звездная 39</strong><span>Jas Urpaq Kids</span></div>
+                    <div><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg></span><strong>Балалар 36</strong><span>Eventum Junior</span></div>
+                    <div><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg></span><strong>Звездная 35</strong><span>Jas Urpaq Group</span></div>
+                    <div><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg></span><strong>Балалар 21</strong><span>Eventum</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <a class="brand footer-brand" href="index.html">
+                    <span class="brand-logo-wrap"><img src="assets/logo.jpg" alt="Логотип Urpaq Inclusive" width="42" height="42"></span>
+                    <span class="brand-text"><strong>Urpaq Inclusive</strong><small>Jas Urpaq & Eventum</small></span>
+                </a>
+                <p data-i18n="footer_text">Поддержка детей, семей, специалистов и инклюзивных социальных проектов.</p>
+            </div>
+            <div>
+                <h3 data-i18n="footer_nav">Навигация</h3>
+                <a href="about_us.html" data-i18n="nav_about">О фонде</a>
+                <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
+                <a href="#programs" data-i18n="nav_programs">Программы</a>
+                <a href="#internship" data-i18n="nav_internship">Стажировка</a>
+            </div>
+            <div>
+                <h3 data-i18n="footer_contact">Контакты</h3>
+                <a href="tel:+77767504466"><span class="mini-icon-sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.4 4-2 1.6a13 13 0 0 0 5.9 5.9l1.6-2 4 1.4v3c0 1-.9 1.8-1.9 1.7C11.6 18.7 5.3 12.4 4.8 5.4c-.1-1 .7-1.9 1.7-1.9z"></path></svg></span>+7 776 750 4466</a>
+                <a href="https://www.instagram.com/jasurpaq_aktobe/" target="_blank" rel="noopener"><span class="mini-icon-sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H5.5A1.5 1.5 0 0 0 4 7.5v11A1.5 1.5 0 0 0 5.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15"></path><path d="M14 4h6v6"></path><path d="M20 4 11 13"></path></svg></span>@jasurpaq_aktobe</a>
+                <button class="btn btn-support" type="button" data-open-modal="donate" data-i18n="nav_support">Поддержать фонд</button>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="modal-close" type="button" data-close-modal aria-label="Закрыть">×</button>
+            <span class="eyebrow" id="modal-kicker">Urpaq Inclusive</span>
+            <h2 id="modal-title">Связаться с нами</h2>
+            <p id="modal-text">Оставьте контакты - мы свяжемся с вами.</p>
+            <form class="action-form" id="action-form">
+                <label>
+                    <span data-i18n="form_name">Имя</span>
+                    <input type="text" name="name" required placeholder="Ваше имя">
+                </label>
+                <label>
+                    <span data-i18n="form_phone">Телефон</span>
+                    <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+                </label>
+                <label class="amount-field" hidden>
+                    <span data-i18n="form_amount">Сумма пожертвования</span>
+                    <input type="number" name="amount" min="1000" placeholder="10000">
+                </label>
+                <button class="btn btn-support btn-block" type="submit" data-i18n="form_submit">Отправить</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="lang.js?v=20260703-ux3"></script>
+</body>
+</html>
