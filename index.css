@@ -1163,25 +1163,25 @@ p {
   border-bottom: 0;
 }
 
-.faq-item summary {
+.faq-question {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 18px;
   padding: 24px 62px 24px 24px;
+  border: 0;
+  background: none;
   cursor: pointer;
-  list-style: none;
+  text-align: left;
   color: var(--navy);
+  font: inherit;
   font-weight: 900;
   font-size: 17px;
   transition: background 0.18s ease;
 }
 
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary::after {
+.faq-question::after {
   content: "+";
   position: absolute;
   right: 24px;
@@ -1197,24 +1197,55 @@ p {
   color: var(--teal);
   font-size: 19px;
   font-weight: 900;
-  transition: background 0.18s ease, color 0.18s ease, transform 0.22s ease;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.3s ease;
 }
 
-.faq-item:hover summary {
+.faq-item:hover .faq-question {
   background: linear-gradient(90deg, rgba(230, 244, 247, 0.6), transparent);
 }
 
-.faq-item[open] summary::after {
+.faq-question[aria-expanded="true"]::after {
   content: "−";
   background: var(--teal);
   color: var(--white);
   transform: translateY(-50%) rotate(180deg);
 }
 
-.faq-item p {
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-question[aria-expanded="true"] + .faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-panel p {
   margin: 0;
   padding: 0 62px 26px 24px;
   color: var(--muted);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.28s ease 0.06s, transform 0.28s ease 0.06s;
+}
+
+.faq-question[aria-expanded="true"] + .faq-panel p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-panel,
+  .faq-question::after,
+  .faq-panel p {
+    transition: none;
+  }
 }
 
 /* Floating quick-contact (WhatsApp / Telegram) */
@@ -1975,12 +2006,12 @@ p {
     height: 52px;
   }
 
-  .faq-item summary {
+  .faq-question {
     padding: 20px 52px 20px 18px;
     font-size: 15.5px;
   }
 
-  .faq-item p {
+  .faq-panel p {
     padding: 0 52px 22px 18px;
   }
 

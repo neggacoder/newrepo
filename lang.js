@@ -482,10 +482,20 @@ function initCounters() {
   counters.forEach((el) => observer.observe(el));
 }
 
+function initFaq() {
+  document.querySelectorAll(".faq-question").forEach((button) => {
+    button.addEventListener("click", () => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!isOpen));
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderLangSwitch();
   applyTranslations();
   initMenus();
   initModal();
   initCounters();
+  initFaq();
 });
