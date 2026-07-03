@@ -6,7 +6,7 @@
     <meta name="description" content="Urpaq Inclusive - фонд и сеть центров Jas Urpaq & Eventum для поддержки детей с особенностями развития, семей и специалистов.">
     <title>Urpaq Inclusive - поддержка детей и семей</title>
     <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="index.css?v=20260703-ux3">
+    <link rel="stylesheet" href="index.css?v=20260703-ux5">
 </head>
 <body>
     <header class="site-header">
@@ -31,6 +31,7 @@
                         <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
                         <a href="index.html#news" data-i18n="nav_news">Новости</a>
                         <a href="index.html#internship" data-i18n="nav_internship">Стажировка</a>
+                        <a href="index.html#faq" data-i18n="nav_faq">Вопросы и ответы</a>
                     </div>
                 </div>
                 <a class="nav-link" href="#programs" data-i18n="nav_programs">Программы</a>
@@ -67,9 +68,9 @@
                         <a class="btn btn-outline" href="#programs" data-i18n="hero_programs">Посмотреть программы</a>
                     </div>
                     <div class="hero-metrics" aria-label="Ключевые показатели">
-                        <div><strong>4</strong><span data-i18n="metric_centres">центра</span></div>
-                        <div><strong>17</strong><span data-i18n="metric_years">лет опыта</span></div>
-                        <div><strong>40+</strong><span data-i18n="metric_team">специалистов</span></div>
+                        <div><strong class="counter">4</strong><span data-i18n="metric_centres">центра</span></div>
+                        <div><strong class="counter">17</strong><span data-i18n="metric_years">лет опыта</span></div>
+                        <div><strong class="counter">40+</strong><span data-i18n="metric_team">специалистов</span></div>
                     </div>
                 </div>
 
@@ -91,19 +92,19 @@
                 </div>
                 <div class="help-grid">
                     <article class="info-card path-card">
-                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"></path><circle cx="17" cy="7" r="2.3"></circle><path d="M14.8 12.3c2.3.4 4 2.2 4.2 4.7"></path></svg></span>
+                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.2" cy="6.6" r="2.7"></circle><path d="M3.4 19.2c.3-3.4 2.3-5.6 4.8-5.6s4.5 2.2 4.8 5.6"></path><circle cx="17.4" cy="9.5" r="1.8"></circle><path d="M14.2 19.2c.2-2.7 1.6-4.3 3.2-4.3s3 1.6 3.2 4.3"></path></svg></span>
                         <h3 data-i18n="path_parent_title">Родителям</h3>
                         <p data-i18n="path_parent_text">Запишитесь на консультацию. Администратор подскажет ближайший центр и первый шаг.</p>
                         <button class="btn btn-support" type="button" data-open-modal="help" data-i18n="action_help">Получить помощь</button>
                     </article>
                     <article class="info-card path-card">
-                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="13" width="4.2" height="7" rx="1"></rect><rect x="9.9" y="8" width="4.2" height="12" rx="1"></rect><rect x="16.3" y="4" width="4.2" height="16" rx="1"></rect></svg></span>
+                        <span class="card-icon icon-gold" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 2.6 9.3 12 13.6l9.4-4.3z"></path><path d="M6.4 11.3v4c0 1.5 2.5 2.8 5.6 2.8s5.6-1.3 5.6-2.8v-4"></path><path d="M21.4 9.3v5.3"></path></svg></span>
                         <h3 data-i18n="path_specialist_title">Специалистам</h3>
                         <p data-i18n="path_specialist_text">Посмотрите стажировку 2026: практика в действующих центрах, кураторы и супервизии.</p>
                         <a class="btn btn-outline" href="#internship" data-i18n="nav_internship">Стажировка</a>
                     </article>
                     <article class="info-card path-card">
-                        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2c-3.6-2.4-8.4-5.9-8.4-10.2 0-2.6 2.1-4.6 4.6-4.6 1.6 0 3 .8 3.8 2 .8-1.2 2.2-2 3.8-2 2.5 0 4.6 2 4.6 4.6 0 4.3-4.8 7.8-8.4 10.2z"></path></svg></span>
+                        <span class="card-icon icon-deep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2c-3.6-2.4-8.4-5.9-8.4-10.2 0-2.6 2.1-4.6 4.6-4.6 1.6 0 3 .8 3.8 2 .8-1.2 2.2-2 3.8-2 2.5 0 4.6 2 4.6 4.6 0 4.3-4.8 7.8-8.4 10.2z"></path><path d="M9.4 9.8h1.6l.9-1.6.9 3.2 1-1.6h1.5"></path></svg></span>
                         <h3 data-i18n="path_partner_title">Партнерам и волонтерам</h3>
                         <p data-i18n="path_partner_text">Помогите фонду ресурсами, временем или профессиональной поддержкой.</p>
                         <button class="btn btn-outline" type="button" data-open-modal="volunteer" data-i18n="action_volunteer">Стать волонтером</button>
@@ -261,6 +262,40 @@
                     <div><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg></span><strong>Балалар 21</strong><span>Eventum</span></div>
                 </div>
             </div>
+            <div class="wrap">
+                <div class="map-embed" aria-label="Карта филиалов Urpaq Inclusive">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A99e59f7ac544d07eee7694601a9f00a2c940a2b21b51f2d0929a64c4ccd80f75&amp;width=100%25&amp;height=512&amp;lang=ru_RU&amp;scroll=true"></script>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="faq">
+            <div class="wrap">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow" data-i18n="faq_eyebrow">Частые вопросы</span>
+                        <h2 data-i18n="faq_title">Ответы на вопросы, которые чаще всего задают родители.</h2>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary data-i18n="faq_q1">Как записать ребёнка?</summary>
+                        <p data-i18n="faq_a1">Позвоните или приходите в любой из 4 центров на короткую вводную встречу. Специалист поговорит с вами о ребёнке и предложит первую программу - диагноз или направление врача для этого не требуются.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary data-i18n="faq_q2">Есть ли поддержка для семей с ограниченным бюджетом?</summary>
+                        <p data-i18n="faq_a2">Да. Часть каждого пожертвования направляется в фонд стипендий, который полностью или частично покрывает занятия для нуждающихся семей. Уточните условия у координатора центра.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary data-i18n="faq_q3">С какими возрастными группами вы работаете?</summary>
+                        <p data-i18n="faq_a3">Наши программы разделены на четыре группы - Kids, Junior, Jas Urpaq Group и Eventum - от раннего детства до подросткового возраста, плюс выездные мероприятия для всех возрастов. Подробнее - на странице «О нас».</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary data-i18n="faq_q4">Как стать волонтёром или специалистом?</summary>
+                        <p data-i18n="faq_a4">Мы регулярно набираем волонтёров и круглый год ищем лицензированных специалистов. Обратитесь в любой центр, а действующие сотрудники могут войти на странице «Для сотрудников».</p>
+                    </details>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -279,6 +314,7 @@
                 <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
                 <a href="#programs" data-i18n="nav_programs">Программы</a>
                 <a href="#internship" data-i18n="nav_internship">Стажировка</a>
+                <a href="#faq" data-i18n="nav_faq">Вопросы и ответы</a>
             </div>
             <div>
                 <h3 data-i18n="footer_contact">Контакты</h3>
@@ -314,6 +350,23 @@
         </section>
     </div>
 
-    <script src="lang.js?v=20260703-ux3"></script>
+    <div class="quick-contact" id="quick-contact">
+        <div class="quick-contact-menu" id="quick-contact-menu">
+            <a class="quick-contact-link whatsapp" href="https://wa.me/77767504466" target="_blank" rel="noopener">
+                <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.5 2.9 3.9 5.3 6.8 6.8l2.3-2.3c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1l-2.1 2.3z"></path></svg></span>
+                <span data-i18n="quick_contact_whatsapp">Написать в WhatsApp</span>
+            </a>
+            <a class="quick-contact-link telegram" href="https://t.me/jasurpaq_aktobe" target="_blank" rel="noopener">
+                <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"></path></svg></span>
+                <span data-i18n="quick_contact_telegram">Написать в Telegram</span>
+            </a>
+        </div>
+        <button class="quick-contact-toggle" type="button" aria-expanded="false" aria-controls="quick-contact-menu" data-i18n-aria="quick_contact_label" aria-label="Быстрая связь">
+            <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.4 6.5L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12z"></path><circle cx="8.7" cy="12" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="15.3" cy="12" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+            <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+    </div>
+
+    <script src="lang.js?v=20260703-ux5"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <meta name="description" content="О фонде Urpaq Inclusive, центрах Jas Urpaq & Eventum, миссии, направлениях и филиалах.">
     <title>Фонд - Urpaq Inclusive</title>
     <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="index.css?v=20260703-ux3">
+    <link rel="stylesheet" href="index.css?v=20260703-ux5">
 </head>
 <body>
     <header class="site-header">
@@ -24,6 +24,7 @@
                         <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
                         <a href="index.html#news" data-i18n="nav_news">Новости</a>
                         <a href="index.html#internship" data-i18n="nav_internship">Стажировка</a>
+                        <a href="index.html#faq" data-i18n="nav_faq">Вопросы и ответы</a>
                     </div>
                 </div>
                 <a class="nav-link" href="index.html#programs" data-i18n="nav_programs">Программы</a>
@@ -63,10 +64,10 @@
 
         <section class="section">
             <div class="wrap values-grid">
-                <article class="value-card"><strong>17</strong><span data-i18n="value_years">лет работы</span></article>
-                <article class="value-card"><strong>4</strong><span data-i18n="value_centres">центра</span></article>
-                <article class="value-card"><strong>2 300+</strong><span data-i18n="value_children">детей получили поддержку</span></article>
-                <article class="value-card"><strong>40+</strong><span data-i18n="value_specialists">специалистов в штате</span></article>
+                <article class="value-card"><strong class="counter">17</strong><span data-i18n="value_years">лет работы</span></article>
+                <article class="value-card"><strong class="counter">4</strong><span data-i18n="value_centres">центра</span></article>
+                <article class="value-card"><strong class="counter">2 300+</strong><span data-i18n="value_children">детей получили поддержку</span></article>
+                <article class="value-card"><strong class="counter">40+</strong><span data-i18n="value_specialists">специалистов в штате</span></article>
             </div>
         </section>
 
@@ -126,6 +127,7 @@
                 <a href="index.html#programs" data-i18n="nav_programs">Программы</a>
                 <a href="specialists.html" data-i18n="nav_team">Наша команда</a>
                 <a href="index.html#internship" data-i18n="nav_internship">Стажировка</a>
+                <a href="index.html#faq" data-i18n="nav_faq">Вопросы и ответы</a>
             </div>
             <div>
                 <h3 data-i18n="footer_contact">Контакты</h3>
@@ -151,6 +153,23 @@
             </form>
         </section>
     </div>
-    <script src="lang.js?v=20260703-ux3"></script>
+    <div class="quick-contact" id="quick-contact">
+        <div class="quick-contact-menu" id="quick-contact-menu">
+            <a class="quick-contact-link whatsapp" href="https://wa.me/77767504466" target="_blank" rel="noopener">
+                <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.5 2.9 3.9 5.3 6.8 6.8l2.3-2.3c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1l-2.1 2.3z"></path></svg></span>
+                <span data-i18n="quick_contact_whatsapp">Написать в WhatsApp</span>
+            </a>
+            <a class="quick-contact-link telegram" href="https://t.me/jasurpaq_aktobe" target="_blank" rel="noopener">
+                <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"></path></svg></span>
+                <span data-i18n="quick_contact_telegram">Написать в Telegram</span>
+            </a>
+        </div>
+        <button class="quick-contact-toggle" type="button" aria-expanded="false" aria-controls="quick-contact-menu" data-i18n-aria="quick_contact_label" aria-label="Быстрая связь">
+            <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.4 6.5L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12z"></path><circle cx="8.7" cy="12" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="15.3" cy="12" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+            <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+    </div>
+
+    <script src="lang.js?v=20260703-ux5"></script>
 </body>
 </html>

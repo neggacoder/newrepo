@@ -7,6 +7,7 @@ const TRANSLATIONS = {
   nav_programs: { ru: "Программы", kk: "Бағдарламалар", en: "Programs" },
   nav_help: { ru: "Помощь", kk: "Көмек", en: "Help" },
   nav_locations: { ru: "Филиалы", kk: "Филиалдар", en: "Branches" },
+  nav_faq: { ru: "Вопросы и ответы", kk: "Сұрақ-жауап", en: "FAQ" },
   nav_staff: { ru: "Для сотрудников", kk: "Қызметкерлерге", en: "For staff" },
   nav_contact: { ru: "Связаться с нами", kk: "Байланысу", en: "Contact us" },
   nav_support: { ru: "Поддержать фонд", kk: "Қорды қолдау", en: "Donate" },
@@ -154,6 +155,41 @@ const TRANSLATIONS = {
   locations_title: { ru: "Четыре точки присутствия в Актобе.", kk: "Ақтөбедегі төрт орталық.", en: "Four locations in Aktobe." },
   locations_text: { ru: "Выберите ближайший центр или позвоните администратору - мы подскажем, с какого формата лучше начать.", kk: "Жақын орталықты таңдаңыз немесе әкімшіге қоңырау шалыңыз - қай форматтан бастау керегін айтамыз.", en: "Choose the nearest centre or call the administrator - we will suggest the best starting format." },
 
+  faq_eyebrow: { ru: "Частые вопросы", kk: "Жиі қойылатын сұрақтар", en: "Frequently asked questions" },
+  faq_title: {
+    ru: "Ответы на вопросы, которые чаще всего задают родители.",
+    kk: "Ата-аналар жиі қоятын сұрақтарға жауаптар.",
+    en: "Answers to the questions parents ask us most often."
+  },
+  faq_q1: { ru: "Как записать ребёнка?", kk: "Баланы қалай тіркеуге болады?", en: "How do I enrol my child?" },
+  faq_a1: {
+    ru: "Позвоните или приходите в любой из 4 центров на короткую вводную встречу. Специалист поговорит с вами о ребёнке и предложит первую программу - диагноз или направление врача для этого не требуются.",
+    kk: "4 орталықтың кез келгеніне қоңырау шалыңыз немесе қысқа кіріспе кездесуге келіңіз. Маман балаңыз туралы әңгімелесіп, алғашқы бағдарламаны ұсынады - диагноз немесе дәрігердің жолдамасы қажет емес.",
+    en: "Call or visit any of our 4 centres for a short introductory meeting. A specialist will talk with you about your child and suggest a first program - no diagnosis or doctor's referral is required."
+  },
+  faq_q2: { ru: "Есть ли поддержка для семей с ограниченным бюджетом?", kk: "Бюджеті шектеулі отбасыларға қолдау бар ма?", en: "Is there support for families on a limited budget?" },
+  faq_a2: {
+    ru: "Да. Часть каждого пожертвования направляется в фонд стипендий, который полностью или частично покрывает занятия для нуждающихся семей. Уточните условия у координатора центра.",
+    kk: "Иә. Әр қайырымдылықтың бір бөлігі мұқтаж отбасылар үшін сабақтарды толық немесе ішінара жабатын стипендия қорына жіберіледі. Шарттарын орталық координаторынан нақтылаңыз.",
+    en: "Yes. Part of every donation goes to a scholarship fund that fully or partially covers sessions for families in need. Ask your centre coordinator about eligibility."
+  },
+  faq_q3: { ru: "С какими возрастными группами вы работаете?", kk: "Қандай жас топтарымен жұмыс істейсіздер?", en: "What age groups do you work with?" },
+  faq_a3: {
+    ru: "Наши программы разделены на четыре группы - Kids, Junior, Jas Urpaq Group и Eventum - от раннего детства до подросткового возраста, плюс выездные мероприятия для всех возрастов. Подробнее - на странице «О нас».",
+    kk: "Бағдарламаларымыз төрт топқа бөлінген - Kids, Junior, Jas Urpaq Group және Eventum - ерте балалық шақтан жасөспірім кезеңіне дейін, сонымен қатар барлық жасқа арналған көшпелі іс-шаралар. Толығырақ - «Қор туралы» бетінде.",
+    en: "Our programs are split into four groups - Kids, Junior, Jas Urpaq Group and Eventum - from early childhood through the teenage years, plus outreach events for all ages. See the \"About us\" page for details."
+  },
+  faq_q4: { ru: "Как стать волонтёром или специалистом?", kk: "Волонтер немесе маман болу қалай?", en: "How do I become a volunteer or a specialist?" },
+  faq_a4: {
+    ru: "Мы регулярно набираем волонтёров и круглый год ищем лицензированных специалистов. Обратитесь в любой центр, а действующие сотрудники могут войти на странице «Для сотрудников».",
+    kk: "Біз тұрақты түрде волонтерлер қабылдаймыз және жыл бойы лицензиясы бар мамандар іздейміз. Кез келген орталыққа хабарласыңыз, ал қызметкерлер «Қызметкерлерге» бетінен кіре алады.",
+    en: "We regularly recruit volunteers and look for licensed specialists year-round. Reach out to any centre, and current staff can sign in on the \"For staff\" page."
+  },
+
+  quick_contact_label: { ru: "Быстрая связь", kk: "Жылдам байланыс", en: "Quick contact" },
+  quick_contact_whatsapp: { ru: "Написать в WhatsApp", kk: "WhatsApp-қа жазу", en: "Message on WhatsApp" },
+  quick_contact_telegram: { ru: "Написать в Telegram", kk: "Telegram-ға жазу", en: "Message on Telegram" },
+
   footer_text: { ru: "Поддержка детей, семей, специалистов и инклюзивных социальных проектов.", kk: "Балаларға, отбасыларға, мамандарға және инклюзивті әлеуметтік жобаларға қолдау.", en: "Supporting children, families, specialists and inclusive social projects." },
   footer_nav: { ru: "Навигация", kk: "Навигация", en: "Navigation" },
   footer_contact: { ru: "Контакты", kk: "Байланыс", en: "Contacts" },
@@ -253,6 +289,9 @@ function applyTranslations() {
   document.querySelectorAll("[data-i18n]").forEach((node) => {
     node.textContent = tr(node.dataset.i18n);
   });
+  document.querySelectorAll("[data-i18n-aria]").forEach((node) => {
+    node.setAttribute("aria-label", tr(node.dataset.i18nAria));
+  });
   document.querySelectorAll(".lang-btn").forEach((button) => {
     button.classList.toggle("active", button.dataset.lang === getLang());
   });
@@ -305,7 +344,31 @@ function initMenus() {
       }
     });
   }
+
+  const quick = document.querySelector(".quick-contact");
+  const quickToggle = document.querySelector(".quick-contact-toggle");
+  if (quick && quickToggle) {
+    quickToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = quick.classList.toggle("is-open");
+      quickToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    document.addEventListener("click", (event) => {
+      if (!quick.contains(event.target)) {
+        quick.classList.remove("is-open");
+        quickToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        quick.classList.remove("is-open");
+        quickToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 }
+
+const NO_AMOUNT_ACTIONS = ["help", "volunteer"];
 
 function initModal() {
   const modal = document.getElementById("modal");
@@ -318,7 +381,7 @@ function initModal() {
   function open(action) {
     title.textContent = modalText(action, "title");
     text.textContent = modalText(action, "text");
-    if (amount) amount.hidden = !MODAL_COPY[action]?.amount;
+    if (amount) amount.hidden = NO_AMOUNT_ACTIONS.includes(action);
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("is-locked");
@@ -349,9 +412,80 @@ function initModal() {
   }
 }
 
+function formatCounterNumber(value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+function animateCounter(el) {
+  const raw = el.textContent.trim();
+  const match = raw.match(/^([\d\s]+)(.*)$/);
+  if (!match) return;
+
+  const target = parseInt(match[1].replace(/\s+/g, ""), 10);
+  const suffix = match[2] || "";
+  if (isNaN(target)) return;
+
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) {
+    el.textContent = formatCounterNumber(target) + suffix;
+    return;
+  }
+
+  const duration = 1700;
+  const startTime = performance.now();
+
+  el.textContent = "0";
+
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutQuart(progress);
+    const current = Math.floor(target * eased);
+
+    if (progress >= 1) {
+      el.textContent = formatCounterNumber(target) + suffix;
+      return;
+    }
+
+    el.textContent = formatCounterNumber(current);
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll(".counter");
+  if (!counters.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    counters.forEach(animateCounter);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  counters.forEach((el) => observer.observe(el));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderLangSwitch();
   applyTranslations();
   initMenus();
   initModal();
+  initCounters();
 });
