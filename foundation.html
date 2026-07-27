@@ -671,6 +671,7 @@
   <div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="modal__dialog"><button class="modal__close" type="button" data-close-modal aria-label="Закрыть"><svg class="icon"><use href="#i-close"/></svg></button><div id="detailContent"></div></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="/assets/eventum-api.js"></script>
   <script>
     window.URPAQ_CONFIG = {
       paymentUrl: "",
@@ -707,7 +708,7 @@
         form:{name:"Имя",phone:"Номер телефона",topic:"Тема обращения",message:"Комментарий",consent:"Согласен(на) на обработку данных для ответа на обращение.",send:"Отправить заявку"},
         instagram:{title:"Последние публикации фонда",text:"Новости центров, обучение и события фонда в официальном профиле.",note:"Официальные публикации фонда отображаются напрямую из Instagram.",open:"Открыть Instagram"},
         footer:{about:"Поддержка детей, подростков и взрослых с ментальными нарушениями, их семей и специалистов.",navigation:"Навигация",participate:"Участие",parents:"Материалы родителям",specialists:"Для специалистов",portalText:"Закрытый рабочий портал для команды центров.",portal:"Войти в портал",disclaimer:"Информация на сайте не заменяет индивидуальную консультацию специалиста."},
-        messages:{whatsApp:"Откроется WhatsApp с подготовленным сообщением.",payment:"Безопасная платёжная ссылка ещё не подключена. Открываем WhatsApp администратора.",readMore:"Материал готовится редакцией фонда.",feedError:"Не удалось загрузить ленту; откройте официальный профиль Instagram."}
+        messages:{whatsApp:"Откроется WhatsApp с подготовленным сообщением.",payment:"Безопасная платёжная ссылка ещё не подключена. Открываем WhatsApp администратора.",readMore:"Материал готовится редакцией фонда.",feedError:"Не удалось загрузить ленту; откройте официальный профиль Instagram.",requestSaved:"Заявка принята. Администратор свяжется с вами.",donationSaved:"Спасибо! Пожертвование зарегистрировано.",donorName:"Укажите имя или выберите «Анонимно»."}
       },
       kk:{
         skip:"Мазмұнға өту",top:{location:"Ақтөбе, Қазақстан"},brand:{sub:"қоғамдық қор"},
@@ -732,7 +733,7 @@
         form:{name:"Аты",phone:"Телефон нөмірі",topic:"Өтініш тақырыбы",message:"Түсініктеме",consent:"Өтінішке жауап беру үшін деректерді өңдеуге келісемін.",send:"Өтінімді жіберу"},
         instagram:{title:"Қордың соңғы жарияланымдары",text:"Орталық жаңалықтары, оқу және қор іс-шаралары ресми парақшада.",note:"Қордың ресми жарияланымдары Instagram-нан тікелей көрсетіледі.",open:"Instagram ашу"},
         footer:{about:"Менталдық ерекшеліктері бар балаларды, жасөспірімдерді, ересектерді, олардың отбасылары мен мамандарын қолдау.",navigation:"Навигация",participate:"Қатысу",parents:"Ата-аналарға материалдар",specialists:"Мамандарға",portalText:"Орталық командасына арналған жабық жұмыс порталы.",portal:"Порталға кіру",disclaimer:"Сайттағы ақпарат маманның жеке кеңесін алмастырмайды."},
-        messages:{whatsApp:"Дайын хабарламасы бар WhatsApp ашылады.",payment:"Қауіпсіз төлем сілтемесі әлі қосылмаған. Әкімшінің WhatsApp-ын ашамыз.",readMore:"Материалды қор редакциясы дайындап жатыр.",feedError:"Лентаны жүктеу мүмкін болмады; ресми Instagram профилін ашыңыз."}
+        messages:{requestSaved:"Өтінім қабылданды. Әкімші сізбен байланысады.",donationSaved:"Рақмет! Қайырымдылық тіркелді.",donorName:"Атыңызды көрсетіңіз немесе «Анонимді» таңдаңыз.",whatsApp:"Дайын хабарламасы бар WhatsApp ашылады.",payment:"Қауіпсіз төлем сілтемесі әлі қосылмаған. Әкімшінің WhatsApp-ын ашамыз.",readMore:"Материалды қор редакциясы дайындап жатыр.",feedError:"Лентаны жүктеу мүмкін болмады; ресми Instagram профилін ашыңыз."}
       },
       en:{
         skip:"Skip to content",top:{location:"Aktobe, Kazakhstan"},brand:{sub:"public foundation"},
@@ -757,7 +758,7 @@
         form:{name:"Name",phone:"Phone number",topic:"Topic",message:"Message",consent:"I consent to data processing so the foundation can respond to my request.",send:"Send request"},
         instagram:{title:"Latest foundation posts",text:"Center news, training and foundation events in the official profile.",note:"Official foundation posts are displayed directly from Instagram.",open:"Open Instagram"},
         footer:{about:"Support for children, teenagers and adults with mental and developmental disabilities, their families, and professionals.",navigation:"Navigation",participate:"Get involved",parents:"Resources for parents",specialists:"For specialists",portalText:"A private working portal for center staff.",portal:"Open staff portal",disclaimer:"Information on this website does not replace an individual professional consultation."},
-        messages:{whatsApp:"WhatsApp will open with a prepared message.",payment:"The secure payment link is not connected yet. Opening the administrator’s WhatsApp.",readMore:"The foundation’s editorial team is preparing this article.",feedError:"The feed could not be loaded; please open the official Instagram profile."}
+        messages:{requestSaved:"Request received. The administrator will contact you.",donationSaved:"Thank you! Your donation has been registered.",donorName:"Enter a name or choose “Anonymous”.",whatsApp:"WhatsApp will open with a prepared message.",payment:"The secure payment link is not connected yet. Opening the administrator’s WhatsApp.",readMore:"The foundation’s editorial team is preparing this article.",feedError:"The feed could not be loaded; please open the official Instagram profile."}
       }
     };
 
@@ -1177,7 +1178,7 @@
       q("#joinOptions").innerHTML=d.joinOptions.map((x,i)=>`<button class="join-option ${i===0?"active":""}" type="button" data-join-option="${i}">${I(x.icon)}${x.label}</button>`).join("");
       q("#blogGrid").innerHTML=d.blog.map((x,i)=>`<article class="article"><div class="article__visual">${I(x.icon)}</div><div class="article__body"><span class="article__tag">${x.tag}</span><h3>${x.title}</h3><p>${x.text}</p><button type="button" data-article="${i}">${tr("blog.open")}${I("arrow")}</button></div></article>`).join("");
       q("#newsList").innerHTML=d.news.map((x,i)=>`<article class="news-item" data-order="0${i+1}"><div class="news-item__meta"><time>${x.label}</time><span>Urpaq Inclusive</span></div><div class="news-item__content"><h3>${x.title}</h3><p>${x.text}</p>${x.href?`<a class="news-item__link" href="${x.href}" target="_blank" rel="noopener"><span>${x.link}</span>${I("arrow")}</a>`:""}</div></article>`).join("");
-      q("#needsList").innerHTML=d.needs.map(x=>`<div class="need">${I("check")}<span>${x}</span></div>`).join("");q("#donationNeed").innerHTML=d.needs.map(x=>`<option>${x}</option>`).join("");q("#contactTopic").innerHTML=d.topics.map(x=>`<option>${x}</option>`).join("");
+      q("#needsList").innerHTML=d.needs.map(x=>`<div class="need">${I("check")}<span>${x}</span></div>`).join("");const NEED_CODES=["therapy-access","sensory-equipment","playground","greenhouse","scholarships"];q("#donationNeed").innerHTML=d.needs.map((x,i)=>`<option data-code="${NEED_CODES[i]||""}">${x}</option>`).join("");q("#contactTopic").innerHTML=d.topics.map(x=>`<option>${x}</option>`).join("");
       renderFaq();renderInstagramPreview();updateInstagramState();if(instagramExpanded){instagramLoaded=false;q("#instagramGrid").replaceChildren();loadInstagram()}bindDynamic();
     }
     function bindDynamic(){
@@ -1260,9 +1261,78 @@
     qa("[data-close-modal]").forEach(b=>b.addEventListener("click",()=>closeModal(b.closest(".modal"))));qa(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModal(m)}));document.addEventListener("keydown",e=>{trapModalFocus(e);if(e.key==="Escape"){qa(".modal.open").forEach(closeModal);closeMenu()}});
     qa(".amount").forEach(b=>b.addEventListener("click",()=>{const custom=b.dataset.amount==="custom";qa(".amount").forEach(x=>x.classList.remove("active"));b.classList.add("active");q("#customAmount").classList.toggle("visible",custom);q("#customAmountInput").required=custom;if(custom)setTimeout(()=>q("#customAmountInput").focus(),80)}));
     qa('input[name="visibility"]').forEach(r=>r.addEventListener("change",()=>{q("#donorFields").style.display=r.value==="anonymous"&&r.checked?"none":"grid"}));
-    q("#donationForm").addEventListener("submit",e=>{e.preventDefault();const picked=q(".amount.active").dataset.amount,amount=picked==="custom"?q("#customAmountInput").value:picked,need=q("#donationNeed").value,visibility=q('input[name="visibility"]:checked'),visibilityLabel=q("span",visibility.closest(".choice")).textContent,name=q("#donorName").value||"—",message=`Urpaq Inclusive — ${tr("whatsapp.donation")}\n${tr("whatsapp.amount")}: $${amount}\n${tr("whatsapp.direction")}: ${need}\n${tr("whatsapp.publication")}: ${visibilityLabel}\n${tr("whatsapp.name")}: ${name}`;if(window.URPAQ_CONFIG.paymentUrl){try{const u=new URL(window.URPAQ_CONFIG.paymentUrl);if(u.protocol!=="https:")throw Error();u.searchParams.set("amount",amount);u.searchParams.set("purpose",need);u.searchParams.set("visibility",visibility.value);window.open(u,"_blank","noopener")}catch{showToast(tr("messages.payment"));openWhatsApp(message)}}else{showToast(tr("messages.payment"));openWhatsApp(message)}});
-    q("#contactForm").addEventListener("submit",e=>{e.preventDefault();openWhatsApp(`Urpaq Inclusive — ${tr("whatsapp.consultation")}\n${tr("whatsapp.name")}: ${q("#contactName").value}\n${tr("whatsapp.phone")}: ${q("#contactPhone").value}\n${tr("whatsapp.topic")}: ${q("#contactTopic").value}\n${tr("whatsapp.comment")}: ${q("#contactMessage").value||"—"}`);showToast(tr("messages.whatsApp"))});
-    q("#joinForm").addEventListener("submit",e=>{e.preventDefault();openWhatsApp(`Urpaq Inclusive — ${tr("whatsapp.participation")}\n${tr("whatsapp.format")}: ${joinType}\n${tr("whatsapp.name")}: ${q("#joinName").value}\n${tr("whatsapp.phone")}: ${q("#joinPhone").value}\n${tr("whatsapp.organization")}: ${q("#joinOrg").value||"—"}\n${tr("whatsapp.comment")}: ${q("#joinMessage").value||"—"}`);showToast(tr("messages.whatsApp"))});
+    q("#donationForm").addEventListener("submit",async e=>{e.preventDefault();
+      const btn=q('button[type="submit"]',e.target),consent=q(".consent input",e.target);
+      const picked=q(".amount.active").dataset.amount,
+        amount=Number(picked==="custom"?q("#customAmountInput").value:picked),
+        needSelect=q("#donationNeed"),
+        need=needSelect.value,
+        directionCode=needSelect.selectedOptions[0]?.dataset.code||null,
+        visibility=q('input[name="visibility"]:checked'),
+        visibilityLabel=q("span",visibility.closest(".choice")).textContent,
+        anonymous=visibility.value==="anonymous",
+        name=anonymous?null:(q("#donorName").value.trim()||null);
+      const message=`Urpaq Inclusive — ${tr("whatsapp.donation")}\n${tr("whatsapp.amount")}: $${amount}\n${tr("whatsapp.direction")}: ${need}\n${tr("whatsapp.publication")}: ${visibilityLabel}\n${tr("whatsapp.name")}: ${name||"—"}`;
+      if(!anonymous&&!name){showToast(tr("messages.donorName"));return}
+      if(btn)btn.disabled=true;
+      try{
+        // Запись о намерении сохраняется ДО перехода к оплате: иначе успешный платёж,
+        // на котором браузер закрылся, некуда будет привязать.
+        const res=await EventumAPI.createDonation({amount,currency:"USD",direction:directionCode,
+          donor_name:name,donor_email:q("#donorEmail").value.trim()||null,
+          visibility:anonymous?"anonymous":"public",locale:lang,
+          consent:!!(consent&&consent.checked)});
+        if(res.payment_ready&&res.payment_url){
+          const u=new URL(res.payment_url);
+          if(u.protocol!=="https:")throw new Error("insecure");
+          u.searchParams.set("amount",amount);u.searchParams.set("reference",res.reference_code);
+          window.open(u,"_blank","noopener");
+        }else{
+          // Платёжный оператор не подключён — сайт честно говорит об этом,
+          // а не изображает принятый платёж.
+          showToast(`${tr("messages.donationSaved")} № ${res.reference_code}`);
+          openWhatsApp(`${message}\n№ ${res.reference_code}`);
+        }
+      }catch(err){
+        showToast(err&&err.status?err.detail:tr("messages.payment"));
+        if(!err||!err.status)openWhatsApp(message);
+      }finally{if(btn)btn.disabled=false}
+    });
+    q("#contactForm").addEventListener("submit",async e=>{e.preventDefault();
+      const btn=q('button[type="submit"]',e.target),consent=q(".consent input",e.target);
+      const payload={name:q("#contactName").value.trim(),phone:q("#contactPhone").value.trim(),
+        topic:q("#contactTopic").value,message:q("#contactMessage").value.trim()||null,
+        locale:lang,consent:!!(consent&&consent.checked),source_page:location.pathname+location.hash};
+      const fallback=`Urpaq Inclusive — ${tr("whatsapp.consultation")}\n${tr("whatsapp.name")}: ${payload.name}\n${tr("whatsapp.phone")}: ${payload.phone}\n${tr("whatsapp.topic")}: ${payload.topic}\n${tr("whatsapp.comment")}: ${payload.message||"—"}`;
+      if(btn)btn.disabled=true;
+      try{
+        const res=await EventumAPI.submitContact(payload);
+        e.target.reset();
+        showToast(`${tr("messages.requestSaved")} № ${res.ticket}`);
+      }catch(err){
+        // Сервер недоступен — заявка не должна пропасть: открываем WhatsApp, как раньше.
+        showToast(err&&err.status?err.detail:tr("messages.whatsApp"));
+        if(!err||!err.status)openWhatsApp(fallback);
+      }finally{if(btn)btn.disabled=false}
+    });
+    q("#joinForm").addEventListener("submit",async e=>{e.preventDefault();
+      const btn=q('button[type="submit"]',e.target),consent=q(".consent input",e.target);
+      const kindMap={"Спонсор":"sponsor","Партнёр":"partner","Информационный партнёр":"media_partner","Волонтёр":"volunteer"};
+      const payload={name:q("#joinName").value.trim(),phone:q("#joinPhone").value.trim(),
+        kind:kindMap[joinType]||"other",organization:q("#joinOrg").value.trim()||null,
+        message:q("#joinMessage").value.trim()||null,locale:lang,
+        consent:!!(consent&&consent.checked)};
+      const fallback=`Urpaq Inclusive — ${tr("whatsapp.participation")}\n${tr("whatsapp.format")}: ${joinType}\n${tr("whatsapp.name")}: ${payload.name}\n${tr("whatsapp.phone")}: ${payload.phone}\n${tr("whatsapp.organization")}: ${payload.organization||"—"}\n${tr("whatsapp.comment")}: ${payload.message||"—"}`;
+      if(btn)btn.disabled=true;
+      try{
+        const res=await EventumAPI.submitJoin(payload);
+        e.target.reset();
+        showToast(`${tr("messages.requestSaved")} № ${res.ticket}`);
+      }catch(err){
+        showToast(err&&err.status?err.detail:tr("messages.whatsApp"));
+        if(!err||!err.status)openWhatsApp(fallback);
+      }finally{if(btn)btn.disabled=false}
+    });
     qa("[data-legal]").forEach(b=>b.addEventListener("click",()=>openLegal(b.dataset.legal)));
     qa("[data-help]").forEach(b=>b.addEventListener("click",()=>q("#contacts").scrollIntoView({behavior:"smooth"})));qa("[data-open-donation]").forEach(b=>b.addEventListener("click",()=>q("#donate").scrollIntoView({behavior:"smooth"})));qa("[data-internship]").forEach(b=>b.addEventListener("click",()=>openWhatsApp(tr("whatsapp.internship"))));qa("[data-volunteer]").forEach(b=>b.addEventListener("click",()=>openWhatsApp(tr("whatsapp.volunteer"))));
     q("#year").textContent=new Date().getFullYear();setLanguage(lang,false);initSectionTracker();initSectionReveal();initLazyMap();
