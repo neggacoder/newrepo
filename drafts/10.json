@@ -1,0 +1,117 @@
+{
+  "id": 10,
+  "name": "братюня",
+  "description": "Записано в режиме «Обучение» (id 10)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Прочее",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(10) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Шкалы оценки состояния пациента",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(10) > ul:nth-child(2) > li:nth-child(13) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Добавить",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(3) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Индекс Бартела",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(45) > div:nth-child(2) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "не нуждается в помощи, способен самостоятельно пользоваться всеми необходимыми с",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > label:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(4) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(6) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(8) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(10) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(12) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(14) > div:nth-child(1) > div:nth-child(5) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/scale/addScale",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(1) > form:nth-child(1) > div:nth-child(7) > div:nth-child(16) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > input:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      }
+    ]
+  },
+  "skill": {
+    "name": "братюня",
+    "triggers": [
+      "добавь индекс бартела",
+      "заполни шкалу бартела",
+      "оценка по бартелу",
+      "индекс бартела"
+    ],
+    "slots": []
+  }
+}

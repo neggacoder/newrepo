@@ -1,0 +1,61 @@
+{
+  "id": 9,
+  "name": "Индекс Бартела",
+  "description": "Записано в режиме «Обучение» (id 9)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Прочее",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(10) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Шкалы оценки состояния пациента",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(10) > ul:nth-child(2) > li:nth-child(13) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Добавить",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(3) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "",
+        "method": "click",
+        "selector": "body > div:nth-child(61) > div:nth-child(2) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(2) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Индекс Бартела",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(61) > div:nth-child(2) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      }
+    ]
+  },
+  "skill": {
+    "name": "Индекс Бартела",
+    "triggers": [
+      "заполни индекс бартела",
+      "добавь индекс бартела",
+      "открой индекс бартела",
+      "индекс бартела"
+    ],
+    "slots": []
+  }
+}

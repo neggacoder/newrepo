@@ -1,0 +1,38 @@
+{
+  "id": 12,
+  "name": "выписной эпикриз",
+  "description": "Записано в режиме «Обучение» (id 12)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Добавить",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Выписной эпикриз",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > ul:nth-child(2) > li:nth-child(11) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      }
+    ]
+  },
+  "skill": {
+    "name": "выписной эпикриз",
+    "triggers": [
+      "создай выписной эпикриз",
+      "добавь выписной эпикриз",
+      "выписной эпикриз",
+      "открой выписной эпикриз",
+      "заполни выписной эпикриз"
+    ],
+    "slots": []
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": 8,
+  "name": "Заполнить жалобы",
+  "description": "Записано в режиме «Обучение» (id 8)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/doctor",
+        "description": "Выбрать",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Медицинские записи",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Изменить",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(4) > td:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > a:nth-child(3)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Жалобы на головные боли. блаблабла",
+        "method": "write",
+        "selector": "#editor_82701714",
+        "type_write": "write",
+        "value": "Жалобы на головные боли. блаблабла\n"
+      }
+    ]
+  },
+  "skill": {
+    "name": "Заполнить жалобы",
+    "triggers": [
+      "заполни жалобы",
+      "внести жалобы",
+      "добавь жалобы",
+      "укажи жалобы",
+      "записать жалобы"
+    ],
+    "slots": [
+      {
+        "step": 3,
+        "key": "complaints",
+        "label": "жалобы",
+        "skeleton": "Жалобы на … …\n"
+      }
+    ]
+  }
+}

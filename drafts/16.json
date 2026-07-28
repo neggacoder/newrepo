@@ -1,0 +1,53 @@
+{
+  "id": 16,
+  "name": "консультации специалистов",
+  "description": "Записано в режиме «Обучение» (id 16)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Консультации специалистов",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(3) > div:nth-child(2) > div:nth-child(3) > a:nth-child(8)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Шаблон",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Выбрать шаблон",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "консультации специалистов",
+        "method": "click",
+        "selector": "body > div:nth-child(27) > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(19) > td:nth-child(1) > div:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      }
+    ]
+  },
+  "skill": {
+    "name": "консультации специалистов",
+    "triggers": [
+      "заполни консультации специалистов",
+      "добавь консультации специалистов",
+      "консультации специалистов",
+      "открой консультации специалистов",
+      "шаблон консультации специалистов"
+    ],
+    "slots": []
+  }
+}

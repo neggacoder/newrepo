@@ -1,0 +1,78 @@
+{
+  "id": 2,
+  "name": "первичный осмотр",
+  "description": "Записано в режиме «Обучение» (id 2)",
+  "example_output": {
+    "template": "recorded",
+    "steps": [
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Медицинские записи",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Добавить",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/medicalHistory/medicalHistory",
+        "description": "Первичный осмотр",
+        "method": "click",
+        "navigates": true,
+        "selector": "body > div:nth-child(3) > div:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Нет",
+        "method": "click",
+        "selector": "body > div:nth-child(47) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Шаблон",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "Выбрать шаблон",
+        "method": "click",
+        "selector": "body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      },
+      {
+        "address": "https://hospital-akt.dmed.kz/patientMedicalRecord/editMedicalRecord",
+        "description": "G93.2 Жалобы",
+        "method": "click",
+        "selector": "body > div:nth-child(27) > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(11) > td:nth-child(1) > div:nth-child(1)",
+        "type_write": "write",
+        "value": null
+      }
+    ]
+  },
+  "skill": {
+    "name": "первичный осмотр",
+    "triggers": [
+      "записать первичный осмотр",
+      "создать первичный осмотр",
+      "добавить первичный осмотр",
+      "новый первичный осмотр",
+      "оформить первичный осмотр"
+    ],
+    "slots": []
+  }
+}

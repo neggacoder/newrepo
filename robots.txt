@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /staff
-Disallow: /staff-portal.html
-Sitemap: https://urpaq-inclusive-foundation.nsrinstitution.chatgpt.site/sitemap.xml
