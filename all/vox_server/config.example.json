@@ -1,0 +1,30 @@
+{
+  "host": "127.0.0.1",
+  "port": 8000,
+
+  "provider": "qwen",
+  "openai_api_key": "",
+  "openai_model": "gpt-4o",
+  "deepseek_api_key": "",
+  "deepseek_model": "deepseek-chat",
+  "ollama_url": "http://127.0.0.1:11434",
+  "ollama_model": "qwen2.5-coder:14b",
+  "request_timeout": 120,
+  "monthly_budget_usd": 0,
+
+  "whisper_model": "whisper-1",
+  "whisper_language": "ru",
+
+  "ocr_langs": "kaz+rus+eng",
+  "tesseract_cmd": "C:\\Program Files\\Tesseract-OCR\\tesseract.exe",
+  "macro_paste": true,
+
+  "openai_prices": {
+    "gpt-4o": { "input": 2.50, "output": 10.00 },
+    "gpt-4o-mini": { "input": 0.15, "output": 0.60 }
+  },
+  "deepseek_prices": {
+    "deepseek-chat": { "input": 0.27, "output": 1.10 },
+    "deepseek-reasoner": { "input": 0.55, "output": 2.19 }
+  }
+}

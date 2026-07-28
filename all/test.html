@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рандомный Сайт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Куда отправимся?</h1>
+    <button onclick="openRandomSite()">Открыть случайный сайт</button>
+</div>
+
+<script>
+    // Список сайтов для перехода
+    const sites = [
+        'https://www.wikipedia.org'
+    ];
+
+    function openRandomSite() {
+        // Выбираем случайную ссылку из массива
+        const randomIndex = Math.floor(Math.random() * sites.length);
+        const randomUrl = sites[randomIndex];
+        
+        // Открываем сайт в новой вкладке (_blank)
+        window.open(randomUrl, '_blank');
+    }
+</script>
+
+</body>
+</html>

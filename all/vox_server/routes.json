@@ -1,0 +1,75 @@
+[
+  {
+    "//": "Карта страниц Damumed. name/description видит ПЕРВЫЙ ИИ (роутер) — больше он не видит ничего.",
+    "//tab_class": "Класс активного пункта ul.mh-navigation. Так узнаём, где врач сейчас: URL у SPA не меняется.",
+    "//path": "Шаги, чтобы попасть на страницу. Их приклеивает КОД, а не модель.",
+    "//elements_in": "Файл в Scaners/ со списком элементов страницы для ВТОРОГО ИИ. Нет файла — берём живой скан.",
+    "site": "hospital-akt.dmed.kz",
+    "pages": [
+      {
+        "key": "medical_records",
+        "name": "Медицинские записи",
+        "description": "список осмотров, дневников, выписок; отсюда открывают и создают мед. запись",
+        "tab_class": "mh-medicalrecords",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-medicalrecords a", "description": "вкладка «Медицинские записи»" }],
+        "elements_in": "medical_records.json"
+      },
+      {
+        "key": "diaries",
+        "name": "Дневниковые записи",
+        "description": "ежедневные дневники наблюдения за пациентом",
+        "tab_class": "mh-diaries",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-diaries a", "description": "вкладка «Дневниковые записи»" }],
+        "elements_in": "diaries.json"
+      },
+      {
+        "key": "assignments",
+        "name": "Назначения",
+        "description": "лекарственные и процедурные назначения пациенту",
+        "tab_class": "mh-assignments",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-assignments a", "description": "вкладка «Назначения»" }],
+        "elements_in": "assignments.json"
+      },
+      {
+        "key": "diagnoses",
+        "name": "Диагнозы",
+        "description": "диагнозы пациента по МКБ-10",
+        "tab_class": "mh-diagnoses",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-diagnoses a", "description": "вкладка «Диагнозы»" }],
+        "elements_in": "diagnoses.json"
+      },
+      {
+        "key": "operations",
+        "name": "Операции",
+        "description": "проведённые и запланированные операции",
+        "tab_class": "mh-operations",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-operations a", "description": "вкладка «Операции»" }],
+        "elements_in": "operations.json"
+      },
+      {
+        "key": "health_indicators",
+        "name": "Ввод показателей здоровья",
+        "description": "температура, давление, пульс, вес и прочие витальные показатели",
+        "tab_class": "mh-healthIndicators",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-healthIndicators a", "description": "вкладка «Ввод показателей здоровья»" }],
+        "elements_in": "health_indicators.json"
+      },
+      {
+        "key": "documents",
+        "name": "Документы",
+        "description": "документы истории болезни",
+        "tab_class": "mh-documents",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-documents a", "description": "вкладка «Документы»" }],
+        "elements_in": "documents.json"
+      },
+      {
+        "key": "prescriptions",
+        "name": "Рецепты",
+        "description": "выписка рецептов на лекарственные препараты",
+        "tab_class": "mh-Prescriptions",
+        "path": [{ "selector": "ul.mh-navigation.big-screen .mh-Prescriptions a", "description": "вкладка «Рецепты»" }],
+        "elements_in": "prescriptions.json"
+      }
+    ]
+  }
+]

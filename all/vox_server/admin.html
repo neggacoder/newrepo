@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suerte — Админ-панель</title>
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<!-- ЭКРАН ЗАГРУЗКИ -->
+<div id="screen-loading" class="screen center"><div class="spinner"></div></div>
+
+<!-- FIRST-RUN SETUP -->
+<div id="screen-setup" class="screen center hidden">
+  <form class="auth-card" id="setup-form">
+    <div class="brand"><span class="logo"></span><h1>Первичная настройка</h1></div>
+    <p class="sub">Задайте пароль и PIN администратора. Они сохранятся только в виде argon2-хеша.</p>
+    <label>Пароль <small>минимум 8 символов</small>
+      <input type="password" id="setup-pass" autocomplete="new-password" required></label>
+    <label>Повтор пароля
+      <input type="password" id="setup-pass2" autocomplete="new-password" required></label>
+    <label>PIN <small>4–8 цифр</small>
+      <input type="password" id="setup-pin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required></label>
+    <div class="err" id="setup-err"></div>
+    <button type="submit" class="btn primary">Создать администратора</button>
+  </form>
+</div>
+
+<!-- LOGIN -->
+<div id="screen-login" class="screen center hidden">
+  <form class="auth-card" id="login-form">
+    <div class="brand"><span class="logo"></span><h1>Вход в админ-панель</h1></div>
+    <label>Пароль<input type="password" id="login-pass" autocomplete="current-password" required></label>
+    <label>PIN<input type="password" id="login-pin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required></label>
+    <div class="err" id="login-err"></div>
+    <button type="submit" class="btn primary" id="login-btn">Войти</button>
+  </form>
+</div>
+
+<!-- DASHBOARD -->
+<div id="screen-dash" class="screen hidden">
+  <header class="topbar">
+    <div class="brand"><span class="logo"></span><h1>Suerte — Админ-панель</h1></div>
+    <div class="top-right">
+      <span id="svc-badge" class="badge">—</span>
+      <button class="btn ghost" id="btn-logout">Выйти</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-sec="control">Управление</button>
+    <button class="tab" data-sec="ai">Модели ИИ</button>
+    <button class="tab" data-sec="logs">Логи</button>
+    <button class="tab" data-sec="usage">Токены</button>
+    <button class="tab" data-sec="files">Файлы</button>
+    <button class="tab" data-sec="security">Безопасность</button>
+  </nav>
+
+  <main>
+    <section class="sec active" data-sec="control">
+      <div class="card">
+        <h3>Служба aqbobek.service</h3>
+        <p class="muted">Статус: <span id="svc-active">—</span></p>
+        <div class="btn-row">
+          <button class="btn warn" data-svc="restart">Перезапустить</button>
+          <button class="btn danger" data-svc="stop">Остановить</button>
+          <button class="btn ok" data-svc="start">Запустить</button>
+          <button class="btn ghost" id="btn-refresh-status">Обновить</button>
+        </div>
+        <div class="note" id="svc-note"></div>
+      </div>
+    </section>
+
+    <section class="sec" data-sec="ai">
+      <div class="card">
+        <div class="row-between"><h3>Провайдер и модели ИИ</h3>
+          <button class="btn ghost" id="btn-refresh-ai">Обновить</button></div>
+        <p class="muted">Изменения применяются сразу (без перезапуска службы) и сохраняются в config.json.</p>
+        <form id="ai-form">
+          <label>Активный провайдер (используется по умолчанию в /command и /ocr-template)
+            <select id="ai-provider">
+              <option value="qwen">Qwen (локально, Ollama)</option>
+              <option value="openai">OpenAI</option>
+              <option value="deepseek">DeepSeek</option>
+            </select>
+          </label>
+
+          <h4 class="grp-title">Qwen / Ollama (локальная модель)</h4>
+          <label>Ollama URL<input type="text" id="ai-ollama-url" placeholder="http://127.0.0.1:11434"></label>
+          <label>Модель Ollama<input type="text" id="ai-ollama-model" placeholder="qwen2.5-coder:14b"></label>
+
+          <h4 class="grp-title">OpenAI</h4>
+          <label>Модель OpenAI<input type="text" id="ai-openai-model" placeholder="gpt-4o"></label>
+          <label>API-ключ OpenAI <small id="ai-openai-key-note"></small>
+            <input type="password" id="ai-openai-key" placeholder="оставьте пустым, чтобы не менять" autocomplete="off"></label>
+
+          <h4 class="grp-title">DeepSeek</h4>
+          <label>Модель DeepSeek<input type="text" id="ai-deepseek-model" placeholder="deepseek-chat"></label>
+          <label>API-ключ DeepSeek <small id="ai-deepseek-key-note"></small>
+            <input type="password" id="ai-deepseek-key" placeholder="оставьте пустым, чтобы не менять" autocomplete="off"></label>
+
+          <h4 class="grp-title">Прочее</h4>
+          <label>Таймаут запроса к ИИ, сек<input type="number" id="ai-timeout" min="5" max="600"></label>
+
+          <div class="err" id="ai-err"></div>
+          <div class="note" id="ai-note"></div>
+          <button type="submit" class="btn primary">Сохранить</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="sec" data-sec="logs">
+      <div class="card">
+        <div class="row-between"><h3>journalctl — aqbobek.service</h3>
+          <div><label class="inline">Строк <input type="number" id="log-lines" value="200" min="10" max="2000"></label>
+          <button class="btn ghost" id="btn-refresh-logs">Обновить</button></div></div>
+        <pre id="log-out" class="logbox">—</pre>
+      </div>
+    </section>
+
+    <section class="sec" data-sec="usage">
+      <!-- Один ряд фильтров над всем, что он охватывает -->
+      <div class="filter-row">
+        <div class="seg" id="usage-period">
+          <button class="seg-btn" data-days="1">Сегодня</button>
+          <button class="seg-btn active" data-days="7">7 дней</button>
+          <button class="seg-btn" data-days="30">30 дней</button>
+          <button class="seg-btn" data-days="0">Всё время</button>
+        </div>
+        <button class="btn ghost" id="btn-refresh-usage">Обновить</button>
+      </div>
+
+      <div class="card">
+        <h3>Месячный бюджет</h3>
+        <div class="budget-head"><span id="budget-figures" class="muted">—</span></div>
+        <div class="budget-track"><div class="budget-bar" id="budget-bar"></div></div>
+        <form class="budget-form" id="budget-form">
+          <label class="inline">Лимит, $
+            <input type="number" id="budget-input" min="0" max="1000000" step="0.01" placeholder="0"></label>
+          <button class="btn ghost" type="submit">Сохранить</button>
+          <span class="note" id="budget-note"></span>
+        </form>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3>Затраты за период</h3>
+        <div class="usage-stats" id="usage-stats">—</div>
+        <div class="note" id="usage-total-note"></div>
+        <div class="note" id="usage-db-note"></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="row-between"><h3>Расход по дням</h3>
+          <div class="seg" id="chart-metric">
+            <button class="seg-btn active" data-metric="cost_usd">$</button>
+            <button class="seg-btn" data-metric="total_tokens">Токены</button>
+          </div>
+        </div>
+        <div id="usage-chart" class="chart"></div>
+        <div class="muted chart-caption" id="chart-caption"></div>
+        <details class="table-twin" id="chart-details">
+          <summary>Показать таблицей</summary>
+          <div class="table-wrap"><table class="tbl" id="chart-table">
+            <thead><tr><th>День</th><th class="num">Вызовы</th><th class="num">Токены</th><th class="num">Стоимость</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </details>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3>По моделям</h3>
+        <p class="muted">Клик по строке фильтрует журнал вызовов ниже.</p>
+        <div class="table-wrap"><table class="tbl" id="model-table">
+          <thead><tr>
+            <th>Провайдер</th><th>Модель</th><th class="num">Вызовы</th><th class="num">Prompt</th>
+            <th class="num">Completion</th><th class="num">Всего</th><th class="num">Стоимость</th><th>Доля</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="row-between"><h3>Журнал вызовов</h3>
+          <div class="calls-tools">
+            <select id="calls-provider" class="inp-sm">
+              <option value="">Все провайдеры</option>
+              <option value="openai">openai</option>
+              <option value="deepseek">deepseek</option>
+            </select>
+            <input type="search" id="calls-q" class="inp-sm" placeholder="Поиск по модели или источнику...">
+            <button class="btn ghost" id="btn-usage-csv">Экспорт CSV</button>
+          </div>
+        </div>
+        <div id="calls-filter-chip" class="chip-row"></div>
+        <div class="table-wrap"><table class="tbl" id="calls-table">
+          <thead><tr>
+            <th>Время</th><th>Провайдер</th><th>Модель</th><th>Источник</th><th class="num">Prompt</th>
+            <th class="num">Completion</th><th class="num">Всего</th><th class="num">Стоимость</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table></div>
+        <div class="pager">
+          <button class="btn ghost" id="calls-prev">Назад</button>
+          <span class="muted" id="calls-range">—</span>
+          <button class="btn ghost" id="calls-next">Вперёд</button>
+        </div>
+        <div class="note" id="calls-note"></div>
+      </div>
+    </section>
+
+    <section class="sec" data-sec="files">
+      <div class="card files-card">
+        <div class="file-browser">
+          <div class="row-between"><h3>Файлы проекта</h3><span id="file-path" class="muted">/</span></div>
+          <div id="file-list" class="file-list"></div>
+        </div>
+        <div class="file-editor">
+          <div class="row-between"><h3 id="edit-name">Выберите файл</h3>
+            <button class="btn primary" id="btn-save" disabled>Сохранить</button></div>
+          <textarea id="edit-area" spellcheck="false" placeholder="Содержимое файла..."></textarea>
+          <div class="note" id="edit-note"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" data-sec="security">
+      <div class="card">
+        <h3>Сменить пароль / PIN</h3>
+        <form id="chpw-form">
+          <label>Текущий пароль<input type="password" id="chpw-old" required></label>
+          <label>Новый пароль<input type="password" id="chpw-new"></label>
+          <label>Новый PIN <small>необязательно</small><input type="password" id="chpw-pin" inputmode="numeric"></label>
+          <div class="err" id="chpw-err"></div>
+          <button class="btn primary" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>

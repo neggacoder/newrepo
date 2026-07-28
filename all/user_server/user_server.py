@@ -1,0 +1,583 @@
+"""
+Suerte / Aqbobek — ЛОКАЛЬНЫЙ сервер (машина врача, Windows).
+──────────────────────────────────────────────────────────────────────────
+Работает рядом с браузером врача. Отвечает за то, что физически привязано к
+этой машине:
+    POST /ping         — проверка живости
+    POST /scan         — весь HTML страницы -> список элементов-кандидатов (JSON)
+    POST /macro        — набрать текст / нажать клавиши через pyAutoGui (writeByClick)
+    POST /ocr          — PDF / DOCX / картинка -> текст (сначала текстом, потом tesseract)
+    POST /patient/get  — карточка пациента по любому известному id
+    POST /patient/save — слить новые данные в карточку пациента
+    POST /template/save   — сохранить записанную в «Обучении» последовательность шагов
+    POST /template/list   — список сохранённых шаблонов
+    POST /template/delete — удалить шаблон по id
+
+Карточки пациентов (медицинские ПДн) лежат ТОЛЬКО здесь, на машине врача:
+каталог patients/ рядом с этим файлом. Главный сервер их не хранит.
+
+Тяжёлые зависимости (pyautogui, tesseract, fitz) импортируются лениво,
+чтобы сервер поднимался даже если что-то из них не установлено — так можно
+тестировать /scan без лишних зависимостей и т.д.
+
+Запуск:   python user_server.py       (или start_local.bat)
+Порт по умолчанию 8000 — совпадает с настройками расширения.
+"""
+
+import io
+import os
+import json
+import base64
+import tempfile
+import traceback
+
+from fastapi import FastAPI, UploadFile, File, Form, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+import uvicorn
+
+import patients        # карточки пациентов; тяжёлых зависимостей не тянет
+import ids_log         # журнал id пациентов (ids.jsonl); тоже без зависимостей
+import templates_store  # шаблоны, записанные в режиме «Обучение»
+
+# ───────────────────────────── КОНФИГ ─────────────────────────────
+HERE = os.path.dirname(os.path.abspath(__file__))
+CONFIG_PATH = os.path.join(HERE, "config.json")
+
+# Каталог карточек пациентов. Переопределяется через PATIENTS_DIR — этим
+# пользуются тесты, чтобы не писать в рабочий каталог врача.
+PATIENTS_DIR = os.environ.get("PATIENTS_DIR") or os.path.join(HERE, "patients")
+
+# Каталог шаблонов (записанных в режиме «Обучение»). Переопределяется через
+# TEMPLATES_DIR — этим пользуются тесты.
+TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR") or os.path.join(HERE, "templates")
+
+DEFAULT_CONFIG = {
+    "host": "127.0.0.1",
+    "port": 8000,
+    "provider": "qwen",                 # запасной, если расширение не прислало
+    "ocr_langs": "kaz+rus+eng",
+    "tesseract_cmd": "",                # напр. C:\\Program Files\\Tesseract-OCR\\tesseract.exe
+    "macro_paste": True                 # True: вставка из буфера (unicode); False: посимвольный ввод
+}
+
+
+def load_config():
+    cfg = dict(DEFAULT_CONFIG)
+    if os.path.exists(CONFIG_PATH):
+        try:
+            with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+                cfg.update(json.load(f))
+        except Exception as e:
+            print("[config] ошибка чтения config.json:", e)
+    # env перекрывает
+    if os.environ.get("TESSERACT_CMD"):
+        cfg["tesseract_cmd"] = os.environ["TESSERACT_CMD"]
+    return cfg
+
+
+CONFIG = load_config()
+
+app = FastAPI(title="Suerte Local Server", version="11.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],          # локальный сервер — только на этой машине
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ═══════════════════════════════ /ping ═══════════════════════════════
+@app.post("/ping")
+@app.get("/ping")
+async def ping():
+    return {"ok": True, "service": "suerte-local", "version": "11.0.0"}
+
+
+# ═══════════════════════ /patient/get, /patient/save ═════════════════
+# Карточка пациента: ФИО, заметки врача, последние мед. записи. Ключ —
+# patientAdmissionRegisterID; по medicalHistoryID карточка находится через
+# index.json (подробности — в docstring patients.py).
+@app.post("/patient/get")
+async def patient_get(request: Request):
+    body = await request.json()
+    ids = body.get("ids") or {}
+    try:
+        key = patients.resolve_key(ids, patients.load_index(PATIENTS_DIR))
+        if not key:
+            return {"found": False, "patient": None}
+        card = patients.load_card(key, PATIENTS_DIR)
+        if card is None:
+            return {"found": False, "patient": None}
+        return {"found": True, "patient": card}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"patient/get: {e}"})
+
+
+@app.post("/patient/save")
+async def patient_save(request: Request):
+    body = await request.json()
+    ids = body.get("ids") or {}
+    try:
+        key = patients.resolve_key(ids, patients.load_index(PATIENTS_DIR))
+        if not key:
+            # Ни patientAdmissionRegisterID, ни известного алиаса — писать некуда.
+            return {"ok": False, "reason": "нет идентификаторов пациента"}
+
+        old = patients.load_card(key, PATIENTS_DIR)
+        # Всё, что знаем об этом пациенте, идёт в алиасы: так карточка потом
+        # найдётся и со страницы, где в URL другой идентификатор.
+        aliases = {name: value for name, value in ids.items()
+                   if name != "patientAdmissionRegisterID" and value}
+        card = patients.merge_card(old, {
+            "key": key,
+            "aliases": aliases,
+            "full_name": body.get("full_name"),
+            "any_information": body.get("any_information"),
+            "records": body.get("records"),
+        })
+        patients.save_card(card, ids, PATIENTS_DIR)
+        return {"ok": True, "key": key}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"patient/save: {e}"})
+
+
+# ═══════════════════════════ /ids/save ═══════════════════════════════
+# Расширение само извлекает id из живого DOM (patient-ids.js) на странице
+# medicalHistory с активной вкладкой записей и присылает готовую запись.
+@app.post("/ids/save")
+async def ids_save(request: Request):
+    body = await request.json()
+    entry = body.get("entry") or {}
+    try:
+        if not ids_log.has_anchor(entry):
+            return {"ok": False, "reason": "нет идентификаторов пациента"}
+        changed = ids_log.remember(entry, PATIENTS_DIR)
+        return {"ok": True, "changed": changed}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"ids/save: {e}"})
+
+
+# ═══════════ /template/save, /template/list, /template/delete ════════
+# Шаблон — записанная в режиме «Обучение» на расширении последовательность
+# шагов UI (клик/ввод по селектору). Формат файла — см. templates_store.py
+# и server/templates/20.json.
+@app.post("/template/save")
+async def template_save(request: Request):
+    body = await request.json()
+    name = body.get("name")
+    steps = body.get("steps")
+    try:
+        if not steps:
+            return {"ok": False, "reason": "нет шагов"}
+        rec = templates_store.save(name or "Без имени", steps, TEMPLATES_DIR)
+        return {"ok": True, "id": rec["id"], "name": rec["name"]}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"template/save: {e}"})
+
+
+@app.post("/template/list")
+async def template_list(request: Request):
+    try:
+        return {"ok": True, "templates": templates_store.list_all(TEMPLATES_DIR)}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"template/list: {e}"})
+
+
+@app.post("/template/delete")
+async def template_delete(request: Request):
+    body = await request.json()
+    try:
+        deleted = templates_store.delete(int(body["id"]), TEMPLATES_DIR)
+        return {"ok": True, "deleted": deleted}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"template/delete: {e}"})
+
+
+# ═══════════════════════════════ /scan ═══════════════════════════════
+# «Шаблонный» сканер: разбирает HTML и возвращает список элементов-кандидатов
+# в формате действий главного сервера + текущее value. Особые эвристики под
+# конкретные сайты добавляются в SPECIAL_RULES (место оставлено намеренно).
+
+SPECIAL_RULES = [
+    # Пример правила (заполняется под конкретный сайт Damumed):
+    # {"match": "akt.dmed.kz", "selector": "#patient-search", "description": "Поиск пациента",
+    #  "method": "write", "type_write": "write"},
+]
+
+
+def _remember_patient_ids(html, url):
+    """Тихо журналируем id пациента со страницы (ids.jsonl, см. ids_log.py):
+    журнал — побочный эффект скана и ломать его не должен."""
+    try:
+        entry = ids_log.extract_ids(html, url)
+        if entry:
+            ids_log.remember(entry, PATIENTS_DIR)
+    except Exception:
+        traceback.print_exc()
+
+
+@app.post("/scan")
+async def scan(request: Request):
+    body = await request.json()
+    html = body.get("html", "")
+    values = body.get("values", {}) or {}
+    url = body.get("url", "")
+    _remember_patient_ids(html, url)
+    try:
+        elements = _scan_html(html, values, url)
+        # спец-правила для этого url
+        for rule in SPECIAL_RULES:
+            if rule.get("match") and rule["match"] in url:
+                elements.insert(0, {
+                    "description": rule.get("description", ""),
+                    "selector": rule.get("selector", ""),
+                    "method": rule.get("method", "click"),
+                    "type_write": rule.get("type_write", "write"),
+                    "value": values.get(rule.get("selector", ""), None),
+                    "address": url,
+                })
+        return {"url": url, "count": len(elements), "elements": elements}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"scan: {e}"})
+
+
+def _clean_text(s):
+    """Схлопывает пробелы/переносы строк (в т.ч. из вложенных <span>/<svg>) в одну строку."""
+    import re
+    return re.sub(r"\s+", " ", (s or "")).strip()
+
+
+def _scan_html(html, values, url):
+    import copy
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html, "html.parser")
+    out = []
+    seen = set()
+
+    def css_path(tag):
+        if tag.get("id"):
+            return "#" + tag.get("id")
+        parts = []
+        cur = tag
+        depth = 0
+        while cur is not None and getattr(cur, "name", None) and depth < 6:
+            name = cur.name
+            parent = cur.parent
+            if parent and getattr(parent, "find_all", None):
+                sibs = [c for c in parent.find_all(name, recursive=False)]
+                if len(sibs) > 1:
+                    idx = sibs.index(cur) + 1
+                    name += f":nth-of-type({idx})"
+            parts.insert(0, name)
+            if cur.get("id"):
+                parts[0] = "#" + cur.get("id")
+                break
+            cur = parent
+            depth += 1
+        return " > ".join(parts)
+
+    def onclick_selector(tag):
+        """Для кликабельных нон-семантических тегов (div/li/span с onclick, как
+        nav-item в сайдбаре) пробуем селектор по точному значению onclick — он
+        читаемее и устойчивее к перестановке соседних элементов, чем nth-of-type.
+        Используем, только если он однозначно указывает на один элемент."""
+        onclick = tag.get("onclick")
+        if not onclick:
+            return None
+        # onclick обычно в одинарных кавычках ('appointments') — оборачиваем
+        # селектор в двойные; если внутри всё же встретятся двойные (редко),
+        # используем одинарные и экранируем их внутри значения.
+        if '"' in onclick and "'" not in onclick:
+            quote = "'"
+            value = onclick.replace("'", "\\'")
+        else:
+            quote = '"'
+            value = onclick.replace('"', '\\"')
+        try:
+            sel = f'{tag.name}[onclick={quote}{value}{quote}]'
+            if len(soup.select(sel)) == 1:
+                return sel
+        except Exception:
+            pass
+        return None
+
+    def build_selector(tag):
+        if tag.get("id"):
+            return "#" + tag.get("id")
+        return onclick_selector(tag) or css_path(tag)
+
+    # [onclick] — ловит кликабельные div/li/span и т.п. (например, пункты меню
+    # вида <div class="nav-item" onclick="showTab('appointments')">...</div>),
+    # которые не входят ни в одну из семантических категорий выше.
+    selectors = "input, textarea, select, button, a[href], [role=button], [contenteditable=true], [onclick]"
+    for tag in soup.select(selectors):
+        name = tag.name
+        typ = name
+        if name == "input":
+            typ = tag.get("type", "text")
+
+        # метод и способ ввода
+        if name in ("button", "a") or tag.get("role") == "button" or tag.has_attr("onclick"):
+            method, type_write = "click", "write"
+        elif tag.get("contenteditable") == "true":
+            method, type_write = "write", "writeByClick"   # div, слушающий клавиатуру
+        elif name == "select":
+            method, type_write = "click", "write"
+        else:
+            method, type_write = "write", "write"
+
+        sel = build_selector(tag)
+        if not sel or sel in seen:
+            continue
+        seen.add(sel)
+
+        # Текст кнопки без служебных «бейджей»-счётчиков (например, <span
+        # class="nav-badge">3</span>) — их выносим в описание отдельно, чтобы
+        # не путать текст пункта меню со счётчиком уведомлений/задач.
+        badge_text = None
+        text_source = tag
+        badge_el = tag.find(class_=lambda c: c and "badge" in c)
+        if badge_el is not None:
+            text_source = copy.copy(tag)
+            badge_el2 = text_source.find(class_=lambda c: c and "badge" in c)
+            if badge_el2 is not None:
+                badge_text = _clean_text(badge_el2.get_text())
+                badge_el2.decompose()
+
+        label = (
+            tag.get("placeholder")
+            or tag.get("aria-label")
+            or tag.get("title")
+            or tag.get("name")
+            or _clean_text(text_source.get_text())
+        )
+        label = (label or name)[:80]
+        if badge_text:
+            label = f"{label} ({badge_text})"
+        value = values.get(sel)
+        if value is None and tag.has_attr("value"):
+            value = tag.get("value")
+
+        out.append({
+            "description": label,
+            "selector": sel,
+            "method": method,
+            "type_write": type_write,
+            "value": value,
+            "address": url,
+        })
+    return out
+
+
+# ═══════════════════════════ /scan-dynamic ═══════════════════════════
+# Тот же вход и тот же формат ответа, что и у /scan, но для «известных»
+# страниц (например, doctor Damumed) подключается специализированный сканер
+# из first_scan.py: он разбирает блоки по ФИО и пишет в description, чья это
+# кнопка, с уникальным селектором. Сканер выбирается по URL (first_scan.pick).
+# Если спец-сканер не подошёл или упал (нет Playwright/Chromium, таймаут) —
+# деградируем на общий _scan_html, то есть ведём себя ровно как /scan.
+#
+# first_scan импортируется лениво (и только модуль — Playwright он тянет ещё
+# позже, внутри самого сканера), чтобы сервер поднимался даже без Playwright.
+
+def _load_first_scan():
+    """Импорт first_scan независимо от способа запуска сервера:
+    `python user_server.py` (cwd=user_server/) или
+    `uvicorn user_server.user_server:app` (cwd=корень репо). HERE — папка с
+    этим файлом, там же лежит first_scan.py, поэтому кладём её в sys.path."""
+    import sys
+    import importlib
+    if HERE not in sys.path:
+        sys.path.insert(0, HERE)
+    return importlib.import_module("first_scan")
+
+
+async def _call_scanner(fn, html, url, values, iframe_html):
+    """Вызывает спец-сканер из first_scan.py, передавая iframe_html только
+    тем сканерам, чья сигнатура его принимает (сейчас — scan_diary; старые
+    scan_doctor/scan_medical_records/scan_assignments его не знают, им шлём
+    как раньше html/url/values, чтобы не сломать TypeError-ом на лишний
+    kwarg)."""
+    import inspect
+    try:
+        params = inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        params = {}
+    if "iframe_html" in params:
+        return await fn(html, url, values, iframe_html=iframe_html)
+    return await fn(html, url, values)
+
+
+@app.post("/scan-dynamic")
+async def scan_dynamic(request: Request):
+    body = await request.json()
+    html = body.get("html", "")
+    values = body.get("values", {}) or {}
+    url = body.get("url", "")
+    # HTML фрейма (напр. iframe#editor_0 на странице дневниковой записи) —
+    # физически внешний документ, расширение снимает его отдельно и присылает
+    # тут. Пока не все спец-сканеры это используют (см. _call_scanner ниже).
+    iframe_html = body.get("iframe_html")
+    _remember_patient_ids(html, url)
+
+    scanner = None
+    warning = None
+    try:
+        # выбираем специализированный сканер по URL
+        entry = None
+        try:
+            first_scan = _load_first_scan()
+            entry = first_scan.pick(html, url)
+        except Exception as e:
+            traceback.print_exc()
+            warning = f"first_scan недоступен, общий разбор: {e}"
+
+        if entry is not None:
+            try:
+                elements = await _call_scanner(entry["fn"], html, url, values, iframe_html)
+                scanner = entry.get("name")
+            except Exception as e:
+                # Playwright/Chromium не установлен, таймаут set_content и т.п.
+                traceback.print_exc()
+                warning = (f"спец-сканер '{entry.get('name')}' упал, "
+                           f"откат на общий разбор: {e}")
+                elements = _scan_html(html, values, url)
+        else:
+            # неизвестная страница — ведём себя как /scan
+            elements = _scan_html(html, values, url)
+
+        # спец-правила из /scan применяем и здесь — единый вход/выход с /scan
+        for rule in SPECIAL_RULES:
+            if rule.get("match") and rule["match"] in url:
+                elements.insert(0, {
+                    "description": rule.get("description", ""),
+                    "selector": rule.get("selector", ""),
+                    "method": rule.get("method", "click"),
+                    "type_write": rule.get("type_write", "write"),
+                    "value": values.get(rule.get("selector", ""), None),
+                    "address": url,
+                })
+
+        resp = {"url": url, "count": len(elements), "elements": elements,
+                "scanner": scanner}
+        if warning:
+            resp["warning"] = warning
+        return resp
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"scan-dynamic: {e}"})
+
+
+# ═══════════════════════════════ /macro ══════════════════════════════
+# Для type_write=writeByClick: расширение уже сфокусировало элемент кликом,
+# сюда приходит value — набираем его на клавиатуре. Для unicode (рус/каз)
+# используем вставку из буфера (Ctrl+V). Опционально keys для спец-клавиш.
+
+@app.post("/macro")
+async def macro(request: Request):
+    body = await request.json()
+    value = body.get("value", "")
+    keys = body.get("keys")   # напр. "enter" | "tab" | ["ctrl","s"]
+    try:
+        import pyautogui
+        pyautogui.PAUSE = 0.02
+        if keys:
+            if isinstance(keys, list):
+                pyautogui.hotkey(*keys)
+            else:
+                pyautogui.press(str(keys))
+            return {"ok": True, "action": "keys", "keys": keys}
+
+        if CONFIG.get("macro_paste", True):
+            import pyperclip
+            prev = None
+            try:
+                prev = pyperclip.paste()
+            except Exception:
+                pass
+            pyperclip.copy(value)
+            pyautogui.hotkey("ctrl", "v")
+            # вернуть прежний буфер не обязательно; оставим значение
+        else:
+            pyautogui.typewrite(value, interval=0.01)
+        return {"ok": True, "action": "type", "len": len(value)}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"macro: {e}"})
+
+
+# ═══════════════════════════════ /ocr ════════════════════════════════
+@app.post("/ocr")
+async def ocr(file: UploadFile = File(...), langs: str = Form(None)):
+    langs = langs or CONFIG["ocr_langs"]
+    data = await file.read()
+    name = (file.filename or "document").lower()
+    try:
+        if name.endswith(".pdf"):
+            text = _ocr_pdf(data, langs)
+        elif name.endswith(".docx"):
+            text = _ocr_docx(data)
+        else:
+            text = _ocr_image(data, langs)
+        return {"text": (text or "").strip(), "file": file.filename}
+    except Exception as e:
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"ocr: {e}"})
+
+
+def _tess_configure():
+    if CONFIG.get("tesseract_cmd"):
+        import pytesseract
+        pytesseract.pytesseract.tesseract_cmd = CONFIG["tesseract_cmd"]
+
+
+def _ocr_image(data, langs):
+    _tess_configure()
+    import pytesseract
+    from PIL import Image
+    img = Image.open(io.BytesIO(data))
+    return pytesseract.image_to_string(img, lang=langs)
+
+
+def _ocr_docx(data):
+    import docx  # python-docx
+    doc = docx.Document(io.BytesIO(data))
+    return "\n".join(p.text for p in doc.paragraphs)
+
+
+def _ocr_pdf(data, langs):
+    """Сначала пытаемся достать текстовый слой; если пусто — рендерим страницы
+    в картинки и прогоняем через tesseract."""
+    import fitz  # PyMuPDF
+    doc = fitz.open(stream=data, filetype="pdf")
+    text_parts = []
+    for page in doc:
+        text_parts.append(page.get_text())
+    joined = "\n".join(text_parts).strip()
+    if len(joined) >= 20:
+        return joined
+
+    # текстового слоя нет — OCR по изображениям
+    _tess_configure()
+    import pytesseract
+    from PIL import Image
+    ocr_parts = []
+    for page in doc:
+        pix = page.get_pixmap(dpi=200)
+        img = Image.open(io.BytesIO(pix.tobytes("png")))
+        ocr_parts.append(pytesseract.image_to_string(img, lang=langs))
+    return "\n".join(ocr_parts)
+
+
+# ═══════════════════════════════ MAIN ════════════════════════════════
+if __name__ == "__main__":
+    print(f"Suerte local server → http://{CONFIG['host']}:{CONFIG['port']}")
+    print(f"  provider={CONFIG['provider']}  ocr={CONFIG['ocr_langs']}")
+    uvicorn.run(app, host=CONFIG["host"], port=int(CONFIG["port"]), log_level="info")

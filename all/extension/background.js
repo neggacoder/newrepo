@@ -1,0 +1,458 @@
+/* Suerte / Aqbobek — background service worker (MV3)
+ *
+ * Единственная задача: быть сетевым маршрутизатором между content.js и
+ * сервером. Content-скрипт живёт на https-странице врача и НЕ может напрямую
+ * стучаться на http://127.0.0.1:8000 (mixed-content) — поэтому все запросы
+ * идут через этот воркер, у которого есть host_permissions и который свободен
+ * от ограничений mixed-content страницы.
+ *
+ * Сервер ОДИН и локальный (vox_server, машина врача). Раньше их было два —
+ * локальный на 8000 и «мозг» на VPS:8080; отсюда приставки MAIN_/LOCAL_ в
+ * старом протоколе. Теперь все сообщения зовутся SRV_* и уходят по одному
+ * адресу: cfg.servers.local.
+ *
+ * Протокол сообщений (chrome.runtime.sendMessage из content.js):
+ *   { type:'SRV_TRANSCRIBE', audioB64, mime, provider }   -> { text }
+ *   { type:'SRV_SCAN',       html, values, url }          -> scan JSON
+ *   { type:'SRV_MACRO',      value }                      -> { ok }
+ *   { type:'SRV_OCR',        fileB64, name, mime, langs }  -> { text }
+ *   { type:'SRV_COMMAND',     text, provider, url, scan, patient, active_tab } -> action | { steps:[...] }
+ *   { type:'SRV_PATIENT_GET',  ids }                      -> { found, patient }
+ *   { type:'SRV_PATIENT_SAVE', ids, full_name, any_information, records } -> { ok, key }
+ *   { type:'SRV_IDS_SAVE',   entry }                       -> { ok, changed }
+ *   { type:'SRV_OCR_TEMPLATE',         text, provider }             -> { id, data }
+ *   { type:'SRV_PING' }                                   -> { ok }
+ *   { type:'SET_KENDO_VALUE',  marker, value }              -> { applied }
+ *     (marker — временная метка data-aq-kendo-target, проставленная content.js
+ *      на нужный элемент; выполняется в MAIN-мире страницы через
+ *      chrome.scripting.executeScript, т.к. content.js не видит page-jQuery/Kendo)
+ *   { type:'MEDREC_COLLECT',   force }                      -> { ids, blocks, history, source, cached }
+ *   { type:'MEDREC_PLAN',      blocks, history, url, provider } -> { steps:[...] } | { reply }
+ *   { type:'SRV_TEMPLATE_SAVE',   name, steps, provider }  -> { ok, id, name, skill? } | { ok:false, reason }
+ *   { type:'SRV_TEMPLATE_REENRICH', id, provider }        -> { ok, id, name, skill } | { ok:false, reason }
+ *   { type:'SRV_TEMPLATE_LIST' }                            -> { ok, templates:[{id,name,steps}] }
+ *   { type:'SRV_TEMPLATE_DELETE', id }                      -> { ok, deleted }
+ */
+
+'use strict';
+
+import { readPageIds, readFieldBlocks, readBlocksByClicking, fetchHistory } from './bridge/medrecord-main.js';
+
+const CONFIG_KEY = 'aqbobek_config';
+
+/* Собранная мед. запись живёт в chrome.storage.session: она НЕ пишется на диск,
+   недоступна скриптам Damumed и умирает вместе с браузером. Для медданных это
+   заметно лучше, чем storage.local или sessionStorage самой страницы.
+   Кэш нужен ровно затем, чтобы пережить F5 посреди работы. */
+const MEDREC_TTL_MS = 30 * 60 * 1000;
+
+/* «Первая „Посмотреть“» из постановки задачи = первая строка грида при
+   OrderBy:'TypeThenRegDateDesc'. Больше записей — больше токенов и лишних ПДн. */
+const MEDREC_HISTORY_LIMIT = 1;
+
+const medrecKey = (parId) => 'aq_medrec:' + parId;
+
+/* Ключ servers.local сохранён намеренно: он уже лежит в chrome.storage у всех
+   установленных расширений. Переименование потребовало бы миграции ради
+   косметики; вместо этого просто перестали читать бывший servers.main. */
+const FALLBACK = {
+  provider: 'qwen',
+  servers: {
+    local: { url: 'http://127.0.0.1', port: 8000 }
+  }
+};
+
+async function getConfig() {
+  try {
+    const store = await chrome.storage.local.get(CONFIG_KEY);
+    return store[CONFIG_KEY] || FALLBACK;
+  } catch (_e) {
+    return FALLBACK;
+  }
+}
+
+function baseUrl(server) {
+  // server = { url, port }; собираем корректный origin без двойного порта
+  let url = (server && server.url ? server.url : '').replace(/\/+$/, '');
+  const port = server && server.port;
+  if (port && !/:\d+$/.test(url)) url += ':' + port;
+  return url;
+}
+
+async function serverBase(cfg) { return baseUrl((cfg.servers || {}).local || FALLBACK.servers.local); }
+
+/* ── base64 <-> Blob ─────────────────────────────────────────────── */
+function b64ToBlob(b64, mime) {
+  const bin = atob(b64);
+  const len = bin.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
+  return new Blob([bytes], { type: mime || 'application/octet-stream' });
+}
+
+/* ── HTTP helpers ────────────────────────────────────────────────── */
+async function postJSON(url, body, timeoutMs = 60000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: ctrl.signal
+    });
+    const text = await res.text();
+    let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + (data.detail || text).toString().slice(0, 300));
+    return data;
+  } finally { clearTimeout(t); }
+}
+
+async function postForm(url, form, timeoutMs = 120000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { method: 'POST', body: form, signal: ctrl.signal });
+    const text = await res.text();
+    let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + (data.detail || text).toString().slice(0, 300));
+    return data;
+  } finally { clearTimeout(t); }
+}
+
+/* ── MAIN-world инъекция ─────────────────────────────────────────── */
+// Только верхний фрейм: модели EditMedicalRecordFieldData / MedicalRecordsEditor
+// живут в нём, а внутри iframe редактора их нет.
+async function injectMain(tabId, func, args) {
+  const results = await chrome.scripting.executeScript({
+    target: { tabId },
+    world: 'MAIN',
+    func,
+    args: args || []
+  });
+  return results && results[0] ? results[0].result : null;
+}
+
+/* ── Message handlers ────────────────────────────────────────────── */
+const HANDLERS = {
+  async SRV_TRANSCRIBE(msg, cfg) {
+    const base = await serverBase(cfg);
+    const form = new FormData();
+    form.append('file', b64ToBlob(msg.audioB64, msg.mime || 'audio/webm'), 'command.webm');
+    form.append('provider', msg.provider || cfg.provider || 'qwen');
+    return postForm(base + '/transcribe', form);
+  },
+
+  async SRV_SCAN(msg, cfg) {
+    const base = await serverBase(cfg);
+    // /scan-dynamic — супернабор /scan: для известных страниц (doctor) отдаёт
+    // спец-сканер, для остальных — тот же общий разбор, что и /scan.
+    // iframe_html — HTML-снимок документа внутри iframe#editor_N (дневник):
+    // серверный scan_diary читает из него текущий текст поля построчно.
+    return postJSON(base + '/scan-dynamic', { html: msg.html, values: msg.values || {}, url: msg.url, iframe_html: msg.iframe_html || null });
+  },
+
+  async SRV_MACRO(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/macro', { value: msg.value });
+  },
+
+  async SRV_OCR(msg, cfg) {
+    const base = await serverBase(cfg);
+    const form = new FormData();
+    form.append('file', b64ToBlob(msg.fileB64, msg.mime), msg.name || 'document');
+    form.append('langs', msg.langs || 'kaz+rus+eng');
+    return postForm(base + '/ocr', form);
+  },
+
+  async SRV_COMMAND(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/command', {
+      text: msg.text,
+      provider: msg.provider || cfg.provider || 'qwen',
+      url: msg.url,
+      scan: msg.scan || null,
+      // Карточка пациента — из /patient/get того же сервера. Она нужна в
+      // промпте; сервер локальный, поэтому ПДн не покидают машину врача.
+      patient: msg.patient || null,
+      // Класс активной вкладки: по нему сервер понимает, нужна ли навигация.
+      active_tab: msg.active_tab || null
+    });
+  },
+
+  async SRV_PATIENT_GET(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/patient/get', { ids: msg.ids || {} }, 8000);
+  },
+
+  async SRV_PATIENT_SAVE(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/patient/save', {
+      ids: msg.ids || {},
+      full_name: msg.full_name || null,
+      any_information: msg.any_information || null,
+      records: msg.records || null
+    }, 8000);
+  },
+
+  async SRV_IDS_SAVE(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/ids/save', { entry: msg.entry || {} }, 8000);
+  },
+
+  async SRV_OCR_TEMPLATE(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/ocr-template', {
+      text: msg.text,
+      provider: msg.provider || cfg.provider || 'qwen'
+    });
+  },
+
+  async SRV_PING(_msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/ping', {}, 4000);
+  },
+
+  async SRV_TEMPLATE_SAVE(msg, cfg) {
+    const base = await serverBase(cfg);
+    // Таймаут больше остальных: сохранение тянет за собой обогащение шаблона
+    // в навык (один вызов LLM). На локальном qwen это десятки секунд, и
+    // прежние 8 с рвали запрос ровно посередине.
+    return postJSON(base + '/template/save', {
+      name: msg.name || '', steps: msg.steps || [], provider: msg.provider || ''
+    }, 120000);
+  },
+
+  async SRV_TEMPLATE_REENRICH(msg, cfg) {
+    const base = await serverBase(cfg);
+    // Тот же длинный таймаут, что у save: внутри вызов LLM.
+    return postJSON(base + '/template/reenrich', {
+      id: msg.id, provider: msg.provider || ''
+    }, 120000);
+  },
+
+  async SRV_TEMPLATE_LIST(_msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/template/list', {}, 8000);
+  },
+
+  async SRV_TEMPLATE_DELETE(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/template/delete', { id: msg.id }, 8000);
+  },
+
+  // ─── MEDREC_COLLECT ─────────────────────────────────────────────────────
+  // Собирает мед. запись со страницы editMedicalRecord: 16 блоков из JS-модели
+  // и последнюю мед. запись пациента через тот же API, что питает kendo-грид.
+  // Никаких переходов: врач остаётся на странице и не теряет несохранённое.
+  async MEDREC_COLLECT(msg, cfg, sender) {
+    const tabId = sender && sender.tab && sender.tab.id;
+    if (tabId == null) throw new Error('Нет tabId отправителя для executeScript');
+
+    const ids = await injectMain(tabId, readPageIds, []);
+    const parId = ids && ids.patientAdmissionRegisterID;
+    if (!parId) throw new Error('На странице не найден patientAdmissionRegisterID — это не карточка мед. записи');
+
+    const key = medrecKey(parId);
+    if (!msg.force) {
+      const store = await chrome.storage.session.get(key);
+      const cached = store[key];
+      if (cached && Date.now() - cached.savedAt < MEDREC_TTL_MS) {
+        return Object.assign({}, cached, { cached: true });
+      }
+    }
+
+    let blocks = await injectMain(tabId, readFieldBlocks, []);
+    let source = 'model';
+    if (!blocks || !blocks.length) {
+      // Damumed переименовал модель — обходим блоки кликами.
+      blocks = await injectMain(tabId, readBlocksByClicking, []);
+      source = 'clicks';
+    }
+    if (!blocks || !blocks.length) throw new Error('Не найдены блоки мед. записи (#divFieldData)');
+
+    const limit = Math.max(1, Number(cfg.medrecordHistoryLimit) || MEDREC_HISTORY_LIMIT);
+    const hist = await injectMain(tabId, fetchHistory, [parId, limit]);
+    if (!hist || !hist.ok) throw new Error((hist && hist.error) || 'Не удалось получить историю мед. записей');
+
+    const payload = { ids, blocks, history: hist.records, source, savedAt: Date.now() };
+    await chrome.storage.session.set({ [key]: payload });
+    return Object.assign({}, payload, { cached: false });
+  },
+
+  // ─── MEDREC_PLAN ────────────────────────────────────────────────────────
+  // Блоки уже развёрнуты content.js-ом в текст (у service worker нет DOM).
+  async MEDREC_PLAN(msg, cfg) {
+    const base = await serverBase(cfg);
+    return postJSON(base + '/medical-record/plan', {
+      blocks: msg.blocks || [],
+      history: msg.history || [],
+      url: msg.url,
+      provider: msg.provider || cfg.provider || 'qwen'
+    }, 120000);
+  },
+
+  async OPEN_SETTINGS_TAB() {
+    await chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+    return { opened: true };
+  },
+
+  // ─── SET_KENDO_VALUE ────────────────────────────────────────────────────
+  // content.js работает в ИЗОЛИРОВАННОМ JS-мире страницы: он видит DOM, но не
+  // видит её JS-объекты (window.jQuery там — не та jQuery, что использует
+  // сама страница/Kendo). Поэтому применить значение через API kendo-виджета
+  // (widget.value(x) + widget.trigger('change')) можно только выполнив код
+  // в MAIN-мире страницы — это умеет только background через
+  // chrome.scripting.executeScript({world:'MAIN'}).
+  // content.js помечает нужный элемент временным атрибутом-меткой (msg.marker)
+  // и просит найти/применить значение. allFrames:true — на случай, если поле
+  // находится внутри iframe.
+  //
+  // ВАЖНО: элемент, найденный по селектору автоматизации, не всегда тот, на
+  // котором Kendo реально хранит объект виджета. У NumericTextBox есть ДВА
+  // input'а: видимый прокси без id (class="k-formatted-value", то, во что
+  // реально кликает/печатает врач) и оригинальный скрытый input с id и
+  // data-role="numerictextbox" (на нём и живёт jQuery.data('kendoNumericTextBox')).
+  // Если селектор указывает не на тот элемент — просто расширяем поиск на
+  // ближайшую обёртку .k-widget и все её потомки с data-role.
+  //
+  // Возвращаем { applied, reason } — reason всегда содержит человекочитаемое
+  // объяснение (даже при неудаче), чтобы не гадать вслепую при следующем сбое.
+  async SET_KENDO_VALUE(msg, _cfg, sender) {
+    const tabId = sender && sender.tab && sender.tab.id;
+    if (tabId == null) throw new Error('Нет tabId отправителя для executeScript');
+
+    let results;
+    try {
+      results = await chrome.scripting.executeScript({
+        target: { tabId, allFrames: true },
+        world: 'MAIN',
+        func: (marker, rawValue) => {
+          const node = document.querySelector('[data-aq-kendo-target="' + marker + '"]');
+          if (!node) return null; // это не тот фрейм — в нём метки нет, это нормально
+
+          try {
+            const $ = window.jQuery || window.$;
+            if (typeof $ !== 'function') {
+              return { applied: false, reason: 'На странице (в этом фрейме) нет window.jQuery/$ — не удаётся достать виджет' };
+            }
+
+            // Кандидаты: сам элемент, ближайшая обёртка .k-widget, и все узлы с data-role внутри неё.
+            const candidates = [node];
+            const wrap = node.closest('.k-widget');
+            if (wrap) {
+              candidates.push(wrap);
+              wrap.querySelectorAll('[data-role]').forEach((n) => { if (candidates.indexOf(n) === -1) candidates.push(n); });
+            }
+
+            const triedKeys = [];
+            for (const cand of candidates) {
+              let data;
+              try { data = $(cand).data(); } catch (_e) { continue; }
+              if (!data) continue;
+
+              for (const key in data) {
+                if (!Object.prototype.hasOwnProperty.call(data, key)) continue;
+                if (!/^kendo/.test(key)) continue;
+                triedKeys.push(key);
+                const widget = data[key];
+                if (!widget || typeof widget.value !== 'function') continue;
+
+                // Числовые виджеты (NumericTextBox, Slider) ждут Number, остальные — обычно строку.
+                let val = rawValue;
+                if (/NumericTextBox|Slider/i.test(key)) {
+                  const num = Number(rawValue);
+                  if (rawValue !== '' && !isNaN(num)) val = num;
+                }
+
+                widget.value(val);
+                // trigger('change') — kendo-шный метод самого виджета (не DOM-событие),
+                // именно он заставляет виджет уведомить внутренние обработчики/MVVM-биндинги.
+                if (typeof widget.trigger === 'function') widget.trigger('change');
+
+                // Дублируем нативными DOM-событиями на всякий случай — вдруг что-то на
+                // странице слушает 'input'/'change' напрямую, а не через kendo bind().
+                node.dispatchEvent(new Event('input', { bubbles: true }));
+                node.dispatchEvent(new Event('change', { bubbles: true }));
+                cand.dispatchEvent(new Event('input', { bubbles: true }));
+                cand.dispatchEvent(new Event('change', { bubbles: true }));
+
+                return { applied: true, reason: 'OK через ' + key + ' (элемент: ' + (cand.id || cand.className || cand.tagName) + ')' };
+              }
+            }
+
+            return {
+              applied: false,
+              reason: 'jQuery есть, но kendo-виджет не найден среди ' + candidates.length +
+                ' кандидатов (проверенные kendo*-ключи: ' + (triedKeys.join(', ') || 'нет ни одного') + ')'
+            };
+          } catch (e) {
+            return { applied: false, reason: 'Ошибка в MAIN-мире: ' + (e && e.message) };
+          }
+        },
+        args: [msg.marker, msg.value]
+      });
+    } catch (e) {
+      // executeScript сам не смог выполниться (например, страница защищена/недоступна для скриптов)
+      return { applied: false, reason: 'executeScript не сработал: ' + ((e && e.message) || String(e)) };
+    }
+
+    const perFrame = (results || []).map((r) => r && r.result).filter((r) => r != null);
+    const hit = perFrame.find((r) => r && r.applied) || perFrame[0];
+    if (!hit) return { applied: false, reason: 'Ни один фрейм не нашёл элемент с меткой (marker) — странно, элемент должен быть в DOM' };
+    return { applied: !!hit.applied, reason: hit.reason };
+  }
+};
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  const handler = msg && HANDLERS[msg.type];
+  if (!handler) return false;
+  (async () => {
+    try {
+      const cfg = await getConfig();
+      const data = await handler(msg, cfg, sender);
+      sendResponse({ ok: true, data });
+    } catch (e) {
+      sendResponse({ ok: false, error: (e && e.message) || String(e) });
+    }
+  })();
+  return true; // async response
+});
+
+/* ── Страховка на случай, когда вкладка всё-таки открылась ──────────────
+   Основное средство против window.open(url,'_blank') — патч aq-same-tab.js в
+   MAIN-мире (переход происходит в текущей вкладке). Но он не всесилен: страница
+   могла схватить ссылку на нативный window.open до document_start, или переход
+   инициировал сам браузер (middle-click, ctrl+click врача).
+
+   Передавать план в новую вкладку не нужно: очередь шагов и буфер записи лежат
+   в chrome.storage.local, который общий для всех вкладок, — content.js новой
+   вкладки сам подхватит их в resumeRun('init'). Единственная реальная проблема
+   в том, что вкладка может открыться в ФОНЕ: Chrome душит таймеры фоновых
+   вкладок (ожидания в runStep растянутся), да и врач её попросту не увидит.
+   Поэтому делаем ровно одно — выводим её вперёд. */
+const DMED_HOST = /^https:\/\/(hospital-)?akt\.dmed\.kz\//;
+
+chrome.tabs.onCreated.addListener(async (tab) => {
+  try {
+    if (!tab || tab.openerTabId == null || tab.active) return;
+    const url = tab.pendingUrl || tab.url || '';
+    if (url && !DMED_HOST.test(url)) return;   // вкладка не по нашей теме — не трогаем
+
+    const store = await chrome.storage.local.get(['aqbobek_pending_plan', 'aqbobek_recording']);
+    const plan = store.aqbobek_pending_plan;
+    const rec = store.aqbobek_recording;
+    // Те же условия «план ещё жив», что и в resumeRun: остались шаги и окно
+    // ожидания перехода (RESUME_WINDOW_MS) не истекло.
+    const planActive = !!(plan && plan.steps && plan.index < plan.steps.length &&
+                          (Date.now() - (plan.armedAt || 0)) < 120000);
+    if (!planActive && !(rec && rec.active)) return;
+
+    await chrome.tabs.update(tab.id, { active: true });
+  } catch (_e) { /* вкладку могли закрыть быстрее — молча пропускаем */ }
+});
+
+/* Клик по иконке расширения на панели браузера — открыть настройки в новой вкладке. */
+chrome.action.onClicked.addListener(() => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+});

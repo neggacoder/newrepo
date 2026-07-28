@@ -1,0 +1,60 @@
+# Секреты — НИКОГДА в git
+vox_server/admin_secret.json
+vox_server/config.json
+server/admin_secret.json
+server/config.json
+user_server/config.json
+/etc/aqbobek/*
+*.env
+
+# Карточки пациентов и журнал их id — медицинские ПДн, живут ТОЛЬКО на машине
+# врача (см. «Caution» в CLAUDE.md).
+vox_server/patients/
+user_server/patients/
+
+# Записанные шаблоны «Обучения»: в value шагов лежит текст, напечатанный
+# врачом, то есть данные конкретного пациента.
+vox_server/templates/
+
+# Каталог голосовых фраз: производный от игнорируемых шаблонов, в репозитории
+# от него только рассинхрон.
+vox_server/types.json
+
+# Карта страниц: значений параметров в ней нет (см. atlas.py), но это рабочий
+# журнал конкретной машины — в репозитории ему делать нечего.
+vox_server/atlas.json
+
+# Затраты токенов: текстовый архив и рабочая база SQLite
+vox_server/token_usage.txt
+vox_server/token_usage.json
+vox_server/usage.db
+vox_server/usage.db-wal
+vox_server/usage.db-shm
+server/token_usage.txt
+server/token_usage.json
+server/usage.db
+server/usage.db-wal
+server/usage.db-shm
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# ОС / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+
+
+
+.claude/
+*venv/
+docs/
+*tg-bot/
+*newfolder/
+*.venv/
+*.zip
+*NewFolder/

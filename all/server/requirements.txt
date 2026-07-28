@@ -1,0 +1,9 @@
+# Suerte — главный сервер (Linux VPS)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+httpx>=0.27            # запросы к Ollama и OpenAI
+argon2-cffi>=23.1      # админка: argon2id-хеш пароля/PIN
+itsdangerous>=2.1      # админка: подписанные сессионные токены
+python-multipart>=0.0.9
+faster-whisper>=1.0            # локальная транскрипция речи (единственный движок Whisper в проекте)
+# Ollama (qwen2.5-coder:14b) ставится отдельно: https://ollama.com  ->  ollama pull qwen2.5-coder:14b

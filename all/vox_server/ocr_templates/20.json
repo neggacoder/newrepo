@@ -1,0 +1,161 @@
+{
+  "id": 20,
+  "name": "Первичный приём пациента (Новый приём)",
+  "description": "Заполнение формы осмотра на вкладке «Новый приём» Damumed (демо-страница herachxx.github.io/damumed-example).",
+
+  "//": "Реальный питон-декодер пишете ВЫ: templates/decoders/20.py. Здесь — ссылка на него и ПРИМЕР output.",
+  "decoder": "templates/decoders/20.py",
+
+  "example_output": {
+    "template": "new-visit",
+    "steps": [
+      {
+        "selector": "#patient-lastname",
+        "method": "write",
+        "type_write": "write",
+        "value": "Жунусов",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-firstname",
+        "method": "write",
+        "type_write": "write",
+        "value": "Марат",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-middlename",
+        "method": "write",
+        "type_write": "write",
+        "value": "Бекович",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-iin",
+        "method": "write",
+        "type_write": "write",
+        "value": "870312300247",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-dob",
+        "method": "write",
+        "type_write": "write",
+        "value": "1987-03-12",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-gender",
+        "method": "write",
+        "type_write": "write",
+        "value": "Мужской",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-phone",
+        "method": "write",
+        "type_write": "write",
+        "value": "+7 (701) 234-56-78",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#patient-address",
+        "method": "write",
+        "type_write": "write",
+        "value": "г. Алматы, ул. Абая, д. 12, кв. 34",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#bp-sys",
+        "method": "write",
+        "type_write": "write",
+        "value": "130",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#bp-dia",
+        "method": "write",
+        "type_write": "write",
+        "value": "85",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#pulse",
+        "method": "write",
+        "type_write": "write",
+        "value": "78",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#temp",
+        "method": "write",
+        "type_write": "write",
+        "value": "36.8",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#height",
+        "method": "write",
+        "type_write": "write",
+        "value": "176",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#weight",
+        "method": "write",
+        "type_write": "write",
+        "value": "82",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#spo2",
+        "method": "write",
+        "type_write": "write",
+        "value": "97",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#complaints",
+        "method": "write",
+        "type_write": "write",
+        "value": "Одышка при физической нагрузке, кашель с мокротой по утрам, свистящее дыхание.",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#anamnesis",
+        "method": "write",
+        "type_write": "write",
+        "value": "Болен около 5 лет, ухудшение в течение недели после переохлаждения. Курит 20 лет.",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#icd-search",
+        "method": "write",
+        "type_write": "write",
+        "value": "J44.1",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#diag-text",
+        "method": "write",
+        "type_write": "write",
+        "value": "Хроническая обструктивная болезнь лёгких, обострение средней степени тяжести.",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#non-med",
+        "method": "write",
+        "type_write": "write",
+        "value": "Отказ от курения, дыхательная гимнастика, обильное тёплое питьё.",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#recommendations",
+        "method": "write",
+        "type_write": "write",
+        "value": "Контроль состояния через 7 дней, при усилении одышки — обращение немедленно.",
+        "address": "https://herachxx.github.io/damumed-example/"
+      }
+    ]
+  }
+}

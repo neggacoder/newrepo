@@ -1,0 +1,30 @@
+# CI: те же проверки, что описаны в README («Тесты»).
+# Сервер один — vox_server/. Тяжёлые зависимости (playwright, pyautogui,
+# tesseract) в тестах не нужны: сервер импортирует их лениво, тесты работают
+# на моках.
+
+stages:
+  - test
+
+python_tests:
+  stage: test
+  image: python:3.11-slim
+  before_script:
+    - pip install --quiet fastapi uvicorn httpx argon2-cffi itsdangerous python-multipart
+  script:
+    - python -m py_compile vox_server/vox_server.py vox_server/router.py vox_server/medrecord.py vox_server/usage.py vox_server/admin.py
+    - python -m py_compile vox_server/patients.py vox_server/ids_log.py vox_server/templates_store.py vox_server/first_scan.py vox_server/skills.py vox_server/atlas.py
+    - for f in vox_server/tests/test_*.py; do echo "== $f"; python "$f" || exit 1; done
+
+extension_tests:
+  stage: test
+  image: node:22-slim
+  script:
+    - node --check extension/content.js
+    - node --check extension/background.js
+    - node --check extension/settings.js
+    - node --check extension/patient-ids.js
+    - node --check extension/aq-recorder.js
+    - node --check extension/aq-same-tab.js
+    - node --check extension/medrecord-lines.js
+    - node --test "extension/tests/*.test.js"

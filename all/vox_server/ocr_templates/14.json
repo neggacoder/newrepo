@@ -1,0 +1,50 @@
+{
+  "id": 14,
+  "name": "Пробный к Аружан",
+  "description": "Шаблон направления пациента на консультацию.",
+
+  "//": "Реальный питон-декодер пишете ВЫ. Здесь только ссылка на него и ПРИМЕР output.",
+  "decoder": "templates/decoders/14.py",
+
+  "example_output": {
+    "template": "referral",
+    "steps": [
+      {
+        "selector": "#patient-fio",
+        "method": "write",
+        "type_write": "write",
+        "value": "Жунусов Марат Бекович",
+        "address": "https://herachxx.github.io/damumed-example"
+      },
+      {
+        "selector": "#patient-iin",
+        "method": "write",
+        "type_write": "write",
+        "value": "870312300247",
+        "address": "https://herachxx.github.io/damumed-example"
+      },
+      {
+        "selector": "#diagnosis-mkb",
+        "method": "write",
+        "type_write": "writeByClick",
+        "value": "J44.1",
+        "address": "https://herachxx.github.io/damumed-example"
+      },
+      {
+        "selector": "#specialty-select",
+        "method": "click",
+        "type_write": "write",
+        "value": "Пульмонолог",
+        "address": "https://herachxx.github.io/damumed-example"
+      },
+      {
+        "selector": "#save-referral",
+        "method": "click",
+        "type_write": "write",
+        "value": null,
+        "address": "https://herachxx.github.io/damumed-example"
+      }
+    ]
+  }
+}
+

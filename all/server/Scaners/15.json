@@ -1,0 +1,18 @@
+[
+  {
+    "description": "Мой кабинет врача",
+    "selector": "#myCab",
+    "method": "click",
+    "type_write": "write",
+    "value": null,
+    "address": "https://akt.dmed.kz"
+  },
+  {
+    "description": "Поиск пациента по ФИО / ИИН",
+    "selector": "#nt-search-btn",
+    "method": "write",
+    "type_write": "write",
+    "value": null,
+    "address": "https://akt.dmed.kz"
+  }
+]

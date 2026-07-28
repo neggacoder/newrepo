@@ -1,0 +1,24 @@
+{
+  "id": 99,
+  "name": "Пример-база: клик + вкладка + питон",
+  "description": "Минимальный пример шаблона: нажать на селектор, перейти по вкладке, один python-декодер.",
+
+  "decoder": "templates/decoders/example.py",
+
+  "example_output": {
+    "template": "example-base",
+    "steps": [
+      {
+        "selector": "#some-button",
+        "method": "click",
+        "address": "https://herachxx.github.io/damumed-example/"
+      },
+      {
+        "selector": "#tab-visit",
+        "method": "click",
+        "navigates": true,
+        "address": "https://herachxx.github.io/damumed-example/"
+      }
+    ]
+  }
+}

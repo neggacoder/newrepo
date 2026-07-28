@@ -1,0 +1,29 @@
+# Suerte / Vox — единый сервер (машина врача).
+# Объединяет зависимости бывших server/ и user_server/.
+
+# ── Ядро ──
+fastapi>=0.110
+uvicorn[standard]>=0.29
+httpx>=0.27                    # запросы к Ollama / OpenAI / DeepSeek
+python-multipart>=0.0.9        # приём файлов и форм (аудио, OCR)
+
+# ── Админ-панель и учёт затрат ──
+argon2-cffi>=23.1              # argon2id-хеш пароля/PIN
+itsdangerous>=2.1              # подписанные сессионные токены
+
+# ── Сканеры страниц ──
+beautifulsoup4>=4.12           # /scan — разбор HTML
+playwright>=1.40               # /scan-dynamic — спец-сканеры (нужен `playwright install chromium`)
+
+# ── Макросы (writeByClick) ──
+pyautogui>=0.9.54
+pyperclip>=1.8
+
+# ── OCR ──
+pytesseract>=0.3.10            # требует установленного Tesseract-OCR + языки kaz/rus/eng
+pillow>=10.0
+python-docx>=1.1               # .docx
+PyMuPDF>=1.24                  # .pdf (текстовый слой + рендер для OCR)
+
+# Ollama (qwen2.5-coder:14b) ставится отдельно: https://ollama.com
+#   ollama pull qwen2.5-coder:14b
